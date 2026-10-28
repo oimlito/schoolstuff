@@ -1,0 +1,1408 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Klausur-Trainer Stochastik – Grundkurs Mathematik 12 (G8 RLP)</title>
+<style>
+  :root {
+    --bg: #0f172a;
+    --panel: #1e293b;
+    --panel-alt: #334155;
+    --text: #f8fafc;
+    --muted: #94a3b8;
+    --primary: #38bdf8;
+    --primary-dark: #0284c7;
+    --accent: #f59e0b;
+    --success: #10b981;
+    --danger: #ef4444;
+    --purple: #a855f7;
+    --border: #475569;
+    --card-radius: 14px;
+    --font-scale: 1;
+  }
+
+  body.light-mode {
+    --bg: #f1f5f9;
+    --panel: #ffffff;
+    --panel-alt: #e2e8f0;
+    --text: #0f172a;
+    --muted: #475569;
+    --primary: #0284c7;
+    --primary-dark: #0369a1;
+    --accent: #d97706;
+    --success: #059669;
+    --danger: #dc2626;
+    --purple: #7e22ce;
+    --border: #cbd5e1;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background-color: var(--bg);
+    color: var(--text);
+    font-size: calc(16px * var(--font-scale));
+    line-height: 1.55;
+    transition: background-color 0.25s, color 0.25s;
+    padding-bottom: 50px;
+  }
+
+  header {
+    background-color: var(--panel);
+    border-bottom: 2px solid var(--border);
+    padding: 14px 24px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  }
+
+  .brand { display: flex; align-items: center; gap: 12px; }
+  .brand-badge {
+    background: linear-gradient(135deg, var(--primary), var(--purple));
+    color: #fff;
+    font-weight: 800;
+    padding: 6px 12px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    letter-spacing: 0.5px;
+  }
+  .brand h1 { font-size: calc(1.2rem * var(--font-scale)); font-weight: 700; }
+  .controls-bar { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+
+  .nav-tabs {
+    display: flex;
+    gap: 8px;
+    padding: 12px 24px;
+    background: var(--bg);
+    border-bottom: 1px solid var(--border);
+    overflow-x: auto;
+  }
+
+  .tab-btn {
+    background: var(--panel);
+    color: var(--muted);
+    border: 1px solid var(--border);
+    padding: 10px 18px;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: calc(0.95rem * var(--font-scale));
+    cursor: pointer;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+  .tab-btn:hover { color: var(--text); border-color: var(--primary); }
+  .tab-btn.active {
+    background: var(--primary);
+    color: #0f172a;
+    border-color: var(--primary);
+    font-weight: 700;
+  }
+  body.light-mode .tab-btn.active { color: #ffffff; }
+
+  .icon-btn {
+    background: var(--panel-alt);
+    color: var(--text);
+    border: 1px solid var(--border);
+    padding: 8px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 0.85rem;
+  }
+  .icon-btn:hover { border-color: var(--primary); }
+
+  main { max-width: 1380px; margin: 20px auto; padding: 0 24px; }
+  .tab-content { display: none; animation: fadeIn 0.25s ease; }
+  .tab-content.active { display: block; }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(4px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+  @media (max-width: 1024px) { .grid-2, .grid-3 { grid-template-columns: 1fr; } }
+
+  .card {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: var(--card-radius);
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  }
+
+  .card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 14px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border);
+  }
+  .card-title { font-size: calc(1.12rem * var(--font-scale)); font-weight: 700; color: var(--primary); }
+
+  .badge {
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    font-weight: 700;
+  }
+  .badge-basic { background: rgba(16, 185, 129, 0.2); color: var(--success); }
+  .badge-std { background: rgba(56, 189, 248, 0.2); color: var(--primary); }
+  .badge-exam { background: rgba(245, 158, 11, 0.2); color: var(--accent); }
+  .badge-purple { background: rgba(168, 85, 247, 0.2); color: var(--purple); }
+
+  .btn-group { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; margin-bottom: 8px; }
+  .btn {
+    padding: 8px 14px; border-radius: 8px; border: none;
+    font-weight: 700; font-size: calc(0.9rem * var(--font-scale));
+    cursor: pointer; transition: transform 0.1s, opacity 0.2s;
+  }
+  .btn:active { transform: scale(0.97); }
+  .btn-primary { background: var(--primary); color: #0f172a; }
+  body.light-mode .btn-primary { color: #fff; }
+  .btn-accent { background: var(--accent); color: #0f172a; }
+  .btn-success { background: var(--success); color: #fff; }
+  .btn-danger { background: var(--danger); color: #fff; }
+  .btn-outline { background: transparent; border: 1px solid var(--border); color: var(--text); }
+  .btn-outline:hover { border-color: var(--primary); }
+
+  table { width: 100%; border-collapse: collapse; margin: 10px 0; font-size: calc(0.92rem * var(--font-scale)); }
+  th, td { border: 1px solid var(--border); padding: 8px 10px; text-align: center; }
+  th { background: var(--panel-alt); font-weight: 700; color: var(--primary); }
+
+  .formula-box {
+    background: var(--bg); border-left: 5px solid var(--primary);
+    padding: 14px; border-radius: 8px;
+    font-family: "Cambria Math", "Times New Roman", serif;
+    font-size: calc(1.08rem * var(--font-scale));
+    margin: 10px 0; overflow-x: auto;
+  }
+
+  .trap-box {
+    background: rgba(239, 68, 68, 0.1);
+    border-left: 5px solid var(--danger);
+    padding: 12px 15px; border-radius: 8px; margin: 10px 0;
+  }
+
+  .fix-box {
+    background: rgba(16, 185, 129, 0.1);
+    border-left: 5px solid var(--success);
+    padding: 12px 15px; border-radius: 8px; margin: 10px 0;
+  }
+
+  .hint-box {
+    display: none;
+    margin-top: 10px;
+    padding: 14px;
+    background: var(--bg);
+    border-radius: 10px;
+    border: 1px solid var(--border);
+  }
+  .hint-box.open { display: block; }
+  .hint-1 { border-left: 4px solid var(--accent); }
+  .hint-2 { border-left: 4px solid var(--primary); }
+  .hint-sol { border-left: 4px solid var(--success); }
+
+  /* Interactive Answer Checker */
+  .check-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+    background: var(--bg);
+    padding: 10px 14px;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    margin-top: 12px;
+  }
+  .check-input {
+    background: var(--panel);
+    color: var(--text);
+    border: 1px solid var(--border);
+    padding: 7px 12px;
+    border-radius: 6px;
+    width: 130px;
+    font-size: 0.95rem;
+    font-weight: 700;
+  }
+  .check-feedback { font-weight: 700; font-size: 0.9rem; }
+
+  /* Decision Tree Finder */
+  .dtree-box {
+    background: var(--bg);
+    border: 2px solid var(--primary);
+    border-radius: 12px;
+    padding: 18px;
+    margin-top: 12px;
+  }
+  .dtree-question {
+    font-size: calc(1.1rem * var(--font-scale));
+    font-weight: 700;
+    margin-bottom: 12px;
+    color: var(--accent);
+  }
+
+  /* Filter Pills for Training */
+  .filter-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 18px;
+  }
+  .filter-pill {
+    padding: 8px 16px;
+    border-radius: 20px;
+    border: 1px solid var(--border);
+    background: var(--panel);
+    color: var(--muted);
+    font-weight: 700;
+    cursor: pointer;
+  }
+  .filter-pill.active {
+    background: var(--primary);
+    color: #0f172a;
+    border-color: var(--primary);
+  }
+  body.light-mode .filter-pill.active { color: #fff; }
+
+  /* Mock Exam Timer & Score Bar */
+  .exam-bar {
+    background: var(--bg);
+    border: 2px solid var(--accent);
+    border-radius: 12px;
+    padding: 14px 20px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 20px;
+  }
+  .timer-display {
+    font-family: monospace;
+    font-size: 1.8rem;
+    font-weight: 900;
+    color: var(--accent);
+  }
+  .score-check {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--panel);
+    padding: 6px 12px;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    cursor: pointer;
+    font-weight: 700;
+    font-size: 0.9rem;
+    user-select: none;
+  }
+  .score-check input {
+    width: 18px;
+    height: 18px;
+    accent-color: var(--success);
+    cursor: pointer;
+  }
+
+  @media print {
+    header, .nav-tabs, .btn-group, .check-row, .filter-bar { display: none !important; }
+    .tab-content { display: block !important; }
+    .hint-sol { display: block !important; }
+    body { background: #fff; color: #000; }
+    .card { break-inside: avoid; border: 1px solid #999; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="brand">
+    <span class="brand-badge">GK 12 KLAUSUR-TRAINER</span>
+    <h1>Stochastik: Merkseite, Klausurfallen, Training &amp; Probeklausur</h1>
+  </div>
+  <div class="controls-bar">
+    <button class="icon-btn" onclick="window.print()" title="Aktuelle Ansicht drucken">🖨️ Drucken</button>
+    <button class="icon-btn" onclick="changeFont(-0.08)" title="Schrift kleiner">A-</button>
+    <button class="icon-btn" onclick="changeFont(0.08)" title="Schrift größer">A+</button>
+    <button class="icon-btn" onclick="toggleTheme()" id="themeBtn">☀️ Hell-Modus</button>
+  </div>
+</header>
+
+<nav class="nav-tabs">
+  <button class="tab-btn active" onclick="switchTab('tab1', this)">1. 📋 Merkseite &amp; Formel-Finder</button>
+  <button class="tab-btn" onclick="switchTab('tab2', this)">2. 💡 Tipps, Tricks &amp; 7 Klausurfallen</button>
+  <button class="tab-btn" onclick="switchTab('tab3', this)">3. 🎯 Themen-Training (9 Aufgaben mit Hilfen)</button>
+  <button class="tab-btn" onclick="switchTab('tab4', this)">4. ⏱️ 45-Min-Probeklausur (mit Notenrechner)</button>
+</nav>
+
+<main>
+  <!-- ==========================================================================
+       TAB 1: INTERAKTIVE MERKSEITE ("KOMPAKT-SPICKZETTEL") & FORMEL-FINDER
+       ========================================================================== -->
+  <section id="tab1" class="tab-content active">
+    <!-- Interactive Combinatorics Decision Tree -->
+    <div class="card">
+      <div class="card-header">
+        <span class="card-title">🧭 Interaktiver Kombinatorik-Lotse: Welche Zählstrategie brauchst du?</span>
+        <button class="btn btn-outline" onclick="setDTree('start')">🔄 Lotse neu starten</button>
+      </div>
+      <p style="color:var(--muted); margin-bottom:10px;">
+        Beantworte bis zu drei kurze Fragen zu deiner Textaufgabe – der Lotse führt dich direkt zur richtigen Formel und Taschenrechner-Taste:
+      </p>
+
+      <div id="dtreeContainer" class="dtree-box">
+        <!-- Dynamically populated by JS -->
+      </div>
+    </div>
+
+    <!-- All Combinatorics Formulas Overview Table -->
+    <div class="card">
+      <div class="card-header">
+        <span class="card-title">1. Merkblatt: Kombinatorische Zählstrategien im Überblick</span>
+        <span class="badge badge-std">Klausur-Thema 1</span>
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th>Modell / Zählstrategie</th>
+            <th>Merkmale (Zurücklegen? Reihenfolge?)</th>
+            <th>Formel &amp; Taschenrechner</th>
+            <th>Typisches Klausur-Beispiel</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="font-weight:700; text-align:left; color:var(--primary);">Allgemeine Produktregel</td>
+            <td>Mehrstufiger Versuch mit <b>verschiedenen Teilmengen</b> (nicht eine Urne!)</td>
+            <td><b>N = n<sub>1</sub> &middot; n<sub>2</sub> &middot; &hellip; &middot; n<sub>k</sub></b></td>
+            <td>Menü aus 3 Vorspeisen, 4 Hauptgerichten und 3 Desserts: 3 &middot; 4 &middot; 3 = 36</td>
+          </tr>
+          <tr>
+            <td style="font-weight:700; text-align:left; color:var(--accent);">Ziehen mit Zurücklegen, mit Reihenfolge</td>
+            <td>Elemente dürfen <b>mehrfach</b> vorkommen; Position ist wichtig (geordnetes k-Tupel)</td>
+            <td><b>N = n<sup>k</sup></b><br><span style="font-size:0.8rem; color:var(--muted);">(n = Auswahl pro Stelle, k = Stellen)</span></td>
+            <td>5-stelliger Smartphone-PIN aus Ziffern 0–9 (n=10, k=5): 10<sup>5</sup> = 100.000</td>
+          </tr>
+          <tr>
+            <td style="font-weight:700; text-align:left; color:var(--success);">Ziehen ohne Zurücklegen, mit Reihenfolge</td>
+            <td>Kein Element doppelt; Reihenfolge/Amt macht einen Unterschied</td>
+            <td><b>N = n &middot; (n &minus; 1) &middot; &hellip; &middot; (n &minus; k + 1)</b><br><span style="font-size:0.8rem; color:var(--muted);">TR-Taste: <b>nPr</b></span></td>
+            <td>Platz 1, 2 und 3 bei 12 Pferden tippen: 12 &middot; 11 &middot; 10 = 1.320</td>
+          </tr>
+          <tr>
+            <td style="font-weight:700; text-align:left; color:var(--success);">Sonderfall: Permutation (k = n)</td>
+            <td><b>Alle n Elemente</b> werden in eine feste Reihenfolge gebracht (Urne wird komplett geleert)</td>
+            <td><b>N = n! = n &middot; (n &minus; 1) &middot; &hellip; &middot; 2 &middot; 1</b><br><span style="font-size:0.8rem; color:var(--muted);">TR-Taste: <b>x!</b> (Hinweis: 0! = 1)</span></td>
+            <td>5 Personen präsentieren nacheinander (Reihenfolge): 5! = 120</td>
+          </tr>
+          <tr>
+            <td style="font-weight:700; text-align:left; color:var(--purple);">Ziehen ohne Zurücklegen, ohne Reihenfolge</td>
+            <td>Kein Element doppelt; Auswahl erfolgt „mit einem Griff“ (gleichberechtigte Gruppe)</td>
+            <td><b>N = (n über k) = <span style="white-space:nowrap;">[n &middot; (n&minus;1) &hellip; (n&minus;k+1)] / k!</span></b><br><span style="font-size:0.8rem; color:var(--muted);">TR-Taste: <b>nCr</b></span></td>
+            <td>3er-Delegation aus 20 Personen auslosen: (20 über 3) = (20&middot;19&middot;18)/3! = 1.140</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Section 2 & 3 side by side -->
+    <div class="grid-2">
+      <!-- Section 2: Vierfeldertafel, Baumdiagramm, Bedingte Wahrscheinlichkeit -->
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">2. Merkblatt: Vierfeldertafel, Baum &amp; Bedingte Wahrscheinlichkeit</span>
+          <span class="badge badge-std">Klausur-Thema 2</span>
+        </div>
+
+        <p style="margin-bottom:8px;"><strong>Zusammenhang Vierfeldertafel &hArr; Baumdiagramm (1. Stufe A):</strong></p>
+        <table>
+          <thead>
+            <tr>
+              <th>Merkmal</th>
+              <th>B</th>
+              <th>nicht B (B&#772;)</th>
+              <th>Gesamt</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="font-weight:700; color:var(--primary);">A</td>
+              <td><b>|A &cap; B|</b><br><span style="font-size:0.8rem; color:var(--muted);">P(A &cap; B) = P(A)&middot;P(B|A)</span></td>
+              <td><b>|A &cap; B&#772;|</b><br><span style="font-size:0.8rem; color:var(--muted);">P(A &cap; B&#772;) = P(A)&middot;P(B&#772;|A)</span></td>
+              <td style="font-weight:700;">|A|<br><span style="font-size:0.8rem; color:var(--primary);">1. Stufe: P(A)</span></td>
+            </tr>
+            <tr>
+              <td style="font-weight:700; color:var(--accent);">nicht A (A&#772;)</td>
+              <td><b>|A&#772; &cap; B|</b><br><span style="font-size:0.8rem; color:var(--muted);">P(A&#772; &cap; B) = P(A&#772;)&middot;P(B|A&#772;)</span></td>
+              <td><b>|A&#772; &cap; B&#772;|</b><br><span style="font-size:0.8rem; color:var(--muted);">P(A&#772; &cap; B&#772;) = P(A&#772;)&middot;P(B&#772;|A&#772;)</span></td>
+              <td style="font-weight:700;">|A&#772;|<br><span style="font-size:0.8rem; color:var(--accent);">1. Stufe: P(A&#772;)</span></td>
+            </tr>
+            <tr style="background:var(--panel-alt); font-weight:700;">
+              <td>Gesamt</td>
+              <td>|B| &rarr; P(B)</td>
+              <td>|B&#772;| &rarr; P(B&#772;)</td>
+              <td>N (Gesamtzahl = 100%)</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="formula-box">
+          <strong>Bedingte Wahrscheinlichkeit (2. Stufe im Baumdiagramm):</strong><br>
+          Wahrscheinlichkeit für <i>A</i> unter der Bedingung, dass <i>B</i> bereits eingetreten ist:<br>
+          <div style="margin:6px 0; color:var(--primary); font-weight:700;">
+            P<sub>B</sub>(A) = P(A | B) = P(A &cap; B) / P(B) = |A &cap; B| / |B|
+          </div>
+          <span style="font-size:0.88rem; color:var(--muted);">Merke: Im Nenner steht immer die Wahrscheinlichkeit (oder Anzahl) der <b>Bedingung</b>, die man schon sicher weiß!</span>
+        </div>
+
+        <div class="formula-box" style="border-left-color:var(--accent);">
+          <strong>Prüfung auf stochastische Unabhängigkeit:</strong><br>
+          Zwei Ereignisse A und B heißen <b>stochastisch unabhängig</b>, wenn gilt:<br>
+          <div style="margin:6px 0; color:var(--accent); font-weight:700;">
+            P(A &cap; B) = P(A) &middot; P(B) &nbsp;&nbsp;&hArr;&nbsp;&nbsp; P(A | B) = P(A)
+          </div>
+          <span style="font-size:0.88rem; color:var(--muted);">Gilt <b>P(A &cap; B) &ne; P(A) &middot; P(B)</b>, so sind A und B <b>stochastisch abhängig</b>!</span>
+        </div>
+      </div>
+
+      <!-- Section 3: Zufallsgrößen, Erwartungswert, Varianz & Faires Spiel -->
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">3. Merkblatt: Zufallsgrößen, Erwartungswert &mu;, Varianz &amp; Faires Spiel</span>
+          <span class="badge badge-std">Klausur-Thema 3</span>
+        </div>
+
+        <div class="formula-box" style="border-left-color:var(--danger);">
+          <strong>1. Goldene Regel: Auszahlung A vs. Reingewinn X</strong><br>
+          <span style="color:var(--danger); font-weight:700;">
+            Reingewinn x<sub>i</sub> = Auszahlung a<sub>i</sub> &minus; Einsatz
+          </span><br>
+          <span style="font-size:0.88rem; color:var(--muted);">Beispiel: Bei 2 € Einsatz und 0 € Auszahlung (Niete) ist der Reingewinn <b>x<sub>i</sub> = &minus;2 €</b>!</span>
+        </div>
+
+        <div class="formula-box">
+          <strong>2. Erwartungswert &mu; = E(X) (Langfristiger Durchschnitt pro Spiel):</strong><br>
+          <div style="margin:6px 0; color:var(--primary); font-weight:700;">
+            E(X) = &mu; = x<sub>1</sub> &middot; P(X = x<sub>1</sub>) + x<sub>2</sub> &middot; P(X = x<sub>2</sub>) + &hellip; + x<sub>n</sub> &middot; P(X = x<sub>n</sub>)
+          </div>
+          &bull; Für den Spieler gilt: Ist <b>E(X) &lt; 0</b>, macht der Spieler auf lange Sicht Verlust &rarr; das Spiel ist für den <b>Anbieter (Abikasse / Bank) profitabel</b>!
+        </div>
+
+        <div class="formula-box" style="border-left-color:var(--success);">
+          <strong>3. Bedingung für ein „Faires Spiel“ (Parameteraufgabe):</strong><br>
+          <div style="margin:6px 0; color:var(--success); font-weight:700;">
+            E(Reingewinn X) = 0,00 € &nbsp;&nbsp;&hArr;&nbsp;&nbsp; E(Auszahlung A) = Einsatz
+          </div>
+          <span style="font-size:0.88rem; color:var(--muted);">Tipp: Setze für den gesuchten Reingewinn die Variable <i>y</i> in die Gleichung E(X) = 0 ein, löse nach <i>y</i> auf und addiere am Ende den Einsatz: <b>Auszahlung a = y + Einsatz</b>!</span>
+        </div>
+
+        <div class="formula-box" style="border-left-color:var(--purple);">
+          <strong>4. Varianz V(X) &amp; Standardabweichung &sigma;(X) (Streuungsmaße):</strong><br>
+          <div style="margin:6px 0; color:var(--purple); font-weight:700;">
+            V(X) = (x<sub>1</sub> &minus; &mu;)<sup>2</sup> &middot; P(X = x<sub>1</sub>) + &hellip; + (x<sub>n</sub> &minus; &mu;)<sup>2</sup> &middot; P(X = x<sub>n</sub>)<br>
+            &sigma;(X) = &radic;V(X)
+          </div>
+          <span style="font-size:0.88rem; color:var(--muted);">Merke: Da sich ein fester Einsatz herauskürzt, gilt immer <b>V(Reingewinn) = V(Auszahlung)</b>!</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       TAB 2: TIPPS, TRICKS & DIE 7 HÄUFIGSTEN KLAUSURFALLEN
+       ========================================================================== -->
+  <section id="tab2" class="tab-content">
+    <div class="card">
+      <div class="card-header">
+        <span class="card-title">🚨 Die 7 häufigsten Klausurfallen – und wie du sie sicher umgehst!</span>
+        <span style="font-size:0.85rem; color:var(--muted);">Klicke bei jeder Karte auf den Mini-Check zur Selbstkontrolle</span>
+      </div>
+
+      <div class="grid-2">
+        <!-- Trap 1 -->
+        <div class="card" style="background:var(--bg); margin-bottom:0;">
+          <div class="card-header">
+            <span class="card-title" style="color:var(--danger);">Falle 1: n &middot; (n&minus;1) &middot; (n&minus;2) vs. (n über 3)</span>
+            <span class="badge badge-exam">Kombinatorik</span>
+          </div>
+          <div class="trap-box">
+            <strong>❌ Typischer Fehler:</strong> Bei einer gelosten 3er-Delegation aus 20 Personen einfach <code>20 &middot; 19 &middot; 18 = 6.840</code> rechnen.
+          </div>
+          <div class="fix-box">
+            <strong>✅ So machst du es richtig:</strong> Frage dich immer: <em>„Haben die gezogenen Personen unterschiedliche Ämter/Plätze (Platz 1, 2, 3) oder sind alle gleichberechtigt?“</em><br>
+            In einer Delegation ist es völlig egal, ob Anna als Erste, Zweite oder Dritte gezogen wird. Da es für jede 3er-Gruppe <b>3! = 6 Reihenfolgen</b> gibt, teilt der Binomialkoeffizient <b>(20 über 3) = (20&middot;19&middot;18) / 3! = 1.140</b> genau diese Reihenfolgen heraus!
+          </div>
+        </div>
+
+        <!-- Trap 2 -->
+        <div class="card" style="background:var(--bg); margin-bottom:0;">
+          <div class="card-header">
+            <span class="card-title" style="color:var(--danger);">Falle 2: „Und zugleich“ vs. „Unter den...“</span>
+            <span class="badge badge-exam">Textverständnis</span>
+          </div>
+          <div class="trap-box">
+            <strong>❌ Typischer Fehler:</strong> Bedingte Wahrscheinlichkeit <code>P(A | B)</code> und Schnittmenge <code>P(A &cap; B)</code> beim Eintragen in Vierfeldertafel oder Baum verwechseln.
+          </div>
+          <div class="fix-box">
+            <strong>✅ Signalwörter-Code knacken:</strong><br>
+            &bull; <b>Schnittmenge |A &cap; B| (gehört IN die Vierfeldertafel):</b> „Bei 260 der siegreichen Matches war der Voice-Chat an“ (absolut) oder „15 % <u>aller</u> Befragten sind männlich <u>und</u> rauchen“.<br>
+            &bull; <b>Bedingung P(A | B) (gehört AN den 2. Ast im Baum):</b> „<u>Von den</u> Frauen sind 0,5 % farbenblind“ oder „Ein Match wurde gewonnen. Wie wahrscheinlich war Voice-Chat an?“
+          </div>
+        </div>
+
+        <!-- Trap 3 -->
+        <div class="card" style="background:var(--bg); margin-bottom:0;">
+          <div class="card-header">
+            <span class="card-title" style="color:var(--danger);">Falle 3: Der Umkehrfehlschluss P(A|B) &ne; P(B|A)</span>
+            <span class="badge badge-exam">Bedingte Wahrsch.</span>
+          </div>
+          <div class="trap-box">
+            <strong>❌ Typischer Fehler:</strong> „Da wir gewonnen haben (S), hatten wir bestimmt auch den Voice-Chat (V) an, weil man mit Voice-Chat öfter gewinnt!“
+          </div>
+          <div class="fix-box">
+            <strong>✅ So argumentierst du in der Klausur:</strong><br>
+            Unterscheide sauber die beiden Richtungen:<br>
+            &bull; <b>P(S | V)</b> = Wie oft gewinnt man, <i>wenn</i> der Voice-Chat an ist?<br>
+            &bull; <b>P(V | S)</b> = Wie oft war der Voice-Chat an, <i>wenn</i> man gewonnen hat?<br>
+            Da die Grundmengen im Nenner verschieden sind (<code>|V| &ne; |S|</code>), darf man Bedingung und Ereignis niemals einfach vertauschen!
+          </div>
+        </div>
+
+        <!-- Trap 4 -->
+        <div class="card" style="background:var(--bg); margin-bottom:0;">
+          <div class="card-header">
+            <span class="card-title" style="color:var(--danger);">Falle 4: Unabhängigkeit nur „nach Gefühl“ beurteilen</span>
+            <span class="badge badge-exam">Stoch. Unabhängigkeit</span>
+          </div>
+          <div class="trap-box">
+            <strong>❌ Typischer Fehler:</strong> Einen Aufsatz schreiben („Voice-Chat hilft bestimmt beim Gewinnen, also abhängig“), ohne eine Gleichung zu prüfen.
+          </div>
+          <div class="fix-box">
+            <strong>✅ Das 3-Zeilen-Rezept für volle Punktzahl:</strong><br>
+            1. Schreibe die Prüfbedingung hin: <code>Prüfe: P(A &cap; B) = P(A) &middot; P(B)</code><br>
+            2. Berechne beide Seiten getrennt mit den Werten aus der Vierfeldertafel.<br>
+            3. Vergleiche: Bei <code>=</code> &rarr; <b>stochastisch unabhängig</b>; bei <code>&ne;</code> &rarr; <b>stochastisch abhängig</b>. Formuliere danach 1 Satz im Sachzusammenhang!
+          </div>
+        </div>
+
+        <!-- Trap 5 -->
+        <div class="card" style="background:var(--bg); margin-bottom:0;">
+          <div class="card-header">
+            <span class="card-title" style="color:var(--danger);">Falle 5: Einsatz am Ende beim „Fairen Spiel“ vergessen</span>
+            <span class="badge badge-exam">Erwartungswert</span>
+          </div>
+          <div class="trap-box">
+            <strong>❌ Typischer Fehler:</strong> Über <code>E(X) = 0</code> den neuen Reingewinn <code>y = 12 €</code> berechnen und als Antwort „Die Auszahlung muss 12 € betragen“ hinschreiben.
+          </div>
+          <div class="fix-box">
+            <strong>✅ So vermeidest du den Punktverlust:</strong><br>
+            Wenn die Tabelle mit dem <b>Reingewinn X</b> aufgestellt wurde, liefert der Ansatz <code>y &middot; p<sub>1</sub> + x<sub>2</sub> &middot; p<sub>2</sub> + x<sub>3</sub> &middot; p<sub>3</sub> = 0</code> den benötigten <b>Reingewinn y</b>.<br>
+            Ist in der Aufgabenstellung nach der <b>Auszahlung</b> gefragt, musst du ganz am Ende zwingend rechnen: <b>Neue Auszahlung = Reingewinn y + Einsatz</b>!
+          </div>
+        </div>
+
+        <!-- Trap 6 & 7 -->
+        <div class="card" style="background:var(--bg); margin-bottom:0;">
+          <div class="card-header">
+            <span class="card-title" style="color:var(--danger);">Falle 6 &amp; 7: Vergessener Pfad &amp; Minus-Klammer bei V(X)</span>
+            <span class="badge badge-exam">Zufallsgrößen &amp; Varianz</span>
+          </div>
+          <div class="trap-box">
+            <strong>❌ Fehler 6:</strong> Bei „1 goldene und 1 schwarze Kugel“ nur <code>(2/5) &middot; (3/4)</code> rechnen.<br>
+            <strong>❌ Fehler 7:</strong> Bei <code>&mu; = &minus;0,40 €</code> in der Varianz <code>(8 &minus; 0,40)<sup>2</sup></code> oder im TR <code>&minus;1,6<sup>2</sup> = &minus;2,56</code> tippen.
+          </div>
+          <div class="fix-box">
+            <strong>✅ Richtig:</strong><br>
+            &bull; Zu „genau 1 Treffer bei 2 Zügen“ gehören <b>zwei Pfade</b>: <code>(G &rarr; S)</code> UND <code>(S &rarr; G)</code>, also <b>mal 2</b> nehmen! Mach immer die Probe: <b>&sum; P(X = x<sub>i</sub>) = 1</b>!<br>
+            &bull; Ist <code>&mu; = &minus;0,4</code> negativ, wird aus <code>(x<sub>i</sub> &minus; &mu;)<sup>2</sup></code> durch Minus mal Minus ein Plus: <b>(x<sub>i</sub> + 0,4)<sup>2</sup></b>. Und jedes Quadrat <code>(...)<sup>2</sup></code> in der Varianz ist <b>positiv</b>!
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       TAB 3: THEMEN-TRAINING (9 GESTUFTE AUFGABEN MIT 3-STUFEN-HILFESYSTEM)
+       ========================================================================== -->
+  <section id="tab3" class="tab-content">
+    <div class="card">
+      <div class="card-header">
+        <span class="card-title">🎯 Selbstständiges Themen-Training mit 3-Stufen-Hilfesystem</span>
+        <span style="font-size:0.85rem; color:var(--muted);">Nutze erst Tipp 1 &amp; Tipp 2 und prüfe dein Ergebnis, bevor du die Lösung aufklappst!</span>
+      </div>
+
+      <div class="filter-bar">
+        <button class="filter-pill active" onclick="filterTasks('all', this)">Alle 9 Aufgaben anzeigen</button>
+        <button class="filter-pill" onclick="filterTasks('komb', this)">Block A: Kombinatorik (3)</button>
+        <button class="filter-pill" onclick="filterTasks('cond', this)">Block B: Vierfeldertafel &amp; Bedingte Wahrsch. (3)</button>
+        <button class="filter-pill" onclick="filterTasks('ev', this)">Block C: Erwartungswert, Varianz &amp; Faires Spiel (3)</button>
+      </div>
+
+      <!-- ==================== BLOCK A: KOMBINATORIK ==================== -->
+      <div class="card task-card" data-topic="komb" style="background:var(--bg);">
+        <div class="card-header">
+          <span class="card-title">Aufgabe A1: Streaming-Profil &amp; Abgrenzung zum Urnenmodell</span>
+          <span class="badge badge-basic">Kombinatorik &bull; Basis</span>
+        </div>
+        <p>
+          Beim Einrichten eines neuen Accounts bei einem Streaming-Dienst wählt man nacheinander genau <b>einen von 5 Avataren</b>, <b>eines von 8 Farbschemata</b> und <b>eines von 4 Start-Genres</b>.<br>
+          <b>a)</b> Berechne die Anzahl der verschiedenen Profil-Kombinationen.<br>
+          <b>b)</b> Benenne das verwendete Zählprinzip und begründe kurz, warum hier kein klassisches Urnenmodell vorliegt.
+        </p>
+
+        <div class="check-row">
+          <span>🔢 Dein Ergebnis zu a):</span>
+          <input type="text" id="inp_a1" class="check-input" placeholder="Anzahl">
+          <button class="btn btn-primary" onclick="checkVal('inp_a1', 'fb_a1', [160])">Prüfen</button>
+          <span id="fb_a1" class="check-feedback"></span>
+        </div>
+
+        <div class="btn-group">
+          <button class="btn btn-outline" onclick="toggleBox('h1_a1')">💡 Tipp 1: Strategie</button>
+          <button class="btn btn-outline" onclick="toggleBox('h2_a1')">📐 Tipp 2: Ansatz</button>
+          <button class="btn btn-outline" onclick="toggleBox('sol_a1')">✅ Vollständige Lösung mit Herleitung</button>
+        </div>
+        <div id="h1_a1" class="hint-box hint-1">
+          <b>Tipp 1 (Strategie):</b> Es handelt sich um einen dreistufigen Auswahlprozess, bei dem in jeder Stufe aus einer völlig eigenen Auswahlmenge (Avatare, Farben, Genres) genau ein Element gewählt wird.
+        </div>
+        <div id="h2_a1" class="hint-box hint-2">
+          <b>Tipp 2 (Ansatz):</b> Wende die allgemeine Produktregel <code>N = n<sub>1</sub> &middot; n<sub>2</sub> &middot; n<sub>3</sub></code> an. Überlege für b), ob hier Kugeln aus <i>ein und derselben</i> Urne gezogen werden.
+        </div>
+        <div id="sol_a1" class="hint-box hint-sol">
+          <b>Herleitung &amp; Musterlösung:</b><br>
+          <b>a)</b> Nach der Produktregel der Kombinatorik gibt es <b>N = 5 &middot; 8 &middot; 4 = 160</b> verschiedene Profil-Kombinationen.<br>
+          <b>b)</b> Es handelt sich um die <b>allgemeine Produktregel</b>. Im Gegensatz zum Urnenmodell wird hier nicht mehrfach aus <i>ein und derselben</i> Grundmenge (Urne) gezogen, sondern in jeder Stufe aus einer anderen, getrennten Teilmenge gewählt.
+        </div>
+      </div>
+
+      <div class="card task-card" data-topic="komb" style="background:var(--bg);">
+        <div class="card-header">
+          <span class="card-title">Aufgabe A2: Die 4 Urnen-Zählstrategien im direkten Vergleich</span>
+          <span class="badge badge-std">Kombinatorik &bull; Standard</span>
+        </div>
+        <p>
+          Ordne den folgenden Situationen jeweils das passende Urnenmodell zu (<i>mit/ohne Zurücklegen, mit/ohne Reihenfolge</i>) und berechne die Anzahl der Möglichkeiten:<br>
+          <b>a)</b> Ein digitaler Tresor-Code besteht aus <b>4 Ziffern</b> (jeweils von 0 bis 9). Jede Ziffer darf beliebig oft vorkommen.<br>
+          <b>b)</b> Wie viele solcher 4-stelligen Codes aus den Ziffern 0 bis 9 gibt es, wenn <b>keine Ziffer mehrfach</b> vorkommen darf?<br>
+          <b>c)</b> Beim 100-Meter-Finale treten <b>8 Läufer</b> an.<br>
+          &nbsp;&nbsp;&nbsp;<i>i)</i> Wie viele Möglichkeiten gibt es für die komplette Reihenfolge aller 8 Läufer im Ziel?<br>
+          &nbsp;&nbsp;&nbsp;<i>ii)</i> Wie viele Möglichkeiten gibt es für die Vergabe von Gold, Silber und Bronze (Plätze 1 bis 3)?<br>
+          &nbsp;&nbsp;&nbsp;<i>iii)</i> Nach dem Rennen werden 3 der 8 Läufer zufällig zur Dopingprobe ausgelost. Wie viele 3er-Gruppen sind möglich?
+        </p>
+
+        <div class="check-row">
+          <span>🔢 Prüfe Teil c iii) (Dopingprobe):</span>
+          <input type="text" id="inp_a2" class="check-input" placeholder="Anzahl">
+          <button class="btn btn-primary" onclick="checkVal('inp_a2', 'fb_a2', [56])">Prüfen</button>
+          <span id="fb_a2" class="check-feedback"></span>
+        </div>
+
+        <div class="btn-group">
+          <button class="btn btn-outline" onclick="toggleBox('h1_a2')">💡 Tipp 1: Modell-Zuordnung</button>
+          <button class="btn btn-outline" onclick="toggleBox('h2_a2')">📐 Tipp 2: Formeln</button>
+          <button class="btn btn-outline" onclick="toggleBox('sol_a2')">✅ Vollständige Lösung mit Herleitung</button>
+        </div>
+        <div id="h1_a2" class="hint-box hint-1">
+          <b>Tipp 1 (Modellwahl):</b><br>
+          &bull; <b>a)</b> Ziffern von 0 bis 9 sind <b>n = 10</b> Ziffern! Da Wiederholungen erlaubt sind und die Position im Code zählt: <i>mit Zurücklegen, mit Reihenfolge</i>.<br>
+          &bull; <b>b)</b> Keine Ziffer doppelt, Position zählt: <i>ohne Zurücklegen, mit Reihenfolge</i>.<br>
+          &bull; <b>c)</b> Bei <i>i)</i> werden alle 8 Läufer geordnet (Permutation); bei <i>ii)</i> zählt die Reihenfolge (Gold &ne; Bronze); bei <i>iii)</i> sind die 3 ausgelosten Läufer gleichberechtigt (Reihenfolge egal!).
+        </div>
+        <div id="h2_a2" class="hint-box hint-2">
+          <b>Tipp 2 (Formeln):</b><br>
+          a) <code>10<sup>4</sup></code> &nbsp;|&nbsp; b) <code>10 &middot; 9 &middot; 8 &middot; 7</code> &nbsp;|&nbsp; c i) <code>8!</code> &nbsp;|&nbsp; c ii) <code>8 &middot; 7 &middot; 6</code> &nbsp;|&nbsp; c iii) <code>(8 über 3)</code>.
+        </div>
+        <div id="sol_a2" class="hint-box hint-sol">
+          <b>Herleitung &amp; Musterlösung:</b><br>
+          <b>a)</b> Ziehen mit Zurücklegen, mit Reihenfolge (n = 10, k = 4): <b>N = 10<sup>4</sup> = 10.000</b> Codes.<br>
+          <b>b)</b> Ziehen ohne Zurücklegen, mit Reihenfolge (n = 10, k = 4): <b>N = 10 &middot; 9 &middot; 8 &middot; 7 = 5.040</b> Codes.<br>
+          <b>c i)</b> Permutation aller 8 Läufer (Sonderfall ohne Zurücklegen, mit Reihenfolge, k = n = 8): <b>N = 8! = 40.320</b> Möglichkeiten.<br>
+          <b>c ii)</b> Ziehen ohne Zurücklegen, mit Reihenfolge (n = 8, k = 3): <b>N = 8 &middot; 7 &middot; 6 = 336</b> Möglichkeiten.<br>
+          <b>c iii)</b> Ziehen ohne Zurücklegen, <u>ohne</u> Reihenfolge (ungeordnete Stichprobe, n = 8, k = 3): <b>N = (8 über 3) = (8 &middot; 7 &middot; 6) / 3! = 336 / 6 = 56</b> Möglichkeiten.
+        </div>
+      </div>
+
+      <div class="card task-card" data-topic="komb" style="background:var(--bg);">
+        <div class="card-header">
+          <span class="card-title">Aufgabe A3: Das Organisations-Team (Begründung &amp; Wahrscheinlichkeit)</span>
+          <span class="badge badge-exam">Kombinatorik &bull; ⭐ Klausurniveau</span>
+        </div>
+        <p>
+          Aus einem Mathematikkurs mit <b>16 Personen</b> (darunter <b>10 Mädchen und 6 Jungen</b>) soll ein gleichberechtigtes <b>3er-Team</b> für die Organisation der Abifeier ausgelost werden.<br>
+          <b>a)</b> Berechne, wie viele verschiedene 3er-Teams insgesamt möglich sind.<br>
+          <b>b)</b> Begründe mathematisch, warum die Anzahl der Teams mit dem Binomialkoeffizienten <code>(16 über 3)</code> berechnet wird und nicht mit dem Produkt <code>16 &middot; 15 &middot; 14</code>.<br>
+          <b>c)</b> Berechne die Wahrscheinlichkeit dafür, dass das ausgeloste Team aus <b>genau 2 Mädchen und 1 Jungen</b> besteht.
+        </p>
+
+        <div class="check-row">
+          <span>🔢 Prüfe Teil a) (Anzahl Teams gesamt):</span>
+          <input type="text" id="inp_a3" class="check-input" placeholder="Anzahl">
+          <button class="btn btn-primary" onclick="checkVal('inp_a3', 'fb_a3', [560])">Prüfen</button>
+          <span id="fb_a3" class="check-feedback"></span>
+        </div>
+
+        <div class="btn-group">
+          <button class="btn btn-outline" onclick="toggleBox('h1_a3')">💡 Tipp 1: Strategie für b) &amp; c)</button>
+          <button class="btn btn-outline" onclick="toggleBox('h2_a3')">📐 Tipp 2: Formelansatz</button>
+          <button class="btn btn-outline" onclick="toggleBox('sol_a3')">✅ Vollständige Lösung mit Herleitung</button>
+        </div>
+        <div id="h1_a3" class="hint-box hint-1">
+          <b>Tipp 1:</b><br>
+          &bull; Überlege für <b>b)</b>: Wie oft wird ein und dasselbe 3er-Team (z. B. {Anna, Ben, Clara}) beim Term <code>16 &middot; 15 &middot; 14</code> mehrfach gezählt?<br>
+          &bull; Kombiniere für <b>c)</b> die Auswahl von „2 aus 10 Mädchen“ mit „1 aus 6 Jungen“ und teile durch die Gesamtzahl aus a).
+        </div>
+        <div id="h2_a3" class="hint-box hint-2">
+          <b>Tipp 2 (Ansatz):</b><br>
+          a) <code>N = (16 über 3)</code><br>
+          b) Zusammenhang: <code>(16 über 3) = (16 &middot; 15 &middot; 14) / 3!</code> mit <code>3! = 6</code>.<br>
+          c) <code>P(2M, 1J) = [ (10 über 2) &middot; (6 über 1) ] / (16 über 3)</code>.
+        </div>
+        <div id="sol_a3" class="hint-box hint-sol">
+          <b>Herleitung &amp; Musterlösung:</b><br>
+          <b>a)</b> Ziehen ohne Zurücklegen, ohne Reihenfolge: <b>N = (16 über 3) = (16 &middot; 15 &middot; 14) / (3 &middot; 2 &middot; 1) = 3.360 / 6 = 560</b> mögliche Teams.<br><br>
+          <b>b) Mathematische Begründung (wichtig für volle Punktzahl in der Klausur!):</b><br>
+          Der Term <code>16 &middot; 15 &middot; 14 = 3.360</code> berücksichtigt die <b>Reihenfolge der Ziehung</b> (geordnete Stichprobe, z. B. 1. Vorsitzender, 2. Vorsitzender, Kassenwart). Da es sich aber um ein <b>gleichberechtigtes Team</b> handelt, spielt die Ziehungsreihenfolge keine Rolle (ungeordnete Stichprobe). Jede 3er-Gruppe kann auf <b>3! = 3 &middot; 2 &middot; 1 = 6</b> Arten angeordnet werden. Deshalb muss durch <code>3! = 6</code> geteilt werden, was genau der Definition des Binomialkoeffizienten <code>(16 über 3)</code> entspricht.<br><br>
+          <b>c) Wahrscheinlichkeit für 2 Mädchen und 1 Jungen:</b><br>
+          &bull; Anzahl günstiger Möglichkeiten: Aus 10 Mädchen werden 2 gewählt (<code>(10 über 2) = 45</code>) und aus 6 Jungen wird 1 gewählt (<code>(6 über 1) = 6</code>). Nach der Produktregel gibt es <b>45 &middot; 6 = 270</b> günstige Teams.<br>
+          &bull; Laplace-Wahrscheinlichkeit: <b>P = 270 / 560 = 27 / 56 &approx; 0,4821 (ca. 48,2 %)</b>.
+        </div>
+      </div>
+
+      <!-- ==================== BLOCK B: VIERFELDERTAFEL & BEDINGTE WAHRSCHEINLICHKEIT ==================== -->
+      <div class="card task-card" data-topic="cond" style="background:var(--bg);">
+        <div class="card-header">
+          <span class="card-title">Aufgabe B1: Einstellungstest &amp; Online-Vorbereitungskurs</span>
+          <span class="badge badge-exam">Vierfeldertafel &amp; Baum &bull; ⭐ Klausurniveau</span>
+        </div>
+        <p>
+          An einem Einstellungstest nehmen <b>500 Bewerberinnen und Bewerber</b> teil. <b>200</b> von ihnen haben sich vorab mit einem speziellen Online-Kurs vorbereitet (Merkmal <i>K</i>). Insgesamt haben <b>300 Personen</b> den Test bestanden (Merkmal <i>B</i>). Von den Prüflingen, die den Online-Kurs genutzt haben, haben <b>150</b> den Test bestanden.<br>
+          <b>a)</b> Erstelle eine vollständige Vierfeldertafel mit absoluten Häufigkeiten.<br>
+          <b>b)</b> Übersetze die Vierfeldertafel in ein vollständig beschriftetes Baumdiagramm mit Wahrscheinlichkeiten (1. Stufe: Merkmal <i>K</i>).<br>
+          <b>c)</b> Eine zufällig ausgewählte Person hat den Test bestanden (<i>B</i>). Berechne die Wahrscheinlichkeit, dass sie den Online-Kurs genutzt hat.<br>
+          <b>d)</b> Überprüfe rechnerisch, ob die Teilnahme am Online-Kurs (<i>K</i>) und das Bestehen des Tests (<i>B</i>) stochastisch unabhängig sind, und interpretiere das Ergebnis im Sachzusammenhang.
+        </p>
+
+        <div class="check-row">
+          <span>🔢 Prüfe Teil c) P(K | B) in Prozent (ohne %-Zeichen):</span>
+          <input type="text" id="inp_b1" class="check-input" placeholder="z.B. 50">
+          <button class="btn btn-primary" onclick="checkVal('inp_b1', 'fb_b1', [50, 0.5])">Prüfen</button>
+          <span id="fb_b1" class="check-feedback"></span>
+        </div>
+
+        <div class="btn-group">
+          <button class="btn btn-outline" onclick="toggleBox('h1_b1')">💡 Tipp 1: Textwerte zuordnen</button>
+          <button class="btn btn-outline" onclick="toggleBox('h2_b1')">📐 Tipp 2: Formeln für c) &amp; d)</button>
+          <button class="btn btn-outline" onclick="toggleBox('sol_b1')">✅ Vollständige Lösung mit Herleitung</button>
+        </div>
+        <div id="h1_b1" class="hint-box hint-1">
+          <b>Tipp 1:</b> Trage zuerst <code>Gesamt = 500</code>, <code>|K| = 200</code> (Zeilensumme) und <code>|B| = 300</code> (Spaltensumme) ein. Der Satz „Von den Prüflingen mit Kurs haben 150 bestanden“ liefert in absoluten Zahlen direkt das Feld <code>|K &cap; B| = 150</code>!
+        </div>
+        <div id="h2_b1" class="hint-box hint-2">
+          <b>Tipp 2 (Formeln):</b><br>
+          &bull; <b>b)</b> Für die 2. Stufe im Baum teilst du die inneren Felder durch die jeweilige Zeilensumme (<code>|K| = 200</code> bzw. <code>|K&#772;| = 300</code>).<br>
+          &bull; <b>c)</b> Gesucht ist <code>P<sub>B</sub>(K) = P(K | B) = |K &cap; B| / |B|</code>.<br>
+          &bull; <b>d)</b> Prüfe: Gilt <code>P(K &cap; B) = P(K) &middot; P(B)</code>?
+        </div>
+        <div id="sol_b1" class="hint-box hint-sol">
+          <b>Herleitung &amp; Musterlösung:</b><br>
+          <b>a) Vollständige Vierfeldertafel:</b>
+          <table>
+            <tr><th>Merkmal</th><th>B (bestanden)</th><th>B&#772; (nicht bestanden)</th><th>Gesamt</th></tr>
+            <tr><td><b>K (mit Kurs)</b></td><td><b>150</b></td><td>200 &minus; 150 = <b>50</b></td><td><b>200</b></td></tr>
+            <tr><td><b>K&#772; (ohne Kurs)</b></td><td>300 &minus; 150 = <b>150</b></td><td>300 &minus; 150 = <b>150</b></td><td>500 &minus; 200 = <b>300</b></td></tr>
+            <tr style="background:var(--panel-alt); font-weight:700;"><td>Gesamt</td><td>300</td><td>200</td><td>500</td></tr>
+          </table>
+          <b>b) Baumdiagramm (1. Stufe K):</b><br>
+          &bull; <b>1. Stufe:</b> <code>P(K) = 200/500 = 0,40</code> &nbsp;und&nbsp; <code>P(K&#772;) = 300/500 = 0,60</code><br>
+          &bull; <b>2. Stufe (von K ausgehend):</b> <code>P(B | K) = 150/200 = 0,75</code> &nbsp;und&nbsp; <code>P(B&#772; | K) = 50/200 = 0,25</code><br>
+          &bull; <b>2. Stufe (von K&#772; ausgehend):</b> <code>P(B | K&#772;) = 150/300 = 0,50</code> &nbsp;und&nbsp; <code>P(B&#772; | K&#772;) = 150/300 = 0,50</code><br><br>
+          <b>c) Bedingte Wahrscheinlichkeit P(K | B):</b><br>
+          Bedingung ist <i>B</i> (Person hat bestanden, also 300 Personen):<br>
+          <b>P<sub>B</sub>(K) = P(K | B) = P(K &cap; B) / P(B) = 150 / 300 = 0,50 = 50,0 %</b>.<br><br>
+          <b>d) Rechnerische Prüfung auf stochastische Unabhängigkeit:</b><br>
+          Prüfe, ob <code>P(K &cap; B) = P(K) &middot; P(B)</code> gilt:<br>
+          &bull; Linke Seite: <code>P(K &cap; B) = 150 / 500 = 0,30</code><br>
+          &bull; Rechte Seite: <code>P(K) &middot; P(B) = (200/500) &middot; (300/500) = 0,40 &middot; 0,60 = 0,24</code><br>
+          Da <b>0,30 &ne; 0,24</b> gilt (bzw. da im Baum <code>P(B | K) = 0,75 &ne; P(B | K&#772;) = 0,50</code> ist), sind die Ereignisse <b>stochastisch abhängig</b>. <i>Interpretation:</i> Teilnehmende des Online-Kurses haben eine statistisch deutlich höhere Bestehensquote (75 % statt 50 %).
+        </div>
+      </div>
+
+      <div class="card task-card" data-topic="cond" style="background:var(--bg);">
+        <div class="card-header">
+          <span class="card-title">Aufgabe B2: Qualitätskontrolle mit Prozentangaben (Baumdiagramm umkehren)</span>
+          <span class="badge badge-std">Bedingte Wahrsch. &bull; Standard</span>
+        </div>
+        <p>
+          Ein Smartphone-Hersteller bezieht seine OLED-Displays von zwei Zulieferwerken (Werk A und Werk B). <b>Werk A liefert 80 %</b> aller Displays, der Rest stammt aus Werk B. Erfahrungsgemäß sind <b>5 % der Displays aus Werk A fehlerhaft</b> (<i>F</i>), während bei <b>Werk B 10 % der Displays fehlerhaft</b> sind.<br>
+          <b>a)</b> Erstelle ein Baumdiagramm (1. Stufe: Werk A / Werk B) und berechne die Wahrscheinlichkeit, dass ein zufällig ausgewähltes Display aus Werk A stammt <u>und</u> fehlerhaft ist.<br>
+          <b>b)</b> Berechne die Gesamtwahrscheinlichkeit <i>P(F)</i>, dass ein zufällig aus dem Lager entnommenes Display fehlerhaft ist.<br>
+          <b>c)</b> Ein Techniker entnimmt ein Display und stellt fest, dass es fehlerhaft ist (<i>F</i>). Mit welcher Wahrscheinlichkeit stammt dieses defekte Display aus <b>Werk B</b>?
+        </p>
+
+        <div class="check-row">
+          <span>🔢 Prüfe Teil b) Gesamtfehlerrate P(F) in Prozent:</span>
+          <input type="text" id="inp_b2" class="check-input" placeholder="z.B. 6">
+          <button class="btn btn-primary" onclick="checkVal('inp_b2', 'fb_b2', [6, 0.06])">Prüfen</button>
+          <span id="fb_b2" class="check-feedback"></span>
+        </div>
+
+        <div class="btn-group">
+          <button class="btn btn-outline" onclick="toggleBox('h1_b2')">💡 Tipp 1: Pfadregeln nutzen</button>
+          <button class="btn btn-outline" onclick="toggleBox('h2_b2')">📐 Tipp 2: Formel für c)</button>
+          <button class="btn btn-outline" onclick="toggleBox('sol_b2')">✅ Vollständige Lösung mit Herleitung</button>
+        </div>
+        <div id="h1_b2" class="hint-box hint-1">
+          <b>Tipp 1:</b> Die Angaben „5 % der Displays aus Werk A“ und „10 % bei Werk B“ sind bereits die bedingten Wahrscheinlichkeiten <code>P(F | A) = 0,05</code> und <code>P(F | B) = 0,10</code> für die 2. Stufe des Baumdiagramms!
+        </div>
+        <div id="h2_b2" class="hint-box hint-2">
+          <b>Tipp 2:</b><br>
+          &bull; <b>b)</b> Zwei Pfade führen zu „fehlerhaft (F)“: <code>P(F) = P(A &cap; F) + P(B &cap; F)</code>.<br>
+          &bull; <b>c)</b> Gesucht ist die umgekehrte bedingte Wahrscheinlichkeit <code>P<sub>F</sub>(B) = P(B | F) = P(B &cap; F) / P(F)</code>.
+        </div>
+        <div id="sol_b2" class="hint-box hint-sol">
+          <b>Herleitung &amp; Musterlösung:</b><br>
+          <b>a) Baumdiagramm &amp; Schnittmenge:</b><br>
+          &bull; 1. Stufe: <code>P(A) = 0,80</code>; <code>P(B) = 0,20</code>.<br>
+          &bull; 2. Stufe ab A: <code>P(F | A) = 0,05</code>; <code>P(F&#772; | A) = 0,95</code>.<br>
+          &bull; 2. Stufe ab B: <code>P(F | B) = 0,10</code>; <code>P(F&#772; | B) = 0,90</code>.<br>
+          Nach der 1. Pfadregel (Produktregel) gilt: <b>P(A &cap; F) = P(A) &middot; P(F | A) = 0,80 &middot; 0,05 = 0,04 = 4,0 %</b>.<br><br>
+          <b>b) Gesamtwahrscheinlichkeit für ein fehlerhaftes Display P(F):</b><br>
+          Nach der 2. Pfadregel (Summenregel) addieren wir die beiden Fehler-Pfade:<br>
+          <b>P(F) = P(A &cap; F) + P(B &cap; F) = 0,80 &middot; 0,05 + 0,20 &middot; 0,10 = 0,04 + 0,02 = 0,06 = 6,0 %</b>.<br><br>
+          <b>c) Bedingte Wahrscheinlichkeit P(B | F):</b><br>
+          Wir wissen bereits, dass das Display fehlerhaft ist (Bedingung <i>F</i> steht im Nenner):<br>
+          <b>P<sub>F</sub>(B) = P(B | F) = P(B &cap; F) / P(F) = 0,02 / 0,06 = 2/6 = 1/3 &approx; 33,3 %</b>.
+        </div>
+      </div>
+
+      <div class="card task-card" data-topic="cond" style="background:var(--bg);">
+        <div class="card-header">
+          <span class="card-title">Aufgabe B3: Der Unabhängigkeits-Check (Vorsicht vor Bauchgefühl!)</span>
+          <span class="badge badge-purple">Stoch. Unabhängigkeit &bull; Kontrastaufgabe</span>
+        </div>
+        <p>
+          In einer Gesundheitsstudie wurden <b>800 Jugendliche</b> befragt. <b>200</b> von ihnen gaben an, regelmäßig Energy-Drinks zu konsumieren (Ereignis <i>E</i>). Insgesamt klagten <b>160 Jugendliche</b> über häufigen Schlafmangel (Ereignis <i>S</i>). Genau <b>40 Jugendliche</b> konsumieren regelmäßig Energy-Drinks <u>und</u> leiden zugleich unter Schlafmangel.<br>
+          <b>a)</b> Stelle die Vierfeldertafel zu diesem Sachverhalt auf.<br>
+          <b>b)</b> Ein Mitschüler vermutet: „Energy-Drinks und Schlafmangel hängen in dieser Studie bestimmt statistisch zusammen!“ Überprüfe diese Behauptung rechnerisch auf stochastische Unabhängigkeit.
+        </p>
+
+        <div class="btn-group">
+          <button class="btn btn-outline" onclick="toggleBox('h1_b3')">💡 Tipp 1: Prüfbedingung</button>
+          <button class="btn btn-outline" onclick="toggleBox('sol_b3')">✅ Vollständige Lösung mit Herleitung</button>
+        </div>
+        <div id="h1_b3" class="hint-box hint-1">
+          <b>Tipp 1:</b> Verlasse dich niemals auf dein Alltags-Bauchgefühl! Berechne exakt <code>P(E)</code>, <code>P(S)</code> und <code>P(E &cap; S)</code> und vergleiche <code>P(E) &middot; P(S)</code> mit <code>P(E &cap; S)</code>.
+        </div>
+        <div id="sol_b3" class="hint-box hint-sol">
+          <b>Herleitung &amp; Musterlösung:</b><br>
+          <b>a) Vierfeldertafel:</b>
+          <table>
+            <tr><th>Merkmal</th><th>S (Schlafmangel)</th><th>S&#772; (kein Schlafmangel)</th><th>Gesamt</th></tr>
+            <tr><td><b>E (Energy-Drinks)</b></td><td><b>40</b></td><td>160</td><td><b>200</b></td></tr>
+            <tr><td><b>E&#772; (keine Energy-Drinks)</b></td><td>120</td><td>480</td><td>600</td></tr>
+            <tr style="background:var(--panel-alt); font-weight:700;"><td>Gesamt</td><td>160</td><td>640</td><td>800</td></tr>
+          </table>
+          <b>b) Rechnerische Prüfung auf stochastische Unabhängigkeit:</b><br>
+          &bull; <code>P(E) = 200 / 800 = 0,25</code><br>
+          &bull; <code>P(S) = 160 / 800 = 0,20</code><br>
+          &bull; <code>P(E &cap; S) = 40 / 800 = 0,05</code><br>
+          Wir prüfen die Produktgleichung: <b>P(E) &middot; P(S) = 0,25 &middot; 0,20 = 0,05 = P(E &cap; S)</b>!<br>
+          <i>(Alternativ über bedingte Wahrscheinlichkeit: Unter den Energy-Drink-Konsumenten haben 40/200 = 20 % Schlafmangel – exakt genauso viele wie in der gesamten Stichprobe mit 160/800 = 20 %!)</i><br>
+          <b>Fazit:</b> Die Vermutung des Mitschülers ist für diesen Datensatz falsch: Die Ereignisse <i>E</i> und <i>S</i> sind hier <b>stochastisch unabhängig</b>!
+        </div>
+      </div>
+
+      <!-- ==================== BLOCK C: ERWARTUNGSWERT, VARIANZ & FAIRES SPIEL ==================== -->
+      <div class="card task-card" data-topic="ev" style="background:var(--bg);">
+        <div class="card-header">
+          <span class="card-title">Aufgabe C1: Das Schulfest-Glücksspiel „Blaue Perle“ (Komplett-Check)</span>
+          <span class="badge badge-exam">Erwartungswert &amp; Varianz &bull; ⭐ Klausurniveau</span>
+        </div>
+        <p>
+          Für die Abikasse wird ein Urnenspiel angeboten: In einem Beutel befinden sich <b>2 blaue und 4 weiße Perlen</b> (insgesamt 6 Perlen). Ein Spieler zieht blind <b>nacheinander 2 Perlen ohne Zurücklegen</b>. Der <b>Einsatz pro Spiel beträgt 2,00 €</b>.<br>
+          Auszahlungsplan:<br>
+          &bull; <b>2 blaue Perlen:</b> 11,00 € Auszahlung<br>
+          &bull; <b>1 blaue Perle:</b> 2,00 € Auszahlung<br>
+          &bull; <b>0 blaue Perlen:</b> 0,00 € Auszahlung<br>
+          Die Zufallsgröße <i>X</i> beschreibt den <b>Reingewinn des Spielers</b> (Auszahlung abzüglich Einsatz) pro Spiel.<br>
+          <b>a)</b> Ermittle alle möglichen Werte von <i>X</i> und stelle die Wahrscheinlichkeitsverteilung von <i>X</i> tabellarisch auf.<br>
+          <b>b)</b> Berechne den Erwartungswert <i>E(X)</i>. Ist das Spiel für die Abikasse langfristig profitabel?<br>
+          <b>c)</b> Berechne die Varianz <i>V(X)</i> und die Standardabweichung <i>&sigma;(X)</i>.<br>
+          <b>d)</b> Auf welchen Betrag müsste die <b>Auszahlung</b> für „2 blaue Perlen“ geändert werden, damit das Spiel (bei 2,00 € Einsatz) fair ist?
+        </p>
+
+        <div class="check-row">
+          <span>🔢 Prüfe Teil b) E(X) in €:</span>
+          <input type="text" id="inp_c1b" class="check-input" placeholder="z.B. -0,20">
+          <button class="btn btn-primary" onclick="checkVal('inp_c1b', 'fb_c1b', [-0.2])">Prüfen</button>
+          <span id="fb_c1b" class="check-feedback"></span>
+          <span style="margin-left:12px;">🔢 Prüfe Teil d) Faire Auszahlung in €:</span>
+          <input type="text" id="inp_c1d" class="check-input" placeholder="z.B. 14">
+          <button class="btn btn-primary" onclick="checkVal('inp_c1d', 'fb_c1d', [14])">Prüfen</button>
+          <span id="fb_c1d" class="check-feedback"></span>
+        </div>
+
+        <div class="btn-group">
+          <button class="btn btn-outline" onclick="toggleBox('h1_c1')">💡 Tipp 1: Reingewinn &amp; Baumdiagramm</button>
+          <button class="btn btn-outline" onclick="toggleBox('h2_c1')">📐 Tipp 2: Formeln für b), c), d)</button>
+          <button class="btn btn-outline" onclick="toggleBox('sol_c1')">✅ Vollständige Lösung mit Herleitung</button>
+        </div>
+        <div id="h1_c1" class="hint-box hint-1">
+          <b>Tipp 1:</b><br>
+          &bull; Ziehe für die Werte <code>x<sub>i</sub></code> zuerst jeweils den Einsatz von 2,00 € von der Auszahlung ab (<code>11&minus;2 = 9 €</code>, <code>2&minus;2 = 0 €</code>, <code>0&minus;2 = &minus;2 €</code>).<br>
+          &bull; Beim zweistufigen Ziehen ohne Zurücklegen ist der Nenner <code>6 &middot; 5 = 30</code> (kürzbar auf Fünfzehntel). Vergiss bei „1 blaue Perle“ nicht die <b>beiden Pfade (B &rarr; W) und (W &rarr; B)</b>!
+        </div>
+        <div id="h2_c1" class="hint-box hint-2">
+          <b>Tipp 2:</b><br>
+          &bull; Wahrscheinlichkeiten: <code>P(2B) = 2/30 = 1/15</code>; <code>P(1B) = 16/30 = 8/15</code>; <code>P(0B) = 12/30 = 6/15</code>.<br>
+          &bull; Beachte bei c), dass <code>&mu; = &minus;0,20 €</code> negativ ist: In <code>(x<sub>i</sub> &minus; &mu;)<sup>2</sup></code> rechnest du also <code>(x<sub>i</sub> + 0,20)<sup>2</sup></code>!<br>
+          &bull; Setze bei d) für den neuen Reingewinn bei 2 blauen Perlen <code>y = a &minus; 2</code> in <code>E(X) = 0</code> ein.
+        </div>
+        <div id="sol_c1" class="hint-box hint-sol">
+          <b>Herleitung &amp; Musterlösung:</b><br>
+          <b>a) Wahrscheinlichkeiten &amp; Verteilungstabelle:</b><br>
+          &bull; 2 blaue: <code>P(2B) = (2/6) &middot; (1/5) = 2/30 = 1/15</code> &nbsp;|&nbsp; Reingewinn: <code>x<sub>1</sub> = 11 € &minus; 2 € = +9,00 €</code><br>
+          &bull; 1 blaue: <code>P(1B) = (2/6)&middot;(4/5) + (4/6)&middot;(2/5) = 16/30 = 8/15</code> &nbsp;|&nbsp; Reingewinn: <code>x<sub>2</sub> = 2 € &minus; 2 € = 0,00 €</code><br>
+          &bull; 0 blaue: <code>P(0B) = (4/6) &middot; (3/5) = 12/30 = 6/15 = 2/5</code> &nbsp;|&nbsp; Reingewinn: <code>x<sub>3</sub> = 0 € &minus; 2 € = &minus;2,00 €</code>
+          <table>
+            <tr><th>Ausgang</th><th>2 blaue Perlen</th><th>1 blaue Perle</th><th>0 blaue Perlen</th></tr>
+            <tr><td><b>Reingewinn x<sub>i</sub></b></td><td><b>+9,00 €</b></td><td><b>0,00 €</b></td><td><b>&minus;2,00 €</b></td></tr>
+            <tr><td><b>P(X = x<sub>i</sub>)</b></td><td><b>1/15</b></td><td><b>8/15</b></td><td><b>6/15 (= 2/5)</b></td></tr>
+          </table>
+          <b>b) Erwartungswert E(X):</b><br>
+          <code>E(X) = 9 € &middot; (1/15) + 0 € &middot; (8/15) + (&minus;2 €) &middot; (6/15) = (9 + 0 &minus; 12)/15 € = &minus;3/15 € = &minus;1/5 € = <b>&minus;0,20 €</b></code>.<br>
+          <i>Begründung:</i> Da der Spieler im Durchschnitt 20 Cent pro Spiel verliert, gewinnt die Abikasse langfristig im Mittel <b>+0,20 € pro Spiel</b>. Das Spiel ist für die Abikasse profitabel.<br><br>
+          <b>c) Varianz V(X) und Standardabweichung &sigma;(X) mit &mu; = &minus;0,20 €:</b><br>
+          <code>V(X) = (9 &minus; (&minus;0,2))<sup>2</sup> &middot; (1/15) + (0 &minus; (&minus;0,2))<sup>2</sup> &middot; (8/15) + (&minus;2 &minus; (&minus;0,2))<sup>2</sup> &middot; (6/15)</code><br>
+          <code>V(X) = 9,2<sup>2</sup> &middot; (1/15) + 0,2<sup>2</sup> &middot; (8/15) + (&minus;1,8)<sup>2</sup> &middot; (6/15)</code><br>
+          <code>V(X) = 84,64/15 + 0,32/15 + 19,44/15 = 104,40/15 = <b>6,96 €<sup>2</sup></b></code>.<br>
+          Standardabweichung: <b>&sigma;(X) = &radic;6,96 &approx; 2,64 €</b>.<br><br>
+          <b>d) Auszahlung für ein faires Spiel (Bedingung: E(X) = 0):</b><br>
+          Sei <i>y</i> der neue Reingewinn für „2 blaue Perlen“:<br>
+          <code>y &middot; (1/15) + 0 &middot; (8/15) + (&minus;2) &middot; (6/15) = 0 &nbsp;|&nbsp; &middot; 15</code><br>
+          <code>y &minus; 12 = 0 &nbsp;&rArr;&nbsp; y = 12,00 € (Reingewinn)</code>.<br>
+          Da der Einsatz weiterhin 2,00 € beträgt, muss die <b>Auszahlung auf 12,00 € + 2,00 € = 14,00 €</b> erhöht werden!
+        </div>
+      </div>
+
+      <div class="card task-card" data-topic="ev" style="background:var(--bg);">
+        <div class="card-header">
+          <span class="card-title">Aufgabe C2: Parameter-Bestimmung rückwärts &amp; Varianz</span>
+          <span class="badge badge-std">Zufallsgrößen &bull; Standard</span>
+        </div>
+        <p>
+          Gegeben ist die Wahrscheinlichkeitsverteilung einer Zufallsgröße <i>X</i> mit bekanntem Erwartungswert <b>E(X) = 2</b>:
+        </p>
+        <table style="max-width:520px;">
+          <tr><th>Wert x<sub>i</sub></th><td>&minus;5</td><td>0</td><td>5</td><td>10</td></tr>
+          <tr><th>P(X = x<sub>i</sub>)</th><td>0,2</td><td><b>a</b></td><td><b>b</b></td><td>0,1</td></tr>
+        </table>
+        <p>
+          <b>a)</b> Bestimme rechnerisch die fehlenden Wahrscheinlichkeiten <i>a</i> und <i>b</i>.<br>
+          <b>b)</b> Berechne die Varianz <i>V(X)</i> und die Standardabweichung <i>&sigma;(X)</i>.
+        </p>
+
+        <div class="check-row">
+          <span>🔢 Prüfe Varianz V(X):</span>
+          <input type="text" id="inp_c2" class="check-input" placeholder="V(X)">
+          <button class="btn btn-primary" onclick="checkVal('inp_c2', 'fb_c2', [21])">Prüfen</button>
+          <span id="fb_c2" class="check-feedback"></span>
+        </div>
+
+        <div class="btn-group">
+          <button class="btn btn-outline" onclick="toggleBox('h1_c2')">💡 Tipp 1: 2 Gleichungen für a &amp; b</button>
+          <button class="btn btn-outline" onclick="toggleBox('sol_c2')">✅ Vollständige Lösung mit Herleitung</button>
+        </div>
+        <div id="h1_c2" class="hint-box hint-1">
+          <b>Tipp 1:</b> Stelle zuerst die Gleichung für <code>E(X) = 2</code> auf. Da <code>0 &middot; a = 0</code> wegfällt, kannst du <i>b</i> sofort ausrechnen! Nutze danach <code>0,2 + a + b + 0,1 = 1</code>.
+        </div>
+        <div id="sol_c2" class="hint-box hint-sol">
+          <b>Herleitung &amp; Musterlösung:</b><br>
+          <b>a) Bestimmung von a und b:</b><br>
+          1. Über E(X) = 2: <code>(&minus;5)&middot;0,2 + 0&middot;a + 5&middot;b + 10&middot;0,1 = 2 &rArr; &minus;1 + 0 + 5b + 1 = 2 &rArr; 5b = 2 &rArr; <b>b = 0,4</b></code>.<br>
+          2. Über &sum; P(X = x<sub>i</sub>) = 1: <code>0,2 + a + 0,4 + 0,1 = 1 &rArr; a + 0,7 = 1 &rArr; <b>a = 0,3</b></code>.<br><br>
+          <b>b) Varianz V(X) und Standardabweichung &sigma;(X) mit &mu; = 2:</b><br>
+          <code>V(X) = (&minus;5 &minus; 2)<sup>2</sup>&middot;0,2 + (0 &minus; 2)<sup>2</sup>&middot;0,3 + (5 &minus; 2)<sup>2</sup>&middot;0,4 + (10 &minus; 2)<sup>2</sup>&middot;0,1</code><br>
+          <code>V(X) = 49 &middot; 0,2 + 4 &middot; 0,3 + 9 &middot; 0,4 + 64 &middot; 0,1 = 9,8 + 1,2 + 3,6 + 6,4 = <b>21,00</b></code>.<br>
+          Standardabweichung: <b>&sigma;(X) = &radic;21 &approx; 4,58</b>.
+        </div>
+      </div>
+
+      <div class="card task-card" data-topic="ev" style="background:var(--bg);">
+        <div class="card-header">
+          <span class="card-title">Aufgabe C3: Risiko- &amp; Präzisionsvergleich über &mu; und &sigma;</span>
+          <span class="badge badge-basic">Streuung interpretieren &bull; Basis</span>
+        </div>
+        <p>
+          Zwei Bogenschützen A und B treten im Training gegeneinander an. Die Zufallsgröße <i>X</i> gibt die erzielte Ringzahl pro Pfeil an (8, 9 oder 10 Ringe):
+        </p>
+        <table style="max-width:520px;">
+          <tr><th>Ringzahl x<sub>i</sub></th><th>8 Ringe</th><th>9 Ringe</th><th>10 Ringe</th></tr>
+          <tr><td><b>Schütze A</b></td><td>20 %</td><td>60 %</td><td>20 %</td></tr>
+          <tr><td><b>Schütze B</b></td><td>40 %</td><td>20 %</td><td>40 %</td></tr>
+        </table>
+        <p>
+          <b>a)</b> Zeige rechnerisch, dass beide Schützen im Durchschnitt exakt <b>&mu; = 9,0 Ringe</b> erzielen.<br>
+          <b>b)</b> Berechne für beide Schützen die Standardabweichung <i>&sigma;</i> und begründe, wen der Trainer auswählen sollte, wenn er einen möglichst konstanten Schützen sucht.
+        </p>
+
+        <div class="btn-group">
+          <button class="btn btn-outline" onclick="toggleBox('sol_c3')">✅ Vollständige Lösung mit Herleitung</button>
+        </div>
+        <div id="sol_c3" class="hint-box hint-sol">
+          <b>Herleitung &amp; Musterlösung:</b><br>
+          <b>a) Erwartungswerte:</b><br>
+          &bull; <code>&mu;<sub>A</sub> = 8&middot;0,2 + 9&middot;0,6 + 10&middot;0,2 = 1,6 + 5,4 + 2,0 = <b>9,0 Ringe</b></code>.<br>
+          &bull; <code>&mu;<sub>B</sub> = 8&middot;0,4 + 9&middot;0,2 + 10&middot;0,4 = 3,2 + 1,8 + 4,0 = <b>9,0 Ringe</b></code>.<br><br>
+          <b>b) Varianz und Standardabweichung:</b><br>
+          &bull; Schütze A: <code>V(A) = (&minus;1)<sup>2</sup>&middot;0,2 + 0<sup>2</sup>&middot;0,6 + 1<sup>2</sup>&middot;0,2 = 0,2 + 0,2 = <b>0,40</b> &rArr; <b>&sigma;<sub>A</sub> = &radic;0,40 &approx; 0,63 Ringe</b></code>.<br>
+          &bull; Schütze B: <code>V(B) = (&minus;1)<sup>2</sup>&middot;0,4 + 0<sup>2</sup>&middot;0,2 + 1<sup>2</sup>&middot;0,4 = 0,4 + 0,4 = <b>0,80</b> &rArr; <b>&sigma;<sub>B</sub> = &radic;0,80 &approx; 0,89 Ringe</b></code>.<br>
+          <i>Entscheidung:</i> Der Trainer sollte <b>Schütze A</b> wählen, da dessen Ergebnisse bei gleichem Mittelwert deutlich geringer um die 9 Ringe streuen (<code>&sigma;<sub>A</sub> &lt; &sigma;<sub>B</sub></code>).
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       TAB 4: 45-MINUTEN-PROBEKLAUSUR (40 BE - GENERALPROBE MIT TIMER & NOTENRECHNER)
+       ========================================================================== -->
+  <section id="tab4" class="tab-content">
+    <!-- Timer & Live MSS Score Calculator Bar -->
+    <div class="exam-bar">
+      <div>
+        <div style="font-weight:800; color:var(--primary); font-size:1.05rem;">⏱️ Generalprobe unter Echtbedingungen (40 BE)</div>
+        <div style="font-size:0.85rem; color:var(--muted);">Bearbeite die Aufgaben zuerst auf Papier und hake danach unten deine erreichten BE ab!</div>
+      </div>
+
+      <div style="display:flex; align-items:center; gap:12px;">
+        <span id="timerDisplay" class="timer-display">45:00</span>
+        <button class="btn btn-primary" onclick="startTimer()" id="btnStartTimer">▶ Start</button>
+        <button class="btn btn-outline" onclick="resetTimer(45)">45 Min</button>
+        <button class="btn btn-outline" onclick="resetTimer(60)">60 Min</button>
+      </div>
+
+      <div style="text-align:right; background:var(--panel); padding:8px 16px; border-radius:10px; border:1px solid var(--border);">
+        <div style="font-size:0.8rem; color:var(--muted);">DEIN ERGEBNIS (SELBSTKONTROLLE):</div>
+        <div id="examScoreDisplay" style="font-size:1.25rem; font-weight:900; color:var(--success);">0 / 40 BE &rarr; 0 MSS-Punkte (Note 6)</div>
+      </div>
+    </div>
+
+    <!-- PROBEKLAUSUR AUFGABE 1 (12 BE) -->
+    <div class="card">
+      <div class="card-header">
+        <span class="card-title">Klausuraufgabe 1: Kombinatorische Zählstrategien (12 BE)</span>
+        <button class="btn btn-outline" onclick="toggleBox('pk_sol1')">✅ Erwartungshorizont &amp; Punktevergabe zu Aufgabe 1 aufdecken</button>
+      </div>
+      <p style="margin-bottom:10px;">
+        Begründe in den folgenden Teilaufgaben jeweils kurz deinen Lösungsansatz (z. B. durch Nennung des entsprechenden Urnenmodells oder der passenden Zählstrategie).
+      </p>
+      <p>
+        <b>a)</b> In einer Burger-Bar kann man sich ein Menü aus <b>4 Brötchensorten</b>, <b>5 Patties</b> und <b>3 Saucen</b> zusammenstellen. Wie viele verschiedene Burger-Kombinationen sind möglich? <b>(2 BE)</b><br><br>
+        <b>b)</b> Ein digitales Fahrradschloss hat ein Tastenfeld mit den <b>Ziffern 1 bis 6</b>. Der Zahlencode besteht aus einer <b>6-stelligen Kombination</b> dieser Ziffern. Wie viele Codes gibt es insgesamt? <b>(2 BE)</b><br><br>
+        <b>c)</b> Sechs Finalisten eines Vorlesewettbewerbs treten nacheinander auf. Die Reihenfolge wird ausgelost. Wie viele verschiedene Reihenfolgen für die Auftritte sind möglich? <b>(3 BE)</b><br><br>
+        <b>d)</b> Aus einem Informatikkurs mit <b>18 Personen</b> soll eine gleichberechtigte Delegation aus <b>3 Personen</b> für einen Hackathon ausgelost werden. Berechne die Anzahl der Möglichkeiten und begründe mathematisch, warum hier mit dem Binomialkoeffizienten <code>(18 über 3)</code> gerechnet wird und nicht mit dem Term <code>18 &middot; 17 &middot; 16</code>. <b>(5 BE)</b>
+      </p>
+
+      <div id="pk_sol1" class="hint-box hint-sol">
+        <b>Erwartungshorizont zu Klausuraufgabe 1 (Hake deine erreichten Punkte ab!):</b><br><br>
+        <label class="score-check"><input type="checkbox" class="be-cb" data-be="2" onchange="calcExamScore()"> <b>a) (2 BE):</b> Produktregel (Auswahl aus 3 verschiedenen Mengen): <code>4 &middot; 5 &middot; 3 = <b>60</b></code> Möglichkeiten.</label><br><br>
+        <label class="score-check"><input type="checkbox" class="be-cb" data-be="2" onchange="calcExamScore()"> <b>b) (2 BE):</b> Ziehen mit Zurücklegen, mit Beachtung der Reihenfolge (n = 6 Ziffern, k = 6 Stellen): <code>6<sup>6</sup> = <b>46.656</b></code> Codes.</label><br><br>
+        <label class="score-check"><input type="checkbox" class="be-cb" data-be="3" onchange="calcExamScore()"> <b>c) (3 BE):</b> Permutation aller Elemente (Sonderfall ohne Zurücklegen, mit Reihenfolge, k = n = 6): <code>6! = 6 &middot; 5 &middot; 4 &middot; 3 &middot; 2 &middot; 1 = <b>720</b></code> Reihenfolgen.</label><br><br>
+        <label class="score-check"><input type="checkbox" class="be-cb" data-be="2" onchange="calcExamScore()"> <b>d) Rechnung (2 BE):</b> Ziehen ohne Zurücklegen, ohne Reihenfolge: <code>(18 über 3) = (18 &middot; 17 &middot; 16) / 3! = 4.896 / 6 = <b>816</b></code> Möglichkeiten.</label><br>
+        <label class="score-check" style="margin-top:6px;"><input type="checkbox" class="be-cb" data-be="3" onchange="calcExamScore()"> <b>d) Begründung (3 BE):</b> Bei <code>18 &middot; 17 &middot; 16 = 4.896</code> würde die Reihenfolge der gezogenen Personen eine Rolle spielen (geordnete Stichprobe). Da die 3er-Delegation aber gleichberechtigt ist, ist die Reihenfolge unwichtig (ungeordnete Stichprobe) und die <code>3! = 6</code> Vertauschungsmöglichkeiten derselben 3 Personen müssen durch Division durch <code>3!</code> herausgerechnet werden.</label>
+      </div>
+    </div>
+
+    <!-- PROBEKLAUSUR AUFGABE 2 (14 BE) -->
+    <div class="card">
+      <div class="card-header">
+        <span class="card-title">Klausuraufgabe 2: Bedingte Wahrscheinlichkeiten &amp; Vierfeldertafel (14 BE)</span>
+        <button class="btn btn-outline" onclick="toggleBox('pk_sol2')">✅ Erwartungshorizont &amp; Punktevergabe zu Aufgabe 2 aufdecken</button>
+      </div>
+      <p>
+        In einer Auswertung von <b>800 Mitgliedern</b> eines großen Sportvereins wird untersucht, ob die Nutzung einer Fitness-Smartwatch mit dem Erreichen des persönlichen Jahres-Trainingsziels zusammenhängt. <b>320 Mitglieder</b> nutzen im Training eine Smartwatch (<i>W</i>). Insgesamt erreichten <b>440 Mitglieder</b> ihr Jahres-Trainingsziel (<i>Z</i>). Bei <b>200</b> der Mitglieder, die ihr Trainingsziel erreicht haben, war eine Smartwatch im Einsatz.<br><br>
+        <b>a)</b> Erstelle eine vollständige Vierfeldertafel (mit absoluten Häufigkeiten) zu diesem Sachverhalt. <b>(4 BE)</b><br><br>
+        <b>b)</b> Übersetze die Vierfeldertafel in ein vollständig beschriftetes Baumdiagramm. Die Nutzung der Smartwatch (<i>W</i> bzw. <i>nicht W</i>) soll dabei die 1. Stufe bilden. Trage alle Wahrscheinlichkeiten an die Pfade. <b>(4 BE)</b><br><br>
+        <b>c)</b> Ein zufällig ausgewähltes Mitglied hat sein Jahres-Trainingsziel erreicht (<i>Z</i>). Berechne die Wahrscheinlichkeit, dass dieses Mitglied eine Smartwatch genutzt hat. <b>(3 BE)</b><br><br>
+        <b>d)</b> Ein Hersteller wirbt: „Wer das Ziel erreicht, trägt bestimmt auch unsere Smartwatch!“ Prüfe rechnerisch, ob die Ereignisse „Smartwatch-Nutzung“ (<i>W</i>) und „Trainingsziel erreicht“ (<i>Z</i>) stochastisch unabhängig sind, und bewerte die Aussage im Kontext. <b>(3 BE)</b>
+      </p>
+
+      <div id="pk_sol2" class="hint-box hint-sol">
+        <b>Erwartungshorizont zu Klausuraufgabe 2 (Hake deine erreichten Punkte ab!):</b><br><br>
+        <label class="score-check"><input type="checkbox" class="be-cb" data-be="4" onchange="calcExamScore()"> <b>a) Vierfeldertafel (4 BE):</b></label>
+        <table>
+          <tr><th>Merkmal</th><th>Z (Ziel erreicht)</th><th>Z&#772; (Ziel nicht erreicht)</th><th>Gesamt</th></tr>
+          <tr><td><b>W (Smartwatch)</b></td><td><b>200</b></td><td><b>120</b></td><td><b>320</b></td></tr>
+          <tr><td><b>W&#772; (keine Smartwatch)</b></td><td><b>240</b></td><td><b>240</b></td><td><b>480</b></td></tr>
+          <tr style="background:var(--panel-alt); font-weight:700;"><td>Gesamt</td><td>440</td><td>360</td><td>800</td></tr>
+        </table>
+        <label class="score-check"><input type="checkbox" class="be-cb" data-be="4" onchange="calcExamScore()"> <b>b) Baumdiagramm (4 BE):</b> 1. Stufe: <code>P(W) = 320/800 = 0,40</code>; <code>P(W&#772;) = 480/800 = 0,60</code>. 2. Stufe ab W: <code>P(Z | W) = 200/320 = 5/8 = 0,625</code>; <code>P(Z&#772; | W) = 120/320 = 3/8 = 0,375</code>. 2. Stufe ab W&#772;: <code>P(Z | W&#772;) = 240/480 = 0,50</code>; <code>P(Z&#772; | W&#772;) = 240/480 = 0,50</code>.</label><br><br>
+        <label class="score-check"><input type="checkbox" class="be-cb" data-be="3" onchange="calcExamScore()"> <b>c) Bedingte Wahrscheinlichkeit (3 BE):</b> Gesucht ist <code>P<sub>Z</sub>(W) = P(W | Z) = P(W &cap; Z) / P(Z) = 200 / 440 = 5/11 &approx; <b>0,4545 (ca. 45,5 %)</b></code>.</label><br><br>
+        <label class="score-check"><input type="checkbox" class="be-cb" data-be="3" onchange="calcExamScore()"> <b>d) Stochastische Unabhängigkeit &amp; Bewertung (3 BE):</b> Prüfung: <code>P(W &cap; Z) = 200/800 = 0,25</code> und <code>P(W) &middot; P(Z) = 0,40 &middot; (440/800) = 0,40 &middot; 0,55 = 0,22</code>. Da <code>0,25 &ne; 0,22</code> ist, sind W und Z <b>stochastisch abhängig</b> (mit Smartwatch steigt die Erfolgsquote von 50 % auf 62,5 %). Dennoch hatten unter denen, die das Ziel erreicht haben, nur 45,5 % eine Smartwatch (Umkehrfehlschluss in der Werbeaussage!).</label>
+      </div>
+    </div>
+
+    <!-- PROBEKLAUSUR AUFGABE 3 (14 BE) -->
+    <div class="card">
+      <div class="card-header">
+        <span class="card-title">Klausuraufgabe 3: Zufallsgrößen, Erwartungswert &amp; Varianz (14 BE)</span>
+        <button class="btn btn-outline" onclick="toggleBox('pk_sol3')">✅ Erwartungshorizont &amp; Punktevergabe zu Aufgabe 3 aufdecken</button>
+      </div>
+      <p>
+        Auf dem Schulfest wird zur Aufbesserung der Abikasse das Glücksspiel „Silberschatz“ angeboten. In einer abgedunkelten Truhe liegen <b>2 Silbermünzen und 3 Kupfermünzen</b> (insgesamt 5 Münzen). Ein Spieler zieht nacheinander <b>2 Münzen ohne Zurücklegen</b>. Der <b>Einsatz pro Spiel beträgt 3,00 €</b>.<br>
+        Der Gewinnplan sieht folgende Auszahlungen vor:<br>
+        &bull; <b>2 Silbermünzen:</b> 12,00 € Auszahlung<br>
+        &bull; <b>1 Silbermünze:</b> 2,00 € Auszahlung<br>
+        &bull; <b>0 Silbermünzen:</b> 0,00 € Auszahlung<br>
+        Die Zufallsgröße <i>X</i> beschreibt den <b>Reingewinn des Spielers</b> (Auszahlung abzüglich Einsatz) pro Spiel.<br><br>
+        <b>a)</b> Ermittle alle möglichen Werte für die Zufallsgröße <i>X</i> und erstelle die dazugehörige Wahrscheinlichkeitsverteilung in Tabellenform. <b>(5 BE)</b><br><br>
+        <b>b)</b> Berechne den Erwartungswert <i>E(X)</i>. Ist das Spiel aus Sicht der Abikasse langfristig profitabel? Begründe deine Antwort. <b>(3 BE)</b><br><br>
+        <b>c)</b> Berechne die Varianz <i>V(X)</i> und die Standardabweichung <i>&sigma;(X)</i> der Zufallsgröße <i>X</i>. <b>(3 BE)</b><br><br>
+        <b>d)</b> Auf welchen Betrag müsste die <b>Auszahlung</b> für das Ziehen von „2 Silbermünzen“ geändert werden, damit das Spiel fair wird (bei gleichbleibendem Einsatz von 3,00 €)? <b>(3 BE)</b>
+      </p>
+
+      <div id="pk_sol3" class="hint-box hint-sol">
+        <b>Erwartungshorizont zu Klausuraufgabe 3 (Hake deine erreichten Punkte ab!):</b><br><br>
+        <label class="score-check"><input type="checkbox" class="be-cb" data-be="5" onchange="calcExamScore()"> <b>a) Wahrscheinlichkeiten &amp; Verteilungstabelle (5 BE):</b></label>
+        <div style="margin:6px 0;">
+          &bull; 2 Silber: <code>(2/5) &middot; (1/4) = 2/20 = 0,1</code> &rarr; Reingewinn <code>x<sub>1</sub> = 12 € &minus; 3 € = +9,00 €</code><br>
+          &bull; 1 Silber: <code>(2/5)&middot;(3/4) + (3/5)&middot;(2/4) = 12/20 = 0,6</code> &rarr; Reingewinn <code>x<sub>2</sub> = 2 € &minus; 3 € = &minus;1,00 €</code><br>
+          &bull; 0 Silber: <code>(3/5) &middot; (2/4) = 6/20 = 0,3</code> &rarr; Reingewinn <code>x<sub>3</sub> = 0 € &minus; 3 € = &minus;3,00 €</code>
+        </div>
+        <table style="max-width:520px;">
+          <tr><th>x<sub>i</sub> (Reingewinn)</th><td><b>+9,00 €</b></td><td><b>&minus;1,00 €</b></td><td><b>&minus;3,00 €</b></td></tr>
+          <tr><th>P(X = x<sub>i</sub>)</th><td><b>0,1</b></td><td><b>0,6</b></td><td><b>0,3</b></td></tr>
+        </table>
+        <label class="score-check"><input type="checkbox" class="be-cb" data-be="3" onchange="calcExamScore()"> <b>b) Erwartungswert &amp; Bewertung (3 BE):</b> <code>E(X) = 9 &middot; 0,1 + (&minus;1) &middot; 0,6 + (&minus;3) &middot; 0,3 = 0,9 &minus; 0,6 &minus; 0,9 = <b>&minus;0,60 €</b></code>. Der Spieler verliert im Schnitt 60 Cent pro Spiel; somit ist das Spiel für die Abikasse langfristig profitabel (+0,60 € Gewinn pro Spiel).</label><br><br>
+        <label class="score-check"><input type="checkbox" class="be-cb" data-be="3" onchange="calcExamScore()"> <b>c) Varianz &amp; Standardabweichung (3 BE):</b> <code>V(X) = (9 &minus; (&minus;0,6))<sup>2</sup>&middot;0,1 + (&minus;1 &minus; (&minus;0,6))<sup>2</sup>&middot;0,6 + (&minus;3 &minus; (&minus;0,6))<sup>2</sup>&middot;0,3 = 9,6<sup>2</sup>&middot;0,1 + (&minus;0,4)<sup>2</sup>&middot;0,6 + (&minus;2,4)<sup>2</sup>&middot;0,3 = 9,216 + 0,096 + 1,728 = <b>11,04 €<sup>2</sup></b></code> &rArr; Standardabweichung <code>&sigma;(X) = &radic;11,04 &approx; <b>3,32 €</b></code>.</label><br><br>
+        <label class="score-check"><input type="checkbox" class="be-cb" data-be="3" onchange="calcExamScore()"> <b>d) Faires Spiel (3 BE):</b> Bedingung <code>E(X) = 0</code>. Neuer Reingewinn für 2 Silbermünzen sei <i>y</i>: <code>y &middot; 0,1 + (&minus;1)&middot;0,6 + (&minus;3)&middot;0,3 = 0 &rArr; 0,1y &minus; 1,5 = 0 &rArr; y = 15,00 € (Reingewinn)</code>. Da der Einsatz 3,00 € beträgt, muss die <b>Auszahlung auf 15,00 € + 3,00 € = 18,00 €</b> erhöht werden!</label>
+      </div>
+    </div>
+  </section>
+</main>
+
+<script>
+  let fontScale = 1.0;
+  let timerSeconds = 45 * 60;
+  let timerInterval = null;
+
+  function changeFont(delta) {
+    fontScale = Math.min(1.35, Math.max(0.85, fontScale + delta));
+    document.documentElement.style.setProperty('--font-scale', fontScale);
+  }
+
+  function toggleTheme() {
+    document.body.classList.toggle('light-mode');
+    const isLight = document.body.classList.contains('light-mode');
+    document.getElementById('themeBtn').textContent = isLight ? '🌙 Dunkel-Modus' : '☀️ Hell-Modus';
+  }
+
+  function switchTab(tabId, btn) {
+    document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+    document.getElementById(tabId).classList.add('active');
+    btn.classList.add('active');
+  }
+
+  function toggleBox(id) {
+    document.getElementById(id).classList.toggle('open');
+  }
+
+  // ==========================================
+  // INTERACTIVE COMBINATORICS DECISION TREE
+  // ==========================================
+  const dtreeStates = {
+    start: {
+      q: "Frage 1: Werden Elemente aus verschiedenen, getrennten Kategorien kombiniert (z. B. Vorspeise + Hauptspeise + Dessert) ODER wird mehrfach aus ein und derselben Grundmenge (Urne / Gruppe) gezogen?",
+      opts: [
+        { label: "🍱 Aus verschiedenen Teilmengen (je 1 pro Kategorie)", next: "res_prod" },
+        { label: "🏺 Mehrfach aus EINER Grundmenge (Urne mit n Elementen, k Züge)", next: "q_rep" }
+      ]
+    },
+    q_rep: {
+      q: "Frage 2: Mit oder ohne Zurücklegen? (Darf ein Element mehrfach vorkommen oder kann jede Person / Kugel nur einmal gezogen werden?)",
+      opts: [
+        { label: "🔁 MIT Zurücklegen (Mehrfachnennung erlaubt, z. B. Ziffern im PIN-Code)", next: "res_mz_mr" },
+        { label: "🚫 OHNE Zurücklegen (Jedes Element / jede Person nur einmal)", next: "q_ord" }
+      ]
+    },
+    q_ord: {
+      q: "Frage 3: Spielt die Reihenfolge der gezogenen Elemente eine Rolle? (Macht es einen Unterschied, wer als 1., 2. oder 3. gezogen wird?)",
+      opts: [
+        { label: "🥇 JA, mit Reihenfolge (z. B. Platz 1/2/3, verschiedene Ämter, Sitzordnung)", next: "q_all" },
+        { label: "🤝 NEIN, ohne Reihenfolge (z. B. gleichberechtigte Delegation, Lotto, „mit einem Griff“)", next: "res_oz_or" }
+      ]
+    },
+    q_all: {
+      q: "Zusatzfrage: Werden ALLE n Elemente der Grundmenge angeordnet (k = n) oder nur eine Auswahl von k Elementen (k < n)?",
+      opts: [
+        { label: "📋 ALLE n Elemente werden in eine Reihenfolge gebracht (k = n)", next: "res_perm" },
+        { label: "🎯 Nur k aus n Elementen werden geordnet ausgewählt (k < n)", next: "res_oz_mr" }
+      ]
+    },
+    res_prod: {
+      result: "✅ Allgemeine Produktregel der Kombinatorik",
+      formula: "N = n₁ · n₂ · … · nₖ",
+      desc: "Du multiplizierst einfach die Anzahl der Wahlmöglichkeiten jeder einzelnen Stufe miteinander (kein Urnenmodell, da verschiedene Grundmengen)."
+    },
+    res_mz_mr: {
+      result: "✅ Ziehen MIT Zurücklegen unter Beachtung der Reihenfolge (geordnetes k-Tupel)",
+      formula: "N = nᵏ   (n = Möglichkeiten pro Stelle, k = Anzahl der Stellen/Züge)",
+      desc: "Typisch für Passwörter, Smartphone-PINs (bei Ziffern 0–9 ist n = 10!) oder Fußballtoto."
+    },
+    res_perm: {
+      result: "✅ Permutation aller n Elemente (Sonderfall ohne Zurücklegen, mit Reihenfolge für k = n)",
+      formula: "N = n! = n · (n − 1) · … · 2 · 1   (TR-Taste: x!)",
+      desc: "Typisch für die Reihenfolge von Vorträgen, Sitzordnungen auf n Stühlen oder den kompletten Zieleinlauf aller Starter."
+    },
+    res_oz_mr: {
+      result: "✅ Ziehen OHNE Zurücklegen unter Beachtung der Reihenfolge (geordnete Stichprobe)",
+      formula: "N = n · (n − 1) · … · (n − k + 1) = n! / (n − k)!   (TR-Taste: nPr)",
+      desc: "Typisch für Platzierungen (Gold, Silber, Bronze), unterschiedliche Vorstandsämter oder Passwörter ohne doppelte Zeichen."
+    },
+    res_oz_or: {
+      result: "✅ Ziehen OHNE Zurücklegen OHNE Beachtung der Reihenfolge (ungeordnete Stichprobe / Binomialkoeffizient)",
+      formula: "N = (n über k) = [n · (n − 1) · … · (n − k + 1)] / k!   (TR-Taste: nCr)",
+      desc: "Da die Reihenfolge im Team egal ist, wird durch k! geteilt, um die k! Vertauschungen derselben k Personen herauszurechnen!"
+    }
+  };
+
+  function setDTree(stateKey) {
+    const box = document.getElementById('dtreeContainer');
+    const st = dtreeStates[stateKey];
+    if (st.q) {
+      let html = `<div class="dtree-question">${st.q}</div><div class="btn-group">`;
+      st.opts.forEach(o => {
+        html += `<button class="btn btn-primary" onclick="setDTree('${o.next}')">${o.label}</button>`;
+      });
+      html += `</div>`;
+      box.innerHTML = html;
+    } else {
+      box.innerHTML = `
+        <div style="font-size:1.15rem; font-weight:800; color:var(--success); margin-bottom:8px;">${st.result}</div>
+        <div class="formula-box" style="margin:8px 0; font-weight:700; color:var(--primary);">${st.formula}</div>
+        <p style="margin-bottom:10px;">${st.desc}</p>
+        <button class="btn btn-outline" onclick="setDTree('start')">🔄 Andere Aufgabe prüfen</button>
+      `;
+    }
+  }
+
+  // ==========================================
+  // TRAINING FILTER & ANSWER CHECKER
+  // ==========================================
+  function filterTasks(topic, btn) {
+    document.querySelectorAll('.filter-pill').forEach(el => el.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('.task-card').forEach(card => {
+      if (topic === 'all' || card.getAttribute('data-topic') === topic) {
+        card.style.display = 'block';
+      } else {
+        card.style.display = 'none';
+      }
+    });
+  }
+
+  function checkVal(inputId, fbId, validNums) {
+    const raw = document.getElementById(inputId).value.trim().replace(',', '.').replace('%', '').replace('€', '').trim();
+    const val = parseFloat(raw);
+    const fb = document.getElementById(fbId);
+    if (isNaN(val)) {
+      fb.textContent = "⚠️ Bitte eine Zahl eingeben!";
+      fb.style.color = "var(--accent)";
+      return;
+    }
+    const ok = validNums.some(target => Math.abs(val - target) < 0.015);
+    if (ok) {
+      fb.textContent = "✅ Richtig! Super gerechnet!";
+      fb.style.color = "var(--success)";
+    } else {
+      fb.textContent = "❌ Noch nicht ganz. Nutze Tipp 1 oder Tipp 2!";
+      fb.style.color = "var(--danger)";
+    }
+  }
+
+  // ==========================================
+  // MOCK EXAM TIMER & MSS GRADE CALCULATOR
+  // ==========================================
+  function startTimer() {
+    const btn = document.getElementById('btnStartTimer');
+    if (timerInterval) {
+      clearInterval(timerInterval);
+      timerInterval = null;
+      btn.textContent = "▶ Weiter";
+      return;
+    }
+    btn.textContent = "⏸ Pause";
+    timerInterval = setInterval(() => {
+      if (timerSeconds > 0) {
+        timerSeconds--;
+        updateTimerUI();
+      } else {
+        clearInterval(timerInterval);
+        timerInterval = null;
+        btn.textContent = "⏰ Zeit abgelaufen!";
+      }
+    }, 1000);
+  }
+
+  function resetTimer(mins) {
+    if (timerInterval) { clearInterval(timerInterval); timerInterval = null; }
+    timerSeconds = mins * 60;
+    document.getElementById('btnStartTimer').textContent = "▶ Start";
+    updateTimerUI();
+  }
+
+  function updateTimerUI() {
+    const m = Math.floor(timerSeconds / 60).toString().padStart(2, '0');
+    const s = (timerSeconds % 60).toString().padStart(2, '0');
+    document.getElementById('timerDisplay').textContent = `${m}:${s}`;
+  }
+
+  function calcExamScore() {
+    let total = 0;
+    document.querySelectorAll('.be-cb:checked').forEach(cb => {
+      total += parseFloat(cb.getAttribute('data-be'));
+    });
+
+    // MSS Rheinland-Pfalz table out of 40 BE
+    let mss = "0 MSS-Punkte (Note 6)";
+    if (total >= 38) mss = "15 MSS-Punkte (Note 1+)";
+    else if (total >= 35) mss = "14 MSS-Punkte (Note 1)";
+    else if (total >= 33) mss = "13 MSS-Punkte (Note 1-)";
+    else if (total >= 31) mss = "12 MSS-Punkte (Note 2+)";
+    else if (total >= 29) mss = "11 MSS-Punkte (Note 2)";
+    else if (total >= 27) mss = "10 MSS-Punkte (Note 2-)";
+    else if (total >= 24) mss = "9 MSS-Punkte (Note 3+)";
+    else if (total >= 22) mss = "8 MSS-Punkte (Note 3)";
+    else if (total >= 20) mss = "7 MSS-Punkte (Note 3-)";
+    else if (total >= 18) mss = "6 MSS-Punkte (Note 4+)";
+    else if (total >= 15) mss = "5 MSS-Punkte (Note 4)";
+    else if (total >= 13) mss = "4 MSS-Punkte (Note 4-)";
+    else if (total >= 10) mss = "3 MSS-Punkte (Note 5+)";
+    else if (total >= 8)  mss = "2 MSS-Punkte (Note 5)";
+    else if (total >= 6)  mss = "1 MSS-Punkt (Note 5-)";
+
+    const disp = document.getElementById('examScoreDisplay');
+    disp.innerHTML = `${total} / 40 BE &rarr; ${mss}`;
+    disp.style.color = total >= 15 ? 'var(--success)' : 'var(--danger)';
+  }
+
+  window.onload = function() {
+    setDTree('start');
+  };
+</script>
+</body>
+</html>
