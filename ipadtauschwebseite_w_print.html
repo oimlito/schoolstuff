@@ -1,0 +1,1333 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>iPad-Gerätetausch | Frauenlob-Gymnasium Mainz</title>
+  <link rel="icon" type="image/webp" href="https://www.frauenlob-gymnasium.de/wp-content/uploads/2025/09/favicon.webp">
+  <style>
+    :root {
+      --primary: #0E6B80;
+      --primary-hover: #095162;
+      --primary-light: #EFF7F9;
+      --primary-border: #BCE0E8;
+      --bg: #F8FAFC;
+      --card: #FFFFFF;
+      --text: #0F172A;
+      --text-muted: #475569;
+      --border: #E2E8F0;
+      --success: #0D9488;
+      --success-bg: #F0FDFA;
+      --warning: #D97706;
+      --warning-bg: #FFFBEB;
+      --danger: #DC2626;
+      --danger-bg: #FEF2F2;
+      --radius: 14px;
+      --shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.05);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      padding-bottom: 60px;
+    }
+
+    /* Minimalist Header with School Logo */
+    header {
+      background: var(--card);
+      border-bottom: 1px solid var(--border);
+      padding: 20px 24px;
+      text-align: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .header-inner {
+      max-width: 720px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .school-logo {
+      max-height: 54px;
+      width: auto;
+      object-fit: contain;
+    }
+
+    /* Progress Bar */
+    .progress-wrap {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .progress-step {
+      flex: 1;
+      height: 5px;
+      background: var(--border);
+      border-radius: 99px;
+      transition: background 0.3s ease;
+    }
+
+    .progress-step.active {
+      background: var(--primary);
+    }
+
+    .progress-label {
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+
+    /* Main Container */
+    main {
+      max-width: 1040px;
+      margin: 32px auto 0;
+      padding: 0 20px;
+      display: grid;
+      grid-template-columns: 220px minmax(0, 720px);
+      justify-content: center;
+      align-items: start;
+      gap: 28px;
+    }
+
+    .history-nav {
+      position: sticky;
+      top: 150px;
+      padding: 18px 14px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: var(--card);
+      box-shadow: var(--shadow);
+    }
+
+    .history-title {
+      margin: 0 0 14px;
+      color: var(--text-muted);
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .history-list {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      list-style: none;
+    }
+
+    .history-item {
+      position: relative;
+    }
+
+    .history-item:not(:last-child)::after {
+      position: absolute;
+      top: 34px;
+      bottom: -5px;
+      left: 13px;
+      width: 2px;
+      background: var(--border);
+      content: "";
+    }
+
+    .history-button {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      width: 100%;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 7px 4px;
+      border: 0;
+      border-radius: 8px;
+      background: transparent;
+      color: var(--text-muted);
+      font: inherit;
+      font-size: 0.84rem;
+      line-height: 1.35;
+      text-align: left;
+    }
+
+    .history-button:not(:disabled) {
+      cursor: pointer;
+    }
+
+    .history-button:not(:disabled):hover {
+      background: var(--primary-light);
+      color: var(--primary);
+    }
+
+    .history-button:focus-visible {
+      outline: 2px solid var(--primary);
+      outline-offset: 2px;
+    }
+
+    .history-button:disabled:not([aria-current="step"]) {
+      color: #94A3B8;
+      cursor: default;
+    }
+
+    .history-marker {
+      display: flex;
+      width: 28px;
+      height: 28px;
+      flex: 0 0 28px;
+      align-items: center;
+      justify-content: center;
+      border: 2px solid var(--border);
+      border-radius: 50%;
+      background: var(--card);
+      color: var(--text-muted);
+      font-size: 0.76rem;
+      font-weight: 700;
+    }
+
+    .history-button[aria-current="step"] {
+      color: var(--primary);
+      font-weight: 700;
+    }
+
+    .history-button[aria-current="step"] .history-marker {
+      border-color: var(--primary);
+      background: var(--primary);
+      color: #fff;
+    }
+
+    .history-button.is-complete .history-marker {
+      border-color: var(--primary-border);
+      background: var(--primary-light);
+      color: var(--primary);
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 32px;
+      box-shadow: var(--shadow);
+      animation: fadeIn 0.25s ease-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .badge {
+      display: inline-block;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      padding: 4px 10px;
+      border-radius: 99px;
+      margin-bottom: 12px;
+      background: var(--primary-light);
+      color: var(--primary);
+    }
+
+    .badge.warning {
+      background: var(--warning-bg);
+      color: var(--warning);
+    }
+
+    .badge.danger {
+      background: var(--danger-bg);
+      color: var(--danger);
+    }
+
+    .badge.success {
+      background: var(--success-bg);
+      color: var(--success);
+    }
+
+    h1 {
+      font-size: 1.55rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+      letter-spacing: -0.02em;
+    }
+
+    p.lead {
+      color: var(--text-muted);
+      font-size: 1rem;
+      margin-bottom: 24px;
+    }
+
+    /* Path Selection Cards */
+    .path-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      margin-top: 20px;
+    }
+
+    .path-option {
+      border: 2px solid var(--border);
+      border-radius: 12px;
+      padding: 20px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      text-align: left;
+      background: var(--card);
+      position: relative;
+    }
+
+    .path-option:hover {
+      border-color: var(--primary);
+      background: var(--primary-light);
+    }
+
+    .path-option.recommended {
+      border-color: var(--primary);
+      background: var(--primary-light);
+    }
+
+    .path-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 6px;
+      gap: 10px;
+    }
+
+    .path-title {
+      font-weight: 700;
+      font-size: 1.08rem;
+      color: var(--text);
+    }
+
+    .path-tag {
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 3px 9px;
+      border-radius: 99px;
+      background: var(--primary);
+      color: #fff;
+      white-space: nowrap;
+    }
+
+    .path-tag.neutral {
+      background: var(--border);
+      color: var(--text-muted);
+    }
+
+    .path-desc {
+      font-size: 0.92rem;
+      color: var(--text-muted);
+    }
+
+    /* Instruction Steps & UI Path Pills */
+    .step-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin: 24px 0;
+    }
+
+    .step-item {
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+      padding: 16px;
+      border-radius: 10px;
+      background: var(--bg);
+      border: 1px solid var(--border);
+    }
+
+    .step-num {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: var(--primary);
+      color: #fff;
+      font-weight: 700;
+      font-size: 0.85rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .step-content strong {
+      display: block;
+      margin-bottom: 4px;
+      color: var(--text);
+    }
+
+    .step-content p {
+      font-size: 0.92rem;
+      color: var(--text-muted);
+    }
+
+    .step-content ol {
+      margin: 8px 0 8px 20px;
+      color: var(--text-muted);
+      font-size: 0.92rem;
+    }
+
+    .step-content li + li {
+      margin-top: 6px;
+    }
+
+    .step-content a {
+      color: var(--primary);
+      font-weight: 600;
+    }
+
+    .ui-path {
+      display: inline-block;
+      background: #E2E8F0;
+      color: #1E293B;
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 0.82rem;
+      padding: 2px 8px;
+      border-radius: 6px;
+      margin-top: 6px;
+      font-weight: 600;
+    }
+
+    /* Info & Warning Callouts */
+    .callout {
+      padding: 16px 18px;
+      border-radius: 10px;
+      margin: 20px 0;
+      font-size: 0.92rem;
+      border-left: 4px solid var(--primary);
+      background: var(--primary-light);
+    }
+
+    .callout.warning {
+      border-left-color: var(--warning);
+      background: var(--warning-bg);
+    }
+
+    .callout.danger {
+      border-left-color: var(--danger);
+      background: var(--danger-bg);
+    }
+
+    .callout strong {
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    /* Accordion / FAQ */
+    details {
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 12px 16px;
+      margin-top: 12px;
+      background: var(--card);
+      font-size: 0.9rem;
+    }
+
+    summary {
+      font-weight: 600;
+      cursor: pointer;
+      color: var(--primary);
+      outline: none;
+    }
+
+    details p, details ol {
+      margin-top: 10px;
+      color: var(--text-muted);
+      padding-left: 16px;
+    }
+
+    /* Gatekeeper Checkboxes */
+    .gatekeeper-box {
+      margin-top: 28px;
+      padding: 18px;
+      border-radius: 10px;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .gatekeeper-title {
+      font-size: 0.82rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
+    }
+
+    label.check-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      cursor: pointer;
+      font-size: 0.95rem;
+      font-weight: 500;
+      user-select: none;
+    }
+
+    label.check-row input[type="checkbox"] {
+      width: 20px;
+      height: 20px;
+      margin-top: 2px;
+      accent-color: var(--primary);
+      flex-shrink: 0;
+      cursor: pointer;
+    }
+
+    /* Navigation Buttons */
+    .nav-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 28px;
+      padding-top: 20px;
+      border-top: 1px solid var(--border);
+      gap: 12px;
+    }
+
+    .btn {
+      padding: 12px 22px;
+      border-radius: 10px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      cursor: pointer;
+      border: none;
+      transition: all 0.2s ease;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: #fff;
+      margin-left: auto;
+    }
+
+    .btn-primary:hover:not(:disabled) {
+      background: var(--primary-hover);
+    }
+
+    .btn-primary:disabled {
+      background: #CBD5E1;
+      color: #64748B;
+      cursor: not-allowed;
+    }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--text-muted);
+      border: 1px solid var(--border);
+    }
+
+    .btn-secondary:hover {
+      background: var(--bg);
+      color: var(--text);
+    }
+
+    /* Return Pass Summary */
+    .pass-box {
+      border: 2px solid var(--success);
+      background: var(--success-bg);
+      border-radius: 12px;
+      padding: 24px;
+      text-align: center;
+      margin: 20px 0;
+    }
+
+    .pass-box h2 {
+      color: var(--success);
+      font-size: 1.3rem;
+      margin-bottom: 6px;
+    }
+
+    .pass-box > p {
+      color: var(--text-muted);
+    }
+
+    .pass-method {
+      margin-top: 12px;
+      font-weight: 600;
+    }
+
+    .pass-summary {
+      margin-top: 24px;
+      text-align: left;
+    }
+
+    .pass-summary h3 {
+      margin: 18px 0 6px;
+      font-size: 1rem;
+    }
+
+    .pass-summary ul {
+      padding-left: 22px;
+      color: var(--text-muted);
+    }
+
+    .pass-actions {
+      display: flex;
+      justify-content: center;
+      margin-top: 20px;
+    }
+
+    @media print {
+      @page {
+        margin: 16mm;
+      }
+
+      body {
+        padding: 0;
+        background: #fff;
+      }
+
+      body * {
+        visibility: hidden;
+      }
+
+      #passReveal,
+      #passReveal * {
+        visibility: visible;
+      }
+
+      #passReveal {
+        position: absolute;
+        inset: 0;
+        display: block !important;
+      }
+
+      .pass-box {
+        margin: 0;
+        break-inside: avoid;
+        print-color-adjust: exact;
+        -webkit-print-color-adjust: exact;
+      }
+
+      .pass-actions {
+        display: none;
+      }
+    }
+
+    @media (max-width: 1000px) {
+      main {
+        grid-template-columns: minmax(0, 720px);
+        gap: 16px;
+      }
+
+      .history-nav {
+        position: static;
+        padding: 14px;
+        overflow: hidden;
+      }
+
+      .history-title {
+        margin-bottom: 10px;
+      }
+
+      .history-list {
+        flex-direction: row;
+        gap: 8px;
+        overflow-x: auto;
+        padding: 2px 2px 8px;
+      }
+
+      .history-item {
+        flex: 0 0 150px;
+      }
+
+      .history-item:not(:last-child)::after {
+        display: none;
+      }
+
+      .history-button {
+        height: 100%;
+        padding: 7px;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .card { padding: 22px 18px; }
+      h1 { font-size: 1.35rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="header-inner">
+      <img src="https://www.frauenlob-gymnasium.de/wp-content/uploads/frauenlob-logo.webp" alt="Frauenlob-Gymnasium Mainz" class="school-logo">
+      <div class="progress-wrap" id="progressBar"></div>
+      <div class="progress-label" id="progressLabel">Start: Vorbereitung</div>
+    </div>
+  </header>
+
+  <main>
+    <nav class="history-nav" id="historyNav" aria-labelledby="historyTitle"></nav>
+    <div class="card" id="stepContainer"></div>
+  </main>
+
+  <script>
+    // State Management
+    const state = {
+      step: 0,
+      path: null, // 'icloud', 'airdrop', 'pc', 'school'
+      completedChecks: {}
+    };
+
+    const totalSteps = 5;
+
+    function updateProgress(label) {
+      const bar = document.getElementById('progressBar');
+      bar.innerHTML = '';
+      for (let i = 0; i < totalSteps; i++) {
+        const div = document.createElement('div');
+        div.className = 'progress-step' + (i <= state.step ? ' active' : '');
+        bar.appendChild(div);
+      }
+      document.getElementById('progressLabel').textContent = label;
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function bindCheckboxes() {
+      const checks = document.querySelectorAll('.gate-check');
+      const nextBtn = document.getElementById('nextBtn');
+
+      const evaluate = () => {
+        const allChecked = Array.from(checks).every(c => c.checked);
+        if (nextBtn) nextBtn.disabled = !allChecked;
+      };
+
+      checks.forEach((checkbox, index) => {
+        const flow = state.step === 0 ? 'common' : state.path || 'common';
+        const key = `${state.step}-${flow}-${index}`;
+        checkbox.dataset.checkKey = key;
+        checkbox.checked = state.completedChecks[key]?.checked || false;
+        checkbox.addEventListener('change', () => {
+          state.completedChecks[key] = {
+            step: state.step,
+            path: state.path,
+            label: checkbox.closest('label').innerText.trim(),
+            checked: checkbox.checked
+          };
+          evaluate();
+        });
+      });
+      evaluate();
+    }
+
+    function showReturnPass() {
+      const pathLabels = {
+        icloud: 'Mit privater Apple-ID (Schnellstart & iCloud)',
+        airdrop: 'Ohne Apple-ID per AirDrop',
+        pc: 'Ohne Apple-ID über PC oder Mac',
+        school: 'Unterstützung in der Schule'
+      };
+      const stepLabels = {
+        0: 'Vorbereitung am alten iPad',
+        2: 'Sicherung des alten iPads',
+        3: 'Einrichtung und Kontrolle des neuen iPads',
+        4: state.path === 'school' ? 'Packliste für den Support-Termin' : 'Vorbereitung der Rückgabe'
+      };
+      const checkedItems = Object.values(state.completedChecks)
+        .filter(item => item.checked && (item.step === 0 || item.path === state.path))
+        .sort((a, b) => a.step - b.step);
+      const summary = document.getElementById('passSummary');
+      summary.replaceChildren();
+
+      const itemsByStep = new Map();
+      checkedItems.forEach(item => {
+        if (!itemsByStep.has(item.step)) itemsByStep.set(item.step, []);
+        itemsByStep.get(item.step).push(item.label);
+      });
+
+      itemsByStep.forEach((labels, step) => {
+        const section = document.createElement('section');
+        const heading = document.createElement('h3');
+        heading.textContent = stepLabels[step];
+        const list = document.createElement('ul');
+        labels.forEach(label => {
+          const entry = document.createElement('li');
+          entry.textContent = label;
+          list.appendChild(entry);
+        });
+        section.append(heading, list);
+        summary.appendChild(section);
+      });
+
+      document.getElementById('passMethod').textContent = `Gewählte Methode: ${pathLabels[state.path]}`;
+      document.getElementById('passReveal').style.display = 'block';
+      document.getElementById('nextBtn').style.display = 'none';
+    }
+
+    function renderHistory() {
+      const nav = document.getElementById('historyNav');
+      const pathLabels = { icloud: 'iCloud', airdrop: 'AirDrop', pc: 'PC/Mac', school: 'Schule' };
+      const steps = [
+        { step: 0, label: 'Vorbereitung' },
+        { step: 1, label: 'Methode wählen' },
+        { step: 2, label: state.path ? `Altes iPad sichern · ${pathLabels[state.path]}` : 'Altes iPad sichern' },
+        { step: 3, label: 'Neues iPad einrichten' },
+        { step: 4, label: state.path === 'school' ? 'Packliste & Support' : 'Rückgabe vorbereiten' }
+      ].filter(item => state.path !== 'school' || item.step !== 3);
+
+      nav.innerHTML = `
+        <h2 class="history-title" id="historyTitle">Dein Verlauf</h2>
+        <ol class="history-list">
+          ${steps.map(({ step, label }) => {
+            const isCurrent = step === state.step;
+            const isPrevious = step < state.step;
+            const classes = isPrevious ? 'history-button is-complete' : 'history-button';
+            const currentAttribute = isCurrent ? ' aria-current="step"' : '';
+            return `
+              <li class="history-item">
+                <button class="${classes}" type="button" ${isPrevious ? '' : 'disabled'}${currentAttribute}
+                  ${isPrevious ? `onclick="state.step = ${step}; render();"` : ''}>
+                  <span class="history-marker">${step + 1}</span>
+                  <span>${label}</span>
+                </button>
+              </li>
+            `;
+          }).join('')}
+        </ol>
+      `;
+    }
+
+    function render() {
+      const container = document.getElementById('stepContainer');
+      renderHistory();
+
+      // STEP 0: PFLICHT-SICHERUNG GOODNOTES & CHECKLISTE (FÜR ALLE)
+      if (state.step === 0) {
+        updateProgress('Schritt 1 von 5 · Pflicht-Vorbereitung am alten iPad');
+        container.innerHTML = `
+          <span class="badge warning">Pflicht für alle Schülerinnen & Schüler</span>
+          <h1>Bevor es losgeht: Altes iPad vorbereiten</h1>
+          <p class="lead">Du steigst vom alten Schul-iPad (Gen 8/9) auf das neue iPad (Gen 11) um. Bevor du den Umzugsweg wählst, sichere jetzt deine Goodnotes-Mappen als Datei.</p>
+
+          <div class="step-list">
+            <div class="step-item">
+              <div class="step-num">1</div>
+              <div class="step-content">
+                <strong>Zusatz-Sicherung in Goodnotes erstellen</strong>
+                <p>Öffne Goodnotes auf deinem <b>alten iPad</b>, tippe oben rechts auf das Zahnrad-Symbol und sichere alle Notizbücher lokal in der Dateien-App.</p>
+                <span class="ui-path">Goodnotes → ⚙️ Zahnrad → Backup-Daten → Backup jetzt erstellen → „Auf meinem iPad“ sichern</span>
+              </div>
+            </div>
+
+            <div class="step-item">
+              <div class="step-num">2</div>
+              <div class="step-content">
+                <strong>Systemversion (iPadOS) & Akku prüfen</strong>
+                <p>Schließe das alte iPad ans Stromkabel an, aktiviere WLAN sowie Bluetooth und prüfe, ob das neueste iPadOS installiert ist.</p>
+                <span class="ui-path">Einstellungen → Allgemein → Softwareupdate</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="gatekeeper-box">
+            <div class="gatekeeper-title">Sicherheits-Check zum Fortfahren</div>
+            <label class="check-row">
+              <input type="checkbox" class="gate-check">
+              <span>Ich habe mein Goodnotes-Backup erstellt und in der Dateien-App unter „Auf meinem iPad“ gespeichert.</span>
+            </label>
+            <label class="check-row">
+              <input type="checkbox" class="gate-check">
+              <span>WLAN und Bluetooth sind eingeschaltet.</span>
+            </label>
+          </div>
+
+          <div class="nav-bar">
+            <button class="btn btn-primary" id="nextBtn" disabled onclick="state.step = 1; render();">Weiter zur Methoden-Wahl →</button>
+          </div>
+        `;
+        bindCheckboxes();
+        return;
+      }
+
+      // STEP 1: WEICHE / ENTSCHEIDUNGSBAUM
+      if (state.step === 1) {
+        updateProgress('Schritt 2 von 5 · Umzugs-Methode wählen');
+        container.innerHTML = `
+          <span class="badge">Entscheidungshilfe</span>
+          <h1>Wie möchtest du deine Daten übertragen?</h1>
+          <p class="lead">Mit einer privaten Apple-ID erhältst du beide iPads für <b>eine Woche mit nach Hause</b> und nutzt den kostenlosen, unbegrenzten 21-Tage-Umzugsspeicher von Apple.</p>
+
+          <div class="path-grid">
+            <div class="path-option recommended" onclick="selectPath('icloud')">
+              <div class="path-header">
+                <span class="path-title">Option A: Mit privater Apple-ID (Schnellstart & iCloud)</span>
+                <span class="path-tag">Empfohlen · 1 Woche Heim-Umzug</span>
+              </div>
+              <p class="path-desc">Alle Apps, Goodnotes-Ordner, Fotos und Einstellungen ziehen automatisch um. Funktioniert auch, wenn dein 5-GB-Speicher voll ist – oder du dir kurz für den Umzug eine kostenlose Apple-ID erstellst.</p>
+            </div>
+
+            <div class="path-option" onclick="selectPath('airdrop')">
+              <div class="path-header">
+                <span class="path-title">Option B: Ohne Apple-ID per AirDrop</span>
+                <span class="path-tag neutral">Ohne Konto · Direkt-Transfer</span>
+              </div>
+              <p class="path-desc">Das neue iPad installiert alle Schul-Apps über Jamf School automatisch neu. Du überträgst anschließend dein Goodnotes-Backup, Dateien und Fotos kabellos per AirDrop.</p>
+            </div>
+
+            <div class="path-option" onclick="selectPath('pc')">
+              <div class="path-header">
+                <span class="path-title">Option C: Ohne Apple-ID über PC oder Mac</span>
+                <span class="path-tag neutral">Lokales Kabel-Backup</span>
+              </div>
+              <p class="path-desc">Du erstellst zu Hause am Computer (iTunes / Apple-Geräte-App / Finder) ein Backup. <b>Wichtig:</b> Du benötigst ein Lightning-Kabel (altes iPad) und ein USB-C-Kabel (neues iPad) für deinen PC.</p>
+            </div>
+
+            <div class="path-option" onclick="selectPath('school')">
+              <div class="path-header">
+                <span class="path-title">Option D: Notfall-Service in der Schule</span>
+                <span class="path-tag neutral">Nur bei Defekt / ohne WLAN</span>
+              </div>
+              <p class="path-desc">Nur auswählen, falls dein altes iPad defekt ist oder du zu Hause weder eine Apple-ID noch WLAN/PC nutzen kannst.</p>
+            </div>
+          </div>
+
+          <details style="margin-top: 22px;">
+            <summary>💡 Tipp: Noch keine Apple-ID? So erstellst du in 2 Minuten kostenlos eine für den Umzug</summary>
+            <p>Du musst kein Zahlungsmittel hinterlegen und kannst die Apple-ID nach der Tauschwoche auf Wunsch sofort wieder abmelden:</p>
+            <ol>
+              <li>Öffne auf dem alten iPad <b>Einstellungen → „Beim iPad anmelden“</b>.</li>
+              <li>Tippe auf <b>„Noch keine Apple-ID?“ → „Gratis-Apple-ID erstellen“</b>.</li>
+              <li>Nutze eine private E-Mail-Adresse und bestätige den zugesendeten Code. Danach kannst du direkt <b>Option A</b> wählen!</li>
+            </ol>
+          </details>
+
+          <div class="nav-bar">
+            <button class="btn btn-secondary" onclick="state.step = 0; render();">← Zurück</button>
+          </div>
+        `;
+        return;
+      }
+
+      // STEP 2: DATENSICHERUNG JE NACH PFAD
+      if (state.step === 2) {
+        updateProgress('Schritt 3 von 5 · Altes iPad sichern');
+
+        if (state.path === 'icloud') {
+          container.innerHTML = `
+            <span class="badge">Option A · Gratis-iCloud-Umzugsspeicher</span>
+            <h1>Teil 1: 21-Tage-Umzugsbackup starten</h1>
+            <p class="lead">Apple stellt dir für den Gerätetausch 21 Tage lang kostenlos unbegrenzten iCloud-Speicher zur Verfügung – selbst wenn deine 5 GB voll sind.</p>
+
+            <div class="step-list">
+              <div class="step-item">
+                <div class="step-num">1</div>
+                <div class="step-content">
+                  <strong>Umzugs-Assistent in den Einstellungen öffnen</strong>
+                  <p>Öffne die Einstellungen auf deinem <b>alten iPad</b> und wähle ganz unten „iPad übertragen/zurücksetzen“.</p>
+                  <span class="ui-path">Einstellungen → Allgemein → iPad übertragen/zurücksetzen</span>
+                </div>
+              </div>
+
+              <div class="step-item">
+                <div class="step-num">2</div>
+                <div class="step-content">
+                  <strong>Gratis-iCloud-Speicher aktivieren</strong>
+                  <p>Tippe unter „Für neues iPad vorbereiten“ auf <b>„Los geht's“</b> → <b>„Fortfahren“</b>. Falls gefragt, tippe auf „Alle Apps anzeigen“ und stelle sicher, dass <b>Goodnotes</b> aktiviert ist.</p>
+                </div>
+              </div>
+
+              <div class="step-item">
+                <div class="step-num">3</div>
+                <div class="step-content">
+                  <strong>Im WLAN abwarten bis „Fertig“ erscheint</strong>
+                  <p>Lass das iPad am Ladekabel, bis der Backup-Balken in den Einstellungen vollständig abgeschlossen ist.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="gatekeeper-box">
+              <div class="gatekeeper-title">Bestätigung</div>
+              <label class="check-row">
+                <input type="checkbox" class="gate-check">
+                <span>Das temporäre iCloud-Backup auf meinem alten iPad zeigt den Status „Fertig“ an.</span>
+              </label>
+            </div>
+
+            <div class="nav-bar">
+              <button class="btn btn-secondary" onclick="state.step = 1; render();">← Methode ändern</button>
+              <button class="btn btn-primary" id="nextBtn" disabled onclick="state.step = 3; render();">Weiter zum neuen iPad →</button>
+            </div>
+          `;
+        } else if (state.path === 'airdrop') {
+          container.innerHTML = `
+            <span class="badge">Option B · Umzug ohne Apple-ID</span>
+            <h1>Teil 1: Lokale Dateien auf dem Altgerät bündeln</h1>
+            <p class="lead">Da du keine Apple-ID nutzt, übertragen wir deine Goodnotes-Mappen, Dokumente und Fotos im nächsten Schritt direkt per AirDrop von iPad zu iPad.</p>
+
+            <div class="step-list">
+              <div class="step-item">
+                <div class="step-num">1</div>
+                <div class="step-content">
+                  <strong>Goodnotes-Backup-Datei prüfen</strong>
+                  <p>Öffne die <b>Dateien-App</b> unter „Auf meinem iPad“ und prüfe, ob deine vorhin erstellte <code>.goodnotes</code>- bzw. <code>.zip</code>-Backup-Datei dort liegt.</p>
+                </div>
+              </div>
+
+              <div class="step-item">
+                <div class="step-num">2</div>
+                <div class="step-content">
+                  <strong>AirDrop auf „Für alle“ stellen</strong>
+                  <p>Öffne das Kontrollzentrum (oben rechts nach unten wischen), halte das Verbindungs-Kästchen gedrückt und stelle <b>AirDrop → „10 Minuten für alle“</b> ein.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="gatekeeper-box">
+              <div class="gatekeeper-title">Bestätigung</div>
+              <label class="check-row">
+                <input type="checkbox" class="gate-check">
+                <span>Meine Goodnotes-Backup-Datei und wichtigen Schulordner liegen griffbereit in der Dateien-App.</span>
+              </label>
+            </div>
+
+            <div class="nav-bar">
+              <button class="btn btn-secondary" onclick="state.step = 1; render();">← Methode ändern</button>
+              <button class="btn btn-primary" id="nextBtn" disabled onclick="state.step = 3; render();">Weiter zum neuen iPad →</button>
+            </div>
+          `;
+        } else if (state.path === 'pc') {
+          container.innerHTML = `
+            <span class="badge">Option C · Lokales PC / Mac Backup</span>
+            <h1>Teil 1: Vollbackup am Computer erstellen</h1>
+            <p class="lead">Sichere dein altes iPad per Lightning-Kabel an einem Windows-PC (App „Apple-Geräte“ oder „iTunes“) bzw. an einem Mac (Finder).</p>
+
+            <div class="callout warning">
+              <strong>Kabel-Hinweis beachten (Lightning vs. USB-C)</strong>
+              Dein altes iPad (Gen 8/9) hat einen <b>Lightning-Anschluss</b>. Das neue iPad (Gen 11) hat einen <b>USB-C-Anschluss</b>. Stelle sicher, dass du beide Kabel an deinen Computer anschließen kannst.
+            </div>
+
+            <div class="step-list">
+              <div class="step-item">
+                <div class="step-num">1</div>
+                <div class="step-content">
+                  <strong>Altes iPad anschließen & „Diesem Computer vertrauen“</strong>
+                  <p>Verbinde das alte iPad per Lightning-Kabel mit dem PC/Mac und bestätige am iPad „Vertrauen“ durch Eingabe deines Sperrcodes.</p>
+                </div>
+              </div>
+
+              <div class="step-item">
+                <div class="step-num">2</div>
+                <div class="step-content">
+                  <strong>Lokales Backup starten</strong>
+                  <p>Wähle am Computer unter „Backups“ die Option <b>„Alle Daten auf deinem iPad auf diesem Computer sichern“</b> und klicke auf <b>„Backup jetzt erstellen“</b>.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="gatekeeper-box">
+              <div class="gatekeeper-title">Bestätigung</div>
+              <label class="check-row">
+                <input type="checkbox" class="gate-check">
+                <span>Das Backup auf meinem PC/Mac ist vollständig durchgelaufen.</span>
+              </label>
+            </div>
+
+            <div class="nav-bar">
+              <button class="btn btn-secondary" onclick="state.step = 1; render();">← Methode ändern</button>
+              <button class="btn btn-primary" id="nextBtn" disabled onclick="state.step = 3; render();">Weiter zum neuen iPad →</button>
+            </div>
+          `;
+        } else if (state.path === 'school') {
+          container.innerHTML = `
+            <span class="badge warning">Option D · Schul-Support</span>
+            <h1>Vorbereitung für den Umzug in der Schule</h1>
+            <p class="lead">Wenn du zu Hause kein Backup erstellen kannst, übernehmen wir die Übertragung für dich in der Schule.</p>
+
+            <div class="step-list">
+              <div class="step-item">
+                <div class="step-num">1</div>
+                <div class="step-content">
+                  <strong>Sperrcode bereithalten</strong>
+                  <p>Zum Auslesen des Backups auf unseren Schul-Rechnern musst du dein altes iPad vor Ort entsperren können.</p>
+                </div>
+              </div>
+              <div class="step-item">
+                <div class="step-num">2</div>
+                <div class="step-content">
+                  <strong>Goodnotes-Sicherung bleibt auf dem Gerät</strong>
+                  <p>Lösche dein altes iPad noch <b>nicht</b> selbst, damit wir deine Daten in der Schule sichern können.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="nav-bar">
+              <button class="btn btn-secondary" onclick="state.step = 1; render();">← Methode ändern</button>
+              <button class="btn btn-primary" onclick="state.step = 4; render();">Weiter zur Packliste →</button>
+            </div>
+          `;
+          return;
+        }
+        bindCheckboxes();
+        return;
+      }
+
+      // STEP 3: NEUES IPAD EINRICHTEN (PHASE 2)
+      if (state.step === 3) {
+        updateProgress('Schritt 4 von 5 · Neues iPad (Gen 11) einrichten');
+
+        if (state.path === 'icloud') {
+          container.innerHTML = `
+            <span class="badge">Phase 2 · Schnellstart & Jamf School</span>
+            <h1>Teil 2: Neues iPad per Punktewolke einrichten</h1>
+            <p class="lead">Lege jetzt dein altes und dein neues iPad direkt nebeneinander und schalte das neue iPad ein.</p>
+
+            <div class="step-list">
+              <div class="step-item">
+                <div class="step-num">1</div>
+                <div class="step-content">
+                  <strong>Schnellstart: Blaue Punktewolke scannen</strong>
+                  <p>Auf dem alten iPad erscheint das Fenster „Neues iPad einrichten“. Halte die Kamera des alten iPads über die blaue Punktewolke auf dem neuen iPad und gib deinen alten Sperrcode ein.</p>
+                </div>
+              </div>
+
+              <div class="step-item">
+                <div class="step-num">2</div>
+                <div class="step-content">
+                  <strong>Jamf School: „Entfernte Verwaltung“ bestätigen</strong>
+                  <p>Bestätige den Bildschirm <b>„Entfernte Verwaltung“ (Frauenlob-Gymnasium / Jamf School)</b> mit „Weiter“.</p>
+                </div>
+              </div>
+
+              <div class="step-item">
+                <div class="step-num">3</div>
+                <div class="step-content">
+                  <strong>„Aus iCloud-Backup wiederherstellen“ wählen</strong>
+                  <p>Wähle unter „Apps & Daten“ dein soeben erstelltes iCloud-Backup aus. Das neue iPad lädt nun deine Daten und alle Schul-Apps herunter.</p>
+                </div>
+              </div>
+            </div>
+
+            <details>
+              <summary>⚠️ Das neue iPad verlangt während des Schnellstarts ein Softwareupdate?</summary>
+              <p>Das ist völlig normal, wenn dein altes iPad bereits eine neuere iPadOS-Version hatte als das fabrikneue iPad ab Werk. Lass beide Geräte am Stromkabel und bestätige „Jetzt aktualisieren“. Danach läuft das Backup automatisch weiter.</p>
+            </details>
+
+            <div class="gatekeeper-box">
+              <div class="gatekeeper-title">Pflicht-Kontrolle auf dem neuen iPad</div>
+              <label class="check-row">
+                <input type="checkbox" class="gate-check">
+                <span>Das neue iPad ist fertig eingerichtet und alle Schul-Apps wurden über Jamf geladen.</span>
+              </label>
+              <label class="check-row">
+                <input type="checkbox" class="gate-check">
+                <span>Ich habe <b>Goodnotes auf dem neuen iPad geöffnet</b> und geprüft, dass alle meine Ordner und Hefte vollständig da sind.</span>
+              </label>
+            </div>
+
+            <div class="nav-bar">
+              <button class="btn btn-secondary" onclick="state.step = 2; render();">← Zurück</button>
+              <button class="btn btn-primary" id="nextBtn" disabled onclick="state.step = 4; render();">Weiter zum letzten Schritt →</button>
+            </div>
+          `;
+        } else if (state.path === 'airdrop') {
+          container.innerHTML = `
+            <span class="badge">Phase 2 · Ohne Apple-ID (AirDrop)</span>
+            <h1>Teil 2: Neues iPad starten & Daten per AirDrop senden</h1>
+            <p class="lead">Richte das neue iPad zunächst leer ein, damit Jamf School alle Schul-Apps installiert.</p>
+
+            <div class="step-list">
+              <div class="step-item">
+                <div class="step-num">1</div>
+                <div class="step-content">
+                  <strong>Ohne Daten starten & Jamf-Verwaltung bestätigen</strong>
+                  <p>Schalte das neue iPad ein, verbinde es mit dem WLAN, wähle <b>„Ohne anderes Gerät einrichten“</b> und bestätige die <b>„Entfernte Verwaltung“ (Jamf School)</b>.</p>
+                </div>
+              </div>
+
+              <div class="step-item">
+                <div class="step-num">2</div>
+                <div class="step-content">
+                  <strong>Warten bis Goodnotes installiert ist</strong>
+                  <p>Nach wenigen Minuten im WLAN installiert Jamf automatisch alle Schul-Apps inkl. Goodnotes auf dem neuen iPad.</p>
+                </div>
+              </div>
+
+              <div class="step-item">
+                <div class="step-num">3</div>
+                <div class="step-content">
+                  <strong>Goodnotes-Backup & Dateien per AirDrop senden</strong>
+                  <p>Aktiviere AirDrop auf dem neuen iPad. Tippe auf dem alten iPad in der Dateien-App auf deine <code>.goodnotes</code>-Backup-Datei → <b>Teilen → AirDrop</b> an dein neues iPad und importiere sie dort in Goodnotes.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="gatekeeper-box">
+              <div class="gatekeeper-title">Pflicht-Kontrolle auf dem neuen iPad</div>
+              <label class="check-row">
+                <input type="checkbox" class="gate-check">
+                <span>Ich habe Goodnotes auf dem neuen iPad geöffnet: Alle meine Notizbücher und Ordner sind vollständig importiert.</span>
+              </label>
+              <label class="check-row">
+                <input type="checkbox" class="gate-check">
+                <span>Alle weiteren wichtigen Dokumente und Fotos wurden per AirDrop übertragen.</span>
+              </label>
+            </div>
+
+            <div class="nav-bar">
+              <button class="btn btn-secondary" onclick="state.step = 2; render();">← Zurück</button>
+              <button class="btn btn-primary" id="nextBtn" disabled onclick="state.step = 4; render();">Weiter zum letzten Schritt →</button>
+            </div>
+          `;
+        } else if (state.path === 'pc') {
+          container.innerHTML = `
+            <span class="badge">Phase 2 · Wiederherstellung vom PC/Mac</span>
+            <h1>Teil 2: Backup per USB-C-Kabel aufspielen</h1>
+            <p class="lead">Spiele dein gespeichertes Computer-Backup jetzt auf das neue iPad (Gen 11) auf.</p>
+
+            <div class="step-list">
+              <div class="step-item">
+                <div class="step-num">1</div>
+                <div class="step-content">
+                  <strong>Neues iPad bis „Apps & Daten“ einrichten</strong>
+                  <p>Schalte das neue iPad ein, wähle dein WLAN und wähle im Bildschirm „Apps & Daten“ die Option <b>„Von Mac oder PC übertragen“</b>.</p>
+                </div>
+              </div>
+
+              <div class="step-item">
+                <div class="step-num">2</div>
+                <div class="step-content">
+                  <strong>Mit USB-C-Kabel anschließen & Backup wiederherstellen</strong>
+                  <p>Verbinde das neue iPad mit dem Computer, klicke in iTunes / Apple-Geräte / Finder auf <b>„Backup wiederherstellen“</b> und bestätige anschließend am iPad die <b>„Entfernte Verwaltung“ (Jamf School)</b>.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="gatekeeper-box">
+              <div class="gatekeeper-title">Pflicht-Kontrolle auf dem neuen iPad</div>
+              <label class="check-row">
+                <input type="checkbox" class="gate-check">
+                <span>Ich habe Goodnotes auf dem neuen iPad geöffnet und geprüft, dass alle Ordner vollständig vorhanden sind.</span>
+              </label>
+            </div>
+
+            <div class="nav-bar">
+              <button class="btn btn-secondary" onclick="state.step = 2; render();">← Zurück</button>
+              <button class="btn btn-primary" id="nextBtn" disabled onclick="state.step = 4; render();">Weiter zum letzten Schritt →</button>
+            </div>
+          `;
+        }
+        bindCheckboxes();
+        return;
+      }
+
+      // STEP 4: KONTROLLE, ABMELDEN & RÜCKGABE-PASS
+      if (state.step === 4) {
+        updateProgress('Schritt 5 von 5 · Altgerät abmelden & Rückgabe');
+
+        const isSchoolSupport = state.path === 'school';
+
+        container.innerHTML = `
+          <span class="badge ${isSchoolSupport ? 'warning' : 'success'}">Letzter Schritt vor der Abgabe</span>
+          <h1>${isSchoolSupport ? 'Checkliste für deinen Support-Termin' : 'Altes iPad abmelden & zurücksetzen'}</h1>
+          <p class="lead">${isSchoolSupport
+            ? 'Bringe dein altes iPad ungelöscht mit in die Schule, damit wir deine Daten übertragen können.'
+            : 'Erst wenn auf deinem neuen iPad alles vollständig ist, machst du das alte iPad (Gen 8/9) bereit für die Rückgabe.'}</p>
+
+          ${!isSchoolSupport ? `
+            <div class="callout danger">
+              <strong>⚠️ Extrem wichtig: Sperre „Wo ist?“ & Apple-ID auf dem ALTEN iPad abmelden!</strong>
+              Ein iPad mit aktiver Apple-ID ist durch die Apple-Aktivierungssperre für die Schule unbrauchbar und kann bei der Rückgabe <b>nicht angenommen werden</b>.
+            </div>
+
+            <div class="step-list">
+              <div class="step-item">
+                <div class="step-num">1</div>
+                <div class="step-content">
+                  <strong>Apple-ID & „Wo ist?“ am alten iPad abmelden</strong>
+                  <p>Tippe auf dem <b>alten iPad</b> in den Einstellungen ganz oben auf deinen Namen → ganz unten auf <b>„Abmelden“</b> und gib dein Apple-ID-Passwort ein, um „Wo ist?“ zu deaktivieren.</p>
+                </div>
+              </div>
+
+              <div class="step-item">
+                <div class="step-num">2</div>
+                <div class="step-content">
+                  <strong>Altes iPad vollständig löschen</strong>
+                  <p>Führe das Zurücksetzen erst durch, wenn du geprüft hast, dass alle wichtigen Daten auf dem neuen iPad angekommen sind.</p>
+                  <span class="ui-path">Einstellungen → Allgemein → iPad übertragen/zurücksetzen → Alle Inhalte & Einstellungen löschen</span>
+                  <ol>
+                    <li>Tippe auf <b>„Fortfahren“</b> und gib bei Aufforderung den Gerätecode sowie gegebenenfalls das Passwort deines Apple Accounts ein.</li>
+                    <li>Falls eine Auswahl zur eSIM erscheint, lösche sie nur, wenn der Mobilfunktarif nicht weiter benötigt wird. Bei Unsicherheit frage vorher bei der Schule oder deinem Mobilfunkanbieter nach.</li>
+                    <li>Lass das iPad den Vorgang abschließen und starte es nicht zwischendurch neu. Das Zurücksetzen kann einige Minuten dauern.</li>
+                  </ol>
+                  <p>Fertig ist das Zurücksetzen, wenn der Begrüßungsbildschirm <b>„Hallo“</b> erscheint. Weitere Informationen findest du in der <a href="https://support.apple.com/de-ch/guide/ipad/ipad8f91b5e3/27/ipados/27" target="_blank" rel="noopener noreferrer">Anleitung von Apple zum Löschen des iPad</a>.</p>
+                </div>
+              </div>
+            </div>
+          ` : ''}
+
+          <div class="gatekeeper-box">
+            <div class="gatekeeper-title">Abgabe-Checkliste für die Schule (alles abhaken)</div>
+            ${!isSchoolSupport ? `
+              <label class="check-row">
+                <input type="checkbox" class="gate-check">
+                <span>Die Apple-ID ist auf dem alten iPad abgemeldet (<b>„Wo ist?“ ist deaktiviert</b>) und das Gerät steht auf dem „Hallo“-Startbildschirm.</span>
+              </label>
+            ` : ''}
+            <label class="check-row">
+              <input type="checkbox" class="gate-check">
+              <span><b>Altes iPad (Gen 8/9)</b> inklusive alter Schutzhülle ist eingepackt.</span>
+            </label>
+            <label class="check-row">
+              <input type="checkbox" class="gate-check">
+              <span><b>Altes Lightning-Kabel</b> + Original-Netzteil liegen bei (Behalte das neue USB-C-Kabel für dein neues iPad!).</span>
+            </label>
+            <label class="check-row">
+              <input type="checkbox" class="gate-check">
+              <span>Unterschriebener Leihvertrag ist bereit zur Abgabe.</span>
+            </label>
+          </div>
+
+          <div id="passReveal" style="display:none;" aria-live="polite">
+            <div class="pass-box">
+              <h2>✅ Bereit für die Rückgabe am Frauenlob-Gymnasium</h2>
+              <p>Dieser Rückgabepass fasst die abgehakten Punkte deines Umzugs zusammen.</p>
+              <p class="pass-method" id="passMethod"></p>
+              <div class="pass-summary" id="passSummary"></div>
+              <div class="pass-actions">
+                <button class="btn btn-primary" type="button" onclick="window.print()">Drucken / als PDF speichern</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="nav-bar">
+            <button class="btn btn-secondary" onclick="state.step = ${isSchoolSupport ? 2 : 3}; render();">← Zurück</button>
+            <button class="btn btn-primary" id="nextBtn" disabled onclick="showReturnPass()">Rückgabe-Pass anzeigen ✓</button>
+          </div>
+        `;
+        bindCheckboxes();
+        return;
+      }
+    }
+
+    function selectPath(pathName) {
+      state.path = pathName;
+      state.step = 2;
+      render();
+    }
+
+    // Initial render
+    render();
+  </script>
+</body>
+</html>
