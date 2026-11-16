@@ -788,7 +788,7 @@
       const pathLabels = {
         icloud: 'Mit privater Apple-ID (Schnellstart & iCloud)',
         airdrop: 'Ohne Apple-ID per AirDrop',
-        school: 'Option C: Registrierung für den Schul-Support'
+        school: 'Option C: Schul-Support & Registrierung'
       };
       const stepLabels = {
         0: 'Vorbereitung am alten iPad',
@@ -1313,7 +1313,7 @@
 
           <div class="nav-bar">
             <button class="btn btn-secondary" onclick="state.step = ${isSchoolSupport ? 2 : 3}; render();">← Zurück</button>
-            <button class="btn btn-primary" id="nextBtn" disabled onclick="showReturnPass()">Rückgabe-Pass anzeigen ✓</button>
+            <button class="btn btn-primary" id="nextBtn" disabled onclick="showReturnPass()">Rückgabepass bestätigen ✓</button>
           </div>
         `;
         bindCheckboxes();
