@@ -5,6 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>iPad-Gerätetausch | Frauenlob-Gymnasium Mainz</title>
   <link rel="icon" type="image/webp" href="https://www.frauenlob-gymnasium.de/wp-content/uploads/2025/09/favicon.webp">
+  <!-- Canvas Confetti Library für den Happy Screen -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
   <style>
     :root {
       --primary: #0E6B80;
@@ -541,50 +543,84 @@
       color: var(--text);
     }
 
-    /* Return Pass Summary */
+    /* Return Pass Summary & Happy Screen (Option 1) */
     .pass-box {
       border: 2px solid var(--success);
       background: var(--success-bg);
-      border-radius: 12px;
-      padding: 24px;
+      border-radius: 16px;
+      padding: 32px;
       text-align: center;
       margin: 20px 0;
+      box-shadow: 0 10px 25px -5px rgba(13, 148, 136, 0.1);
+    }
+
+    .success-icon {
+      width: 64px;
+      height: 64px;
+      background: #FFFFFF;
+      color: var(--success);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 32px;
+      margin: 0 auto 16px;
+      box-shadow: 0 4px 12px rgba(13, 148, 136, 0.15);
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(13, 148, 136, 0.4); }
+      70% { transform: scale(1.05); box-shadow: 0 0 0 12px rgba(13, 148, 136, 0); }
+      100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(13, 148, 136, 0); }
     }
 
     .pass-box h2 {
       color: var(--success);
-      font-size: 1.3rem;
+      font-size: 1.4rem;
       margin-bottom: 6px;
     }
 
     .pass-box > p {
       color: var(--text-muted);
+      font-size: 0.95rem;
     }
 
     .pass-method {
       margin-top: 12px;
       font-weight: 600;
+      color: var(--text);
     }
 
     .pass-summary {
       margin-top: 24px;
       text-align: left;
+      background: #FFFFFF;
+      padding: 20px;
+      border-radius: 10px;
+      border: 1px solid #CCFBF1;
     }
 
     .pass-summary h3 {
-      margin: 18px 0 6px;
-      font-size: 1rem;
+      margin: 14px 0 6px;
+      font-size: 0.95rem;
+      color: var(--primary);
+    }
+
+    .pass-summary h3:first-child {
+      margin-top: 0;
     }
 
     .pass-summary ul {
-      padding-left: 22px;
+      padding-left: 20px;
       color: var(--text-muted);
+      font-size: 0.9rem;
     }
 
     .pass-actions {
       display: flex;
       justify-content: center;
-      margin-top: 20px;
+      margin-top: 24px;
     }
 
     @media print {
@@ -614,9 +650,15 @@
 
       .pass-box {
         margin: 0;
+        border: 2px solid var(--success);
+        box-shadow: none;
         break-inside: avoid;
         print-color-adjust: exact;
         -webkit-print-color-adjust: exact;
+      }
+
+      .success-icon {
+        animation: none;
       }
 
       .pass-actions {
@@ -731,6 +773,17 @@
       evaluate();
     }
 
+    function triggerConfetti() {
+      if (typeof confetti === 'function') {
+        confetti({
+          particleCount: 90,
+          spread: 80,
+          origin: { y: 0.6 },
+          colors: ['#0E6B80', '#0D9488', '#38BDF8', '#F59E0B']
+        });
+      }
+    }
+
     function showReturnPass() {
       const pathLabels = {
         icloud: 'Mit privater Apple-ID (Schnellstart & iCloud)',
@@ -772,6 +825,9 @@
       document.getElementById('passMethod').textContent = `Gewählte Methode: ${pathLabels[state.path]}`;
       document.getElementById('passReveal').style.display = 'block';
       document.getElementById('nextBtn').style.display = 'none';
+      
+      // Happy Screen Konfetti zünden
+      triggerConfetti();
     }
 
     function renderHistory() {
@@ -1244,8 +1300,9 @@
 
           <div id="passReveal" style="display:none;" aria-live="polite">
             <div class="pass-box">
-              <h2>✅ Bereit für die Rückgabe am Frauenlob-Gymnasium</h2>
-              <p>Dieser Rückgabepass fasst die abgehakten Punkte des Umzugs zusammen.</p>
+              <div class="success-icon">✓</div>
+              <h2>Großartig! Du hast es geschafft 🎉</h2>
+              <p>Dein Umzug wurde fehlerfrei vorbereitet. Hier ist dein offizieller Rückgabepass für das Frauenlob-Gymnasium.</p>
               <p class="pass-method" id="passMethod"></p>
               <div class="pass-summary" id="passSummary"></div>
               <div class="pass-actions">
