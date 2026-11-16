@@ -686,7 +686,7 @@
     // State Management
     const state = {
       step: 0,
-      path: null, // 'icloud', 'airdrop', 'pc', 'school'
+      path: null, // 'icloud', 'airdrop', 'school'
       completedChecks: {}
     };
 
@@ -735,8 +735,7 @@
       const pathLabels = {
         icloud: 'Mit privater Apple-ID (Schnellstart & iCloud)',
         airdrop: 'Ohne Apple-ID per AirDrop',
-        pc: 'Ohne Apple-ID über PC oder Mac',
-        school: 'Unterstützung in der Schule'
+        school: 'Option C: Registrierung für den Schul-Support'
       };
       const stepLabels = {
         0: 'Vorbereitung am alten iPad',
@@ -777,7 +776,7 @@
 
     function renderHistory() {
       const nav = document.getElementById('historyNav');
-      const pathLabels = { icloud: 'iCloud', airdrop: 'AirDrop', pc: 'PC/Mac', school: 'Schule' };
+      const pathLabels = { icloud: 'iCloud', airdrop: 'AirDrop', school: 'Schule (Option C)' };
       const steps = [
         { step: 0, label: 'Vorbereitung' },
         { step: 1, label: 'Methode wählen' },
@@ -818,23 +817,23 @@
         container.innerHTML = `
           <span class="badge warning">Pflicht für alle Schülerinnen & Schüler</span>
           <h1>Bevor es losgeht: Altes iPad vorbereiten</h1>
-          <p class="lead">Du steigst vom alten Schul-iPad (Gen 8/9) auf das neue iPad (Gen 11) um. Bevor du den Umzugsweg wählst, sichere jetzt deine Goodnotes-Mappen als Datei.</p>
+          <p class="lead">Du steigst vom alten Schul-iPad (Gen 8/9) auf das neue iPad (Gen 11) um. Bevor du den Umzugsweg wählst, sichere jetzt deine Goodnotes-Notizen manuell.</p>
 
           <div class="step-list">
             <div class="step-item">
               <div class="step-num">1</div>
               <div class="step-content">
-                <strong>Zusatz-Sicherung in Goodnotes erstellen</strong>
-                <p>Öffne Goodnotes auf deinem <b>alten iPad</b>, tippe oben rechts auf das Zahnrad-Symbol und sichere alle Notizbücher lokal in der Dateien-App.</p>
-                <span class="ui-path">Goodnotes → ⚙️ Zahnrad → Backup-Daten → Backup jetzt erstellen → „Auf meinem iPad“ sichern</span>
+                <strong>Goodnotes-Notizen manuell exportieren/sichern</strong>
+                <p>Öffne Goodnotes auf deinem <b>alten iPad</b>, exportiere deine wichtigen Notizbücher als Backup-Datei oder sichere sie über Export-Optionen, um Datenverlust zu vermeiden.</p>
+                <span class="ui-path">Goodnotes → Exportieren / Teilen → Als Goodnotes-Datei oder PDF sichern</span>
               </div>
             </div>
 
             <div class="step-item">
               <div class="step-num">2</div>
               <div class="step-content">
-                <strong>Systemversion (iPadOS) & Akku prüfen</strong>
-                <p>Schließe das alte iPad ans Stromkabel an, aktiviere WLAN sowie Bluetooth und prüfe, ob das neueste iPadOS installiert ist.</p>
+                <strong>Systemversion (iOS / iPadOS) & Akku prüfen</strong>
+                <p>Lade das iPad voll auf (100%), schließe es ans Stromkabel an, aktiviere WLAN sowie Bluetooth und installiere das neueste iOS-/iPadOS-Update.</p>
                 <span class="ui-path">Einstellungen → Allgemein → Softwareupdate</span>
               </div>
             </div>
@@ -844,11 +843,11 @@
             <div class="gatekeeper-title">Sicherheits-Check zum Fortfahren</div>
             <label class="check-row">
               <input type="checkbox" class="gate-check">
-              <span>Ich habe mein Goodnotes-Backup erstellt und in der Dateien-App unter „Auf meinem iPad“ gespeichert.</span>
+              <span>Ich habe meine Goodnotes-Notizen gesichert.</span>
             </label>
             <label class="check-row">
               <input type="checkbox" class="gate-check">
-              <span>WLAN und Bluetooth sind eingeschaltet.</span>
+              <span>Das iPad ist zu 100% aufgeladen, am Ladekabel, das neueste iOS-Update ist installiert und WLAN/Bluetooth sind aktiv.</span>
             </label>
           </div>
 
@@ -885,20 +884,12 @@
               <p class="path-desc">Das neue iPad installiert alle Schul-Apps über Jamf School automatisch neu. Du überträgst anschließend dein Goodnotes-Backup, Dateien und Fotos kabellos per AirDrop.</p>
             </div>
 
-            <div class="path-option" onclick="selectPath('pc')">
-              <div class="path-header">
-                <span class="path-title">Option C: Ohne Apple-ID über PC oder Mac</span>
-                <span class="path-tag neutral">Lokales Kabel-Backup</span>
-              </div>
-              <p class="path-desc">Du erstellst zu Hause am Computer (iTunes / Apple-Geräte-App / Finder) ein Backup. <b>Wichtig:</b> Du benötigst ein Lightning-Kabel (altes iPad) und ein USB-C-Kabel (neues iPad) für deinen PC.</p>
-            </div>
-
             <div class="path-option" onclick="selectPath('school')">
               <div class="path-header">
-                <span class="path-title">Option D: Notfall-Service in der Schule</span>
+                <span class="path-title">Option C: Schul-Support & Registrierung</span>
                 <span class="path-tag neutral">Nur bei Defekt / ohne WLAN</span>
               </div>
-              <p class="path-desc">Nur auswählen, falls dein altes iPad defekt ist oder du zu Hause weder eine Apple-ID noch WLAN/PC nutzen kannst.</p>
+              <p class="path-desc">Wähle diese Option, wenn dein altes iPad defekt ist oder du zu Hause weder eine Apple-ID noch WLAN nutzen kannst. Erfordert eine vorherige Terminregistrierung über itslearning.</p>
             </div>
           </div>
 
@@ -929,6 +920,11 @@
             <h1>Teil 1: 21-Tage-Umzugsbackup starten</h1>
             <p class="lead">Apple stellt dir für den Gerätetausch 21 Tage lang kostenlos unbegrenzten iCloud-Speicher zur Verfügung – selbst wenn deine 5 GB voll sind.</p>
 
+            <div class="callout warning">
+              <strong>Stabiles WLAN & Ladekabel erforderlich</strong>
+              Stelle sicher, dass dein altes iPad während des gesamten Backups fest am Ladekabel angeschlossen ist und eine stabile WLAN-Verbindung besteht (kein instabiles Netz).
+            </div>
+
             <div class="step-list">
               <div class="step-item">
                 <div class="step-num">1</div>
@@ -951,7 +947,7 @@
                 <div class="step-num">3</div>
                 <div class="step-content">
                   <strong>Im WLAN abwarten bis „Fertig“ erscheint</strong>
-                  <p>Lass das iPad am Ladekabel, bis der Backup-Balken in den Einstellungen vollständig abgeschlossen ist.</p>
+                  <p>Lass das iPad am Ladekabel und im WLAN, bis der Backup-Balken in den Einstellungen vollständig abgeschlossen ist.</p>
                 </div>
               </div>
             </div>
@@ -975,12 +971,17 @@
             <h1>Teil 1: Lokale Dateien auf dem Altgerät bündeln</h1>
             <p class="lead">Da du keine Apple-ID nutzt, übertragen wir deine Goodnotes-Mappen, Dokumente und Fotos im nächsten Schritt direkt per AirDrop von iPad zu iPad.</p>
 
+            <div class="callout warning">
+              <strong>Stabiles WLAN & Ladekabel erforderlich</strong>
+              Achte darauf, dass beide Geräte für die Übertragung per AirDrop eine stabile Verbindung (WLAN/Bluetooth) haben und am Ladekabel hängen.
+            </div>
+
             <div class="step-list">
               <div class="step-item">
                 <div class="step-num">1</div>
                 <div class="step-content">
                   <strong>Goodnotes-Backup-Datei prüfen</strong>
-                  <p>Öffne die <b>Dateien-App</b> unter „Auf meinem iPad“ und prüfe, ob deine vorhin erstellte <code>.goodnotes</code>- bzw. <code>.zip</code>-Backup-Datei dort liegt.</p>
+                  <p>Öffne die <b>Dateien-App</b> unter „Auf meinem iPad“ und prüfe, ob deine gesicherte Goodnotes-Datei griffbereit ist.</p>
                 </div>
               </div>
 
@@ -997,49 +998,7 @@
               <div class="gatekeeper-title">Bestätigung</div>
               <label class="check-row">
                 <input type="checkbox" class="gate-check">
-                <span>Meine Goodnotes-Backup-Datei und wichtigen Schulordner liegen griffbereit in der Dateien-App.</span>
-              </label>
-            </div>
-
-            <div class="nav-bar">
-              <button class="btn btn-secondary" onclick="state.step = 1; render();">← Methode ändern</button>
-              <button class="btn btn-primary" id="nextBtn" disabled onclick="state.step = 3; render();">Weiter zum neuen iPad →</button>
-            </div>
-          `;
-        } else if (state.path === 'pc') {
-          container.innerHTML = `
-            <span class="badge">Option C · Lokales PC / Mac Backup</span>
-            <h1>Teil 1: Vollbackup am Computer erstellen</h1>
-            <p class="lead">Sichere dein altes iPad per Lightning-Kabel an einem Windows-PC (App „Apple-Geräte“ oder „iTunes“) bzw. an einem Mac (Finder).</p>
-
-            <div class="callout warning">
-              <strong>Kabel-Hinweis beachten (Lightning vs. USB-C)</strong>
-              Dein altes iPad (Gen 8/9) hat einen <b>Lightning-Anschluss</b>. Das neue iPad (Gen 11) hat einen <b>USB-C-Anschluss</b>. Stelle sicher, dass du beide Kabel an deinen Computer anschließen kannst.
-            </div>
-
-            <div class="step-list">
-              <div class="step-item">
-                <div class="step-num">1</div>
-                <div class="step-content">
-                  <strong>Altes iPad anschließen & „Diesem Computer vertrauen“</strong>
-                  <p>Verbinde das alte iPad per Lightning-Kabel mit dem PC/Mac und bestätige am iPad „Vertrauen“ durch Eingabe deines Sperrcodes.</p>
-                </div>
-              </div>
-
-              <div class="step-item">
-                <div class="step-num">2</div>
-                <div class="step-content">
-                  <strong>Lokales Backup starten</strong>
-                  <p>Wähle am Computer unter „Backups“ die Option <b>„Alle Daten auf deinem iPad auf diesem Computer sichern“</b> und klicke auf <b>„Backup jetzt erstellen“</b>.</p>
-                </div>
-              </div>
-            </div>
-
-            <div class="gatekeeper-box">
-              <div class="gatekeeper-title">Bestätigung</div>
-              <label class="check-row">
-                <input type="checkbox" class="gate-check">
-                <span>Das Backup auf meinem PC/Mac ist vollständig durchgelaufen.</span>
+                <span>Meine gesicherten Goodnotes-Dateien und wichtigen Ordner liegen bereit.</span>
               </label>
             </div>
 
@@ -1050,11 +1009,20 @@
           `;
         } else if (state.path === 'school') {
           container.innerHTML = `
-            <span class="badge warning">Option D · Schul-Support</span>
+            <span class="badge warning">Option C · Schul-Support & Registrierung</span>
             <h1>Vorbereitung für den Umzug in der Schule</h1>
-            <p class="lead">Wenn du zu Hause kein Backup erstellen kannst, übernehmen wir die Übertragung für dich in der Schule.</p>
+            <p class="lead">Für den Support-Termin in der Schule ist zwingend eine vorherige Registrierung über itslearning erforderlich.</p>
 
             <div class="step-list">
+              <div class="step-item">
+                <div class="step-num">0</div>
+                <div class="step-content">
+                  <strong>Registrierung für den Supporttermin über itslearning</strong>
+                  <p>Melde dich in itslearning an und navigiere zu folgendem Pfad, um deinen Supporttermin zu buchen:</p>
+                  <span class="ui-path">Schulgemeinschaft → Informationen → Übersichtsseite iPads (Informationen zur neuen Satzung der Stadt Mainz und dem iPad-Austausch 2026 (SEU)) → iPad-Umzug</span>
+                </div>
+              </div>
+
               <div class="step-item">
                 <div class="step-num">1</div>
                 <div class="step-content">
@@ -1062,6 +1030,7 @@
                   <p>Zum Auslesen des Backups auf unseren Schul-Rechnern musst du dein altes iPad vor Ort entsperren können.</p>
                 </div>
               </div>
+
               <div class="step-item">
                 <div class="step-num">2</div>
                 <div class="step-content">
@@ -1071,11 +1040,20 @@
               </div>
             </div>
 
+            <div class="gatekeeper-box">
+              <div class="gatekeeper-title">Bestätigung für Option C</div>
+              <label class="check-row">
+                <input type="checkbox" class="gate-check">
+                <span>Ich habe mich erfolgreich über itslearning für den Support-Termin registriert.</span>
+              </label>
+            </div>
+
             <div class="nav-bar">
               <button class="btn btn-secondary" onclick="state.step = 1; render();">← Methode ändern</button>
-              <button class="btn btn-primary" onclick="state.step = 4; render();">Weiter zur Packliste →</button>
+              <button class="btn btn-primary" id="nextBtn" disabled onclick="state.step = 4; render();">Weiter zur Packliste →</button>
             </div>
           `;
+          bindCheckboxes();
           return;
         }
         bindCheckboxes();
@@ -1091,6 +1069,11 @@
             <span class="badge">Phase 2 · Schnellstart & Jamf School</span>
             <h1>Teil 2: Neues iPad per Punktewolke einrichten</h1>
             <p class="lead">Lege jetzt dein altes und dein neues iPad direkt nebeneinander und schalte das neue iPad ein.</p>
+
+            <div class="callout warning">
+              <strong>Stabiles WLAN & Ladekabel erforderlich</strong>
+              Lasse beide iPads während der gesamten Wiederherstellung und App-Installation durchgehend am Ladekabel und im stabilen WLAN.
+            </div>
 
             <div class="step-list">
               <div class="step-item">
@@ -1146,6 +1129,11 @@
             <h1>Teil 2: Neues iPad starten & Daten per AirDrop senden</h1>
             <p class="lead">Richte das neue iPad zunächst leer ein, damit Jamf School alle Schul-Apps installiert.</p>
 
+            <div class="callout warning">
+              <strong>Stabiles WLAN & Ladekabel erforderlich</strong>
+              Verbinde beide Geräte mit einem stabilen WLAN und halte sie am Ladekabel, während die Schul-Apps geladen und Dateien per AirDrop übertragen werden.
+            </div>
+
             <div class="step-list">
               <div class="step-item">
                 <div class="step-num">1</div>
@@ -1166,8 +1154,8 @@
               <div class="step-item">
                 <div class="step-num">3</div>
                 <div class="step-content">
-                  <strong>Goodnotes-Backup & Dateien per AirDrop senden</strong>
-                  <p>Aktiviere AirDrop auf dem neuen iPad. Tippe auf dem alten iPad in der Dateien-App auf deine <code>.goodnotes</code>-Backup-Datei → <b>Teilen → AirDrop</b> an dein neues iPad und importiere sie dort in Goodnotes.</p>
+                  <strong>Daten & Goodnotes per AirDrop empfangen</strong>
+                  <p>Sende deine gesicherten Goodnotes-Dateien und Ordner per AirDrop vom alten auf das neue iPad und importiere sie.</p>
                 </div>
               </div>
             </div>
@@ -1180,44 +1168,7 @@
               </label>
               <label class="check-row">
                 <input type="checkbox" class="gate-check">
-                <span>Alle weiteren wichtigen Dokumente und Fotos wurden per AirDrop übertragen.</span>
-              </label>
-            </div>
-
-            <div class="nav-bar">
-              <button class="btn btn-secondary" onclick="state.step = 2; render();">← Zurück</button>
-              <button class="btn btn-primary" id="nextBtn" disabled onclick="state.step = 4; render();">Weiter zum letzten Schritt →</button>
-            </div>
-          `;
-        } else if (state.path === 'pc') {
-          container.innerHTML = `
-            <span class="badge">Phase 2 · Wiederherstellung vom PC/Mac</span>
-            <h1>Teil 2: Backup per USB-C-Kabel aufspielen</h1>
-            <p class="lead">Spiele dein gespeichertes Computer-Backup jetzt auf das neue iPad (Gen 11) auf.</p>
-
-            <div class="step-list">
-              <div class="step-item">
-                <div class="step-num">1</div>
-                <div class="step-content">
-                  <strong>Neues iPad bis „Apps & Daten“ einrichten</strong>
-                  <p>Schalte das neue iPad ein, wähle dein WLAN und wähle im Bildschirm „Apps & Daten“ die Option <b>„Von Mac oder PC übertragen“</b>.</p>
-                </div>
-              </div>
-
-              <div class="step-item">
-                <div class="step-num">2</div>
-                <div class="step-content">
-                  <strong>Mit USB-C-Kabel anschließen & Backup wiederherstellen</strong>
-                  <p>Verbinde das neue iPad mit dem Computer, klicke in iTunes / Apple-Geräte / Finder auf <b>„Backup wiederherstellen“</b> und bestätige anschließend am iPad die <b>„Entfernte Verwaltung“ (Jamf School)</b>.</p>
-                </div>
-              </div>
-            </div>
-
-            <div class="gatekeeper-box">
-              <div class="gatekeeper-title">Pflicht-Kontrolle auf dem neuen iPad</div>
-              <label class="check-row">
-                <input type="checkbox" class="gate-check">
-                <span>Ich habe Goodnotes auf dem neuen iPad geöffnet und geprüft, dass alle Ordner vollständig vorhanden sind.</span>
+                <span>Alle weiteren wichtigen Dokumente und Fotos wurden erfolgreich übertragen.</span>
               </label>
             </div>
 
@@ -1239,15 +1190,16 @@
 
         container.innerHTML = `
           <span class="badge ${isSchoolSupport ? 'warning' : 'success'}">Letzter Schritt vor der Abgabe</span>
-          <h1>${isSchoolSupport ? 'Checkliste für deinen Support-Termin' : 'Altes iPad abmelden & zurücksetzen'}</h1>
+          <h1>${isSchoolSupport ? 'Checkliste für deinen Support-Termin (Option C)' : 'Altes iPad abmelden & zurücksetzen'}</h1>
           <p class="lead">${isSchoolSupport
-            ? 'Bringe dein altes iPad ungelöscht mit in die Schule, damit wir deine Daten übertragen können.'
+            ? 'Bringe dein altes iPad ungelöscht mit in die Schule, nachdem du dich über itslearning registriert hast.'
             : 'Erst wenn auf deinem neuen iPad alles vollständig ist, machst du das alte iPad (Gen 8/9) bereit für die Rückgabe.'}</p>
 
           ${!isSchoolSupport ? `
-            <div class="callout danger">
-              <strong>⚠️ Extrem wichtig: Sperre „Wo ist?“ & Apple-ID auf dem ALTEN iPad abmelden!</strong>
-              Ein iPad mit aktiver Apple-ID ist durch die Apple-Aktivierungssperre für die Schule unbrauchbar und kann bei der Rückgabe <b>nicht angenommen werden</b>.
+            <div class="callout danger" style="border: 3px solid var(--danger); background-color: var(--danger-bg); padding: 20px;">
+              <strong style="font-size: 1.1rem; color: var(--danger); margin-bottom: 8px;">🛑 KRITISCHER WARNHINWEIS: „WO IST?“ & APPLE-ID UNBEDINGT ABMELDEN!</strong>
+              <p style="color: var(--text); margin-bottom: 8px;">Ein iPad mit aktiver Apple-ID wird bei der Rückgabe abgelehnt!</p>
+              <p style="color: var(--text);">Du musst in den Einstellungen auf deinen Namen tippen, ganz nach unten scrollen und <b>„Abmelden“</b> wählen, um „Wo ist?“ restlos zu deaktivieren, <u>bevor</u> du das Gerät löschst.</p>
             </div>
 
             <div class="step-list">
@@ -1255,7 +1207,7 @@
                 <div class="step-num">1</div>
                 <div class="step-content">
                   <strong>Apple-ID & „Wo ist?“ am alten iPad abmelden</strong>
-                  <p>Tippe auf dem <b>alten iPad</b> in den Einstellungen ganz oben auf deinen Namen → ganz unten auf <b>„Abmelden“</b> und gib dein Apple-ID-Passwort ein, um „Wo ist?“ zu deaktivieren.</p>
+                  <p>Tippe auf dem <b>alten iPad</b> in den Einstellungen ganz oben auf deinen Namen → ganz unten auf <b>„Abmelden“</b> und gib dein privates Apple-ID-Passwort ein, um „Wo ist?“ zu deaktivieren.</p>
                 </div>
               </div>
 
@@ -1281,27 +1233,19 @@
             ${!isSchoolSupport ? `
               <label class="check-row">
                 <input type="checkbox" class="gate-check">
-                <span>Die Apple-ID ist auf dem alten iPad abgemeldet (<b>„Wo ist?“ ist deaktiviert</b>) und das Gerät steht auf dem „Hallo“-Startbildschirm.</span>
+                <span><b>Bestätigt:</b> Die Apple-ID ist auf dem alten iPad abgemeldet, <b>„Wo ist?“ ist vollständig deaktiviert</b> und das Gerät zeigt den „Hallo“-Startbildschirm.</span>
               </label>
             ` : ''}
             <label class="check-row">
               <input type="checkbox" class="gate-check">
-              <span><b>Altes iPad (Gen 8/9)</b> inklusive alter Schutzhülle ist eingepackt.</span>
-            </label>
-            <label class="check-row">
-              <input type="checkbox" class="gate-check">
-              <span><b>Altes Lightning-Kabel</b> + Original-Netzteil liegen bei (Behalte das neue USB-C-Kabel für dein neues iPad!).</span>
-            </label>
-            <label class="check-row">
-              <input type="checkbox" class="gate-check">
-              <span>Unterschriebener Leihvertrag ist bereit zur Abgabe.</span>
+              <span><b>Altes iPad (Gen 8/9)</b> inklusive Hülle ist eingepackt (Es muss lediglich das iPad mit Hülle abgegeben werden).</span>
             </label>
           </div>
 
           <div id="passReveal" style="display:none;" aria-live="polite">
             <div class="pass-box">
               <h2>✅ Bereit für die Rückgabe am Frauenlob-Gymnasium</h2>
-              <p>Dieser Rückgabepass fasst die abgehakten Punkte deines Umzugs zusammen.</p>
+              <p>Dieser Rückgabepass fasst die abgehakten Punkte des Umzugs zusammen.</p>
               <p class="pass-method" id="passMethod"></p>
               <div class="pass-summary" id="passSummary"></div>
               <div class="pass-actions">
