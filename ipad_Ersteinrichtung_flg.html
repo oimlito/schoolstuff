@@ -1,0 +1,2089 @@
+<!DOCTYPE html>
+<html lang="de" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Anleitung zur Einrichtung von iPads (11. Gen) – Frauenlob-Gymnasium Mainz</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts: Open Sans & Fira Code -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Open+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
+  
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            fg: {
+              petrol: '#006D84',
+              petrolDark: '#005163',
+              petrolLight: '#E6F2F5',
+              petrolSoft: '#F0F7F9',
+              iosBlue: '#007AFF',
+              warn: '#D9381E',
+              warnBg: '#FDF2F0',
+              success: '#1E8E3E',
+              successBg: '#E8F5E9',
+              bgPage: '#F5F7F9',
+              textMain: '#1D1D1F',
+              textMuted: '#515154'
+            }
+          },
+          fontFamily: {
+            sans: ['"Open Sans"', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
+            mono: ['"Fira Code"', 'monospace']
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Custom Styles für das Corporate Design & die realistischen iPad Gen 11 Mockups */
+    body {
+      background-color: #F5F7F9;
+      color: #1D1D1F;
+      font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      overflow-x: hidden;
+    }
+
+    /* Briefkopf-Typografie analog zur Original-Vorlage */
+    .frauenlob-lettering {
+      letter-spacing: 0.28em;
+      font-weight: 400;
+    }
+    .mainz-lettering {
+      letter-spacing: 0.32em;
+      font-weight: 400;
+    }
+
+    /* iPad 11. Generation (All-Screen ohne Home-Button) Gehäuse */
+    .ipad-gen11-frame {
+      position: relative;
+      background: #141416;
+      border-radius: 22px;
+      padding: 11px;
+      box-shadow: 
+        0 14px 28px -6px rgba(0, 35, 45, 0.18),
+        0 0 0 2px #2c2c2e,
+        inset 0 0 2px rgba(255,255,255,0.2);
+      user-select: none;
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+    .step-card:hover .ipad-gen11-frame {
+      transform: translateY(-2px);
+      box-shadow: 
+        0 18px 34px -6px rgba(0, 109, 132, 0.22),
+        0 0 0 2px #3a3a3c;
+    }
+
+    /* Top Button (Touch ID / Power Button an der oberen Kante rechts) */
+    .ipad-top-button {
+      position: absolute;
+      top: -4px;
+      right: 28px;
+      width: 34px;
+      height: 4px;
+      background: #3a3a3c;
+      border-radius: 3px 3px 0 0;
+      transition: all 0.3s ease;
+    }
+    .ipad-top-button.highlight-sensor {
+      background: #007AFF;
+      height: 6px;
+      top: -6px;
+      box-shadow: 0 0 12px #007AFF, 0 0 20px rgba(0, 122, 255, 0.8);
+      animation: pulseSensor 1.6s infinite;
+    }
+    @keyframes pulseSensor {
+      0%, 100% { transform: scaleX(1); opacity: 1; }
+      50% { transform: scaleX(1.18); opacity: 0.85; }
+    }
+
+    /* Lautstärke-Tasten rechts oben */
+    .ipad-vol-buttons {
+      position: absolute;
+      right: -4px;
+      top: 32px;
+      width: 4px;
+      height: 42px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .ipad-vol-buttons span {
+      display: block;
+      width: 100%;
+      height: 18px;
+      background: #3a3a3c;
+      border-radius: 0 3px 3px 0;
+    }
+
+    /* iPadOS Buntes Original-Wallpaper (Mesh Gradient wie in den Fotos) */
+    .ipados-wallpaper {
+      position: relative;
+      border-radius: 13px;
+      overflow: hidden;
+      min-height: 290px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      background: 
+        radial-gradient(circle at 18% 18%, #1e6b7b 0%, transparent 48%),
+        radial-gradient(circle at 75% 25%, #2e9e5b 0%, transparent 45%),
+        radial-gradient(circle at 50% 52%, #f59e0b 0%, transparent 50%),
+        radial-gradient(circle at 82% 82%, #ec4899 0%, transparent 52%),
+        radial-gradient(circle at 20% 88%, #ef4444 0%, transparent 55%),
+        linear-gradient(135deg, #164e63 0%, #ca8a04 50%, #db2777 100%);
+    }
+
+    /* iPadOS Homescreen Wallpaper (Rot-Blau-Violett für Schritt 11) */
+    .ipados-homescreen-wallpaper {
+      position: relative;
+      border-radius: 13px;
+      overflow: hidden;
+      min-height: 290px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      background: 
+        radial-gradient(circle at 80% 20%, #6366f1 0%, transparent 45%),
+        radial-gradient(circle at 60% 40%, #2563eb 0%, transparent 50%),
+        linear-gradient(165deg, #d97706 0%, #dc2626 48%, #be185d 85%, #3b82f6 100%);
+    }
+
+    /* Weißes iPadOS Setup-Fenster in der Bildschirmmitte */
+    .ipados-dialog {
+      background: rgba(255, 255, 255, 0.96);
+      backdrop-filter: blur(12px);
+      border-radius: 12px;
+      width: 82%;
+      max-width: 285px;
+      margin: auto;
+      padding: 14px 14px 12px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.22);
+      color: #1c1c1e;
+      font-size: 11px;
+      position: relative;
+      z-index: 10;
+    }
+
+    /* Pulsierender Klick-/Tipp-Indikator im Mockup */
+    .tap-target {
+      position: relative;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .tap-target:hover {
+      filter: brightness(0.95);
+      transform: scale(1.01);
+    }
+    .tap-pulse-ring {
+      position: absolute;
+      right: 8px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 18px;
+      height: 18px;
+      border-radius: 9999px;
+      background: rgba(0, 122, 255, 0.28);
+      border: 2px solid #007AFF;
+      pointer-events: none;
+      animation: tapPing 1.5s infinite;
+    }
+    .tap-pulse-ring.warn-ring {
+      background: rgba(217, 56, 30, 0.28);
+      border-color: #D9381E;
+    }
+    @keyframes tapPing {
+      0% { transform: translateY(-50%) scale(0.85); opacity: 1; }
+      70% { transform: translateY(-50%) scale(1.45); opacity: 0.15; }
+      100% { transform: translateY(-50%) scale(0.85); opacity: 1; }
+    }
+
+    /* Home-Indicator-Balken unten beim iPad Gen 11 */
+    .home-indicator {
+      width: 32%;
+      height: 4px;
+      background: rgba(255, 255, 255, 0.85);
+      border-radius: 999px;
+      margin: 6px auto 5px;
+    }
+
+    /* Erledigte Schritt-Karte */
+    .step-card {
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .step-card.is-completed {
+      border-color: #1E8E3E !important;
+      background-color: #FAFFFB;
+    }
+    .step-card.is-completed .step-badge {
+      background-color: #1E8E3E !important;
+    }
+
+    /* Swipe-Up Pfeil Animation für Schritt 1 */
+    @keyframes swipeUpAnim {
+      0% { transform: translateY(8px); opacity: 0.3; }
+      50% { transform: translateY(-6px); opacity: 1; }
+      100% { transform: translateY(8px); opacity: 0.3; }
+    }
+    .animate-swipe-up {
+      animation: swipeUpAnim 1.8s infinite ease-in-out;
+    }
+
+    /* Druckansicht Optimierung */
+    @media print {
+      .no-print { display: none !important; }
+      .step-card { break-inside: avoid; page-break-inside: avoid; box-shadow: none !important; border: 1px solid #ccc !important; }
+      body { background: #fff !important; }
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between">
+
+  <!-- =====================================================================
+       1. OFFIZIELLER BRIEFKOPF (FRAUENLOB-GYMNASIUM MAINZ)
+       ===================================================================== -->
+  <header class="bg-white border-b border-slate-200 pt-5 pb-4 px-4">
+    <div class="max-w-6xl mx-auto flex flex-col items-center justify-center text-center">
+      <!-- Nachbildung des offiziellen Logos aus der Word-Vorlage -->
+      <div class="flex items-center justify-center gap-3 sm:gap-6 md:gap-8 flex-wrap">
+        <span class="frauenlob-lettering text-xl sm:text-3xl md:text-4xl text-slate-900 tracking-[0.26em] pl-[0.26em]">
+          FRAUENLOB
+        </span>
+        
+        <!-- Runde Petrol-Plakette mit Gelehrten- & Buch-Illustration -->
+        <div class="w-12 h-12 sm:w-16 sm:h-16 rounded-full bg-fg-petrol flex items-center justify-center shadow-md shrink-0 ring-4 ring-fg-petrolLight" title="Frauenlob-Gymnasium Mainz">
+          <svg class="w-9 h-9 sm:w-12 sm:h-12 text-white" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <!-- Gelehrtenkappe & Kopf im Skizzenstil des Originalsiegels -->
+            <path d="M20 16L31 12L40 15.5L30 19L20 16Z" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M24 18V25C24 28.5 26.8 31 30 31C33.2 31 36 28.5 36 25V18" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
+            <path d="M28 23.5C28 23.5 29.5 24.5 31 23.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+            <!-- Schulterlinie -->
+            <path d="M16 40C16 34.5 21.5 32 28 32H33" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/>
+            <path d="M17 41.5L29 44" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
+            <!-- Aufgeschlagenes Buch rechts unten -->
+            <path d="M32 36L41 38.5V51L32 48.5V36Z" fill="rgba(255,255,255,0.12)" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"/>
+            <path d="M50 36L41 38.5V51L50 48.5V36Z" fill="rgba(255,255,255,0.12)" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"/>
+            <path d="M32 51L41 53.5L50 51" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+
+        <span class="frauenlob-lettering text-xl sm:text-3xl md:text-4xl text-slate-900 tracking-[0.26em] pl-[0.26em]">
+          GYMNASIUM
+        </span>
+      </div>
+      <div class="mainz-lettering text-xs sm:text-sm md:text-base text-slate-700 mt-1.5 pl-[0.32em]">
+        Mainz
+      </div>
+    </div>
+  </header>
+
+  <!-- =====================================================================
+       2. STICKY TOP-NAVIGATION & FORTSCHRITTS-TRACKER
+       ===================================================================== -->
+  <div class="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b-2 border-fg-petrol shadow-sm no-print">
+    <div class="max-w-6xl mx-auto px-4 py-2.5 flex flex-wrap items-center justify-between gap-3">
+      
+      <!-- Fortschrittsanzeige -->
+      <div class="flex items-center gap-3 flex-1 min-w-[240px]">
+        <div class="w-10 h-10 rounded-xl bg-fg-petrolLight text-fg-petrol font-bold font-mono text-xs flex items-center justify-center shrink-0 border border-fg-petrol/20" id="progressPercentBadge">
+          0%
+        </div>
+        <div class="flex-1 max-w-xs">
+          <div class="flex justify-between text-xs font-semibold text-slate-700 mb-1">
+            <span>Einrichtungs-Fortschritt</span>
+            <span id="progressCounterText" class="font-mono text-fg-petrol">0 / 16 erledigt</span>
+          </div>
+          <div class="w-full h-2 bg-slate-200 rounded-full overflow-hidden">
+            <div id="progressBarFill" class="h-full bg-fg-petrol transition-all duration-300 rounded-full" style="width: 0%"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sprungmarken -->
+      <nav class="hidden lg:flex items-center gap-1.5 text-xs font-semibold">
+        <a href="#sektion-registrierung" class="px-3 py-1.5 rounded-lg text-slate-700 hover:bg-fg-petrolLight hover:text-fg-petrol transition">
+          1. Initiale Registrierung (1–11)
+        </a>
+        <a href="#sektion-schueler-app" class="px-3 py-1.5 rounded-lg text-slate-700 hover:bg-fg-petrolLight hover:text-fg-petrol transition">
+          2. Schüler-App (12–16)
+        </a>
+        <a href="#sektion-kalender-finder" class="px-3 py-1.5 rounded-lg text-slate-700 hover:bg-fg-petrolLight hover:text-fg-petrol transition">
+          📅 Schulkalender-Finder
+        </a>
+      </nav>
+
+      <!-- Aktions-Buttons -->
+      <div class="flex items-center gap-2">
+        <button onclick="toggleAllSteps()" id="toggleAllBtn" class="text-xs font-semibold px-3 py-1.5 rounded-lg border border-fg-petrol text-fg-petrol hover:bg-fg-petrol hover:text-white transition flex items-center gap-1.5">
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+          <span>Alle abhaken</span>
+        </button>
+        <button onclick="window.print()" class="text-xs font-semibold px-2.5 py-1.5 rounded-lg border border-slate-300 text-slate-600 hover:bg-slate-100 transition flex items-center gap-1" title="Anleitung drucken oder als PDF speichern">
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/></svg>
+          <span class="hidden sm:inline">PDF / Druck</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- =====================================================================
+       3. HAUPTINHALT (HERO & SCHRITT-FÜR-SCHRITT-ANLEITUNG)
+       ===================================================================== -->
+  <main class="max-w-6xl mx-auto px-4 py-6 sm:py-8 flex-1 w-full">
+
+    <!-- Titel-Banner -->
+    <div class="bg-gradient-to-r from-fg-petrol to-fg-petrolDark text-white rounded-2xl p-6 sm:p-8 shadow-md mb-8 relative overflow-hidden">
+      <div class="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div>
+          <div class="inline-flex items-center gap-2 bg-white/15 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-mono mb-3">
+            <span class="w-2 h-2 rounded-full bg-emerald-300 animate-pulse"></span>
+            <span>Rollout iPad 11. Generation (A16)</span>
+          </div>
+          <h1 class="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight">
+            Anleitung zur Einrichtung von iPads
+          </h1>
+          <p class="text-white/90 text-sm sm:text-base mt-1.5 max-w-2xl">
+            Interaktive Schritt-für-Schritt-Anleitung für die Erstregistrierung im Schulnetz (Schulamt Mainz) und die Einrichtung der internen <strong>Schüler-App</strong>.
+          </p>
+        </div>
+
+        <!-- Tipp: Direkt in den Mockups klicken -->
+        <div class="bg-white/10 border border-white/20 rounded-xl p-3.5 text-xs sm:text-sm max-w-xs shrink-0 backdrop-blur-sm">
+          <div class="font-bold flex items-center gap-1.5 mb-1">
+            <span>💡 Interaktive Vorschau:</span>
+          </div>
+          <p class="text-white/85 leading-relaxed">
+            Klicke in jedem Schritt direkt auf das <span class="underline decoration-sky-300 font-semibold">pulsierende Feld im iPad-Bildschirm</span> oder auf die Checkbox, um deinen Fortschritt abzuhaken!
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- =====================================================================
+         TEIL 1: INITIALE REGISTRIERUNG DES IPADS (SCHRITTE 1 BIS 11)
+         ===================================================================== -->
+    <section id="sektion-registrierung" class="mb-12 scroll-mt-20">
+      <div class="flex items-center justify-between border-b-2 border-fg-petrol pb-3 mb-6">
+        <div class="flex items-center gap-3">
+          <span class="w-8 h-8 rounded-lg bg-fg-petrol text-white font-bold flex items-center justify-center text-sm">I</span>
+          <div>
+            <h2 class="text-xl sm:text-2xl font-bold text-slate-900">Initiale Registrierung des iPads</h2>
+            <p class="text-xs sm:text-sm text-slate-500">Grundkonfiguration &amp; Anmeldung bei der entfernten Verwaltung (Schulamt Mainz)</p>
+          </div>
+        </div>
+        <span class="hidden sm:inline-block text-xs font-mono bg-fg-petrolLight text-fg-petrol px-3 py-1 rounded-full font-semibold">
+          Schritte 1 – 11
+        </span>
+      </div>
+
+      <!-- 2-Spalten-Raster analog zur Original-Anleitung -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+        <!-- ===============================================================
+             SCHRITT 1: iPad einschalten & öffnen
+             =============================================================== -->
+        <article class="step-card bg-white rounded-2xl p-5 shadow-sm border border-slate-200 flex flex-col justify-between" data-step="1" id="step-card-1">
+          <div>
+            <!-- Kartenkopf -->
+            <div class="flex items-center justify-between gap-2 mb-4">
+              <div class="flex items-center gap-2.5">
+                <span class="step-badge w-8 h-8 rounded-full bg-fg-petrol text-white font-bold text-sm flex items-center justify-center shrink-0">1</span>
+                <h3 class="font-bold text-base sm:text-lg text-slate-900">iPad einschalten &amp; öffnen</h3>
+              </div>
+              <label class="inline-flex items-center gap-1.5 cursor-pointer select-none text-xs font-semibold text-slate-600 hover:text-fg-petrol bg-slate-100 px-2.5 py-1.5 rounded-lg">
+                <input type="checkbox" class="step-checkbox w-4 h-4 accent-fg-success rounded cursor-pointer" onchange="toggleStep(1, this.checked)">
+                <span>Erledigt</span>
+              </label>
+            </div>
+
+            <!-- iPad Gen 11 Mockup: "hallo" Screen ohne Home-Button -->
+            <div class="ipad-gen11-frame mb-4">
+              <!-- Pulsierender Top-Button -->
+              <div class="ipad-top-button highlight-sensor" title="Obere Taste (Einschaltknopf & Touch ID)"></div>
+              <div class="ipad-vol-buttons"><span></span><span></span></div>
+              
+              <!-- Hinweis-Fähnchen für obere Taste -->
+              <div class="absolute -top-8 right-2 bg-fg-iosBlue text-white text-[10px] font-bold px-2 py-0.5 rounded shadow-sm flex items-center gap-1 z-20">
+                <span>1. Obere Taste drücken</span>
+                <span>&darr;</span>
+              </div>
+
+              <div class="ipados-wallpaper px-3 py-2 text-white">
+                <!-- Status Bar -->
+                <div class="flex justify-between items-center text-[10px] font-medium opacity-90 px-1">
+                  <span>iPad</span>
+                  <div class="flex items-center gap-1">
+                    <span>14 %</span>
+                    <div class="w-5 h-2.5 border border-white/80 rounded-sm p-0.5 flex items-center">
+                      <div class="w-1.5 h-full bg-white rounded-xs"></div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- "hallo" Schreibschrift in der Mitte -->
+                <div class="my-auto text-center py-10">
+                  <div class="text-5xl sm:text-6xl font-light italic tracking-wide drop-shadow-md select-none" style="font-family: Georgia, 'Times New Roman', serif;">
+                    hallo
+                  </div>
+                </div>
+
+                <!-- Unten: Nach oben streichen statt Home-Button -->
+                <div onclick="toggleStep(1, true)" class="tap-target text-center pb-1 pt-2 rounded-lg bg-black/15 hover:bg-black/25 backdrop-blur-xs transition">
+                  <div class="flex flex-col items-center justify-center">
+                    <svg class="w-4 h-4 text-white animate-swipe-up mb-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 15l7-7 7 7"/></svg>
+                    <span class="text-[11px] font-medium tracking-wide text-white/95">
+                      Zum Öffnen nach oben streichen
+                    </span>
+                  </div>
+                  <div class="home-indicator"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Anleitungstext -->
+          <div class="text-sm text-slate-700 bg-slate-50 p-3.5 rounded-xl border border-slate-200/70">
+            <p class="font-semibold text-slate-900 mb-1">iPad einschalten.</p>
+            <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+              Halte die <strong>obere Taste (Einschaltknopf)</strong> gedrückt, bis das Apple-Logo erscheint. Da das iPad der 11. Generation keine Home-Taste mehr hat, <strong>streichst du auf dem „hallo“-Bildschirm vom unteren Rand nach oben</strong>.
+            </p>
+          </div>
+        </article>
+
+        <!-- ===============================================================
+             SCHRITT 2: Sprache auswählen
+             =============================================================== -->
+        <article class="step-card bg-white rounded-2xl p-5 shadow-sm border border-slate-200 flex flex-col justify-between" data-step="2" id="step-card-2">
+          <div>
+            <div class="flex items-center justify-between gap-2 mb-4">
+              <div class="flex items-center gap-2.5">
+                <span class="step-badge w-8 h-8 rounded-full bg-fg-petrol text-white font-bold text-sm flex items-center justify-center shrink-0">2</span>
+                <h3 class="font-bold text-base sm:text-lg text-slate-900">Sprache auswählen</h3>
+              </div>
+              <label class="inline-flex items-center gap-1.5 cursor-pointer select-none text-xs font-semibold text-slate-600 hover:text-fg-petrol bg-slate-100 px-2.5 py-1.5 rounded-lg">
+                <input type="checkbox" class="step-checkbox w-4 h-4 accent-fg-success rounded cursor-pointer" onchange="toggleStep(2, this.checked)">
+                <span>Erledigt</span>
+              </label>
+            </div>
+
+            <!-- iPad Gen 11 Mockup: Sprachauswahl -->
+            <div class="ipad-gen11-frame mb-4">
+              <div class="ipad-top-button"></div>
+              <div class="ipad-vol-buttons"><span></span><span></span></div>
+
+              <div class="ipados-wallpaper px-3 py-2">
+                <div class="flex justify-end items-center text-[10px] text-white/90 px-1">
+                  <span>14 % 🔋</span>
+                </div>
+
+                <!-- Weißes Dialogfenster -->
+                <div class="ipados-dialog my-2">
+                  <div class="flex justify-center my-2">
+                    <svg class="w-8 h-8 text-fg-iosBlue" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"/>
+                    </svg>
+                  </div>
+
+                  <div class="bg-slate-100/90 rounded-lg overflow-hidden divide-y divide-slate-200/80 text-[11px] font-medium mt-2">
+                    <div onclick="toggleStep(2, true)" class="tap-target px-3 py-2 bg-sky-50 border-2 border-fg-iosBlue rounded-t-lg flex justify-between items-center font-bold text-fg-iosBlue">
+                      <span>Deutsch</span>
+                      <span class="text-xs">&rsaquo;</span>
+                      <span class="tap-pulse-ring"></span>
+                    </div>
+                    <div class="px-3 py-1.5 flex justify-between items-center text-slate-700"><span>Français</span><span class="text-slate-400">&rsaquo;</span></div>
+                    <div class="px-3 py-1.5 flex justify-between items-center text-slate-700"><span>Nederlands</span><span class="text-slate-400">&rsaquo;</span></div>
+                    <div class="px-3 py-1.5 flex justify-between items-center text-slate-700"><span>Italiano</span><span class="text-slate-400">&rsaquo;</span></div>
+                    <div class="px-3 py-1.5 flex justify-between items-center text-slate-700"><span>Español</span><span class="text-slate-400">&rsaquo;</span></div>
+                    <div class="px-3 py-1.5 flex justify-between items-center text-slate-700"><span>English</span><span class="text-slate-400">&rsaquo;</span></div>
+                  </div>
+                </div>
+
+                <div class="home-indicator"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="text-sm text-slate-700 bg-slate-50 p-3.5 rounded-xl border border-slate-200/70">
+            <p class="font-semibold text-slate-900 mb-1">Sprache auswählen.</p>
+            <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+              Tippe in der Liste ganz oben auf <strong>„Deutsch“</strong>, um die Systemsprache des iPads festzulegen.
+            </p>
+          </div>
+        </article>
+
+        <!-- ===============================================================
+             SCHRITT 3: Land oder Region wählen
+             =============================================================== -->
+        <article class="step-card bg-white rounded-2xl p-5 shadow-sm border border-slate-200 flex flex-col justify-between" data-step="3" id="step-card-3">
+          <div>
+            <div class="flex items-center justify-between gap-2 mb-4">
+              <div class="flex items-center gap-2.5">
+                <span class="step-badge w-8 h-8 rounded-full bg-fg-petrol text-white font-bold text-sm flex items-center justify-center shrink-0">3</span>
+                <h3 class="font-bold text-base sm:text-lg text-slate-900">Land oder Region wählen</h3>
+              </div>
+              <label class="inline-flex items-center gap-1.5 cursor-pointer select-none text-xs font-semibold text-slate-600 hover:text-fg-petrol bg-slate-100 px-2.5 py-1.5 rounded-lg">
+                <input type="checkbox" class="step-checkbox w-4 h-4 accent-fg-success rounded cursor-pointer" onchange="toggleStep(3, this.checked)">
+                <span>Erledigt</span>
+              </label>
+            </div>
+
+            <!-- iPad Gen 11 Mockup: Land oder Region -->
+            <div class="ipad-gen11-frame mb-4">
+              <div class="ipad-top-button"></div>
+              <div class="ipad-vol-buttons"><span></span><span></span></div>
+
+              <div class="ipados-wallpaper px-3 py-2">
+                <div class="flex justify-end items-center text-[10px] text-white/90 px-1">
+                  <span>14 % 🔋</span>
+                </div>
+
+                <div class="ipados-dialog my-2">
+                  <div class="text-[10px] text-fg-iosBlue mb-1">&lsaquo; Zurück</div>
+                  <div class="flex justify-center mb-1.5">
+                    <svg class="w-7 h-7 text-fg-iosBlue" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                  </div>
+                  <div class="text-center font-bold text-xs mb-2.5">Land oder Region wählen</div>
+
+                  <div onclick="toggleStep(3, true)" class="tap-target px-3 py-2 bg-sky-50 border-2 border-fg-iosBlue rounded-lg flex justify-between items-center font-bold text-fg-iosBlue mb-2.5">
+                    <span>Deutschland</span>
+                    <span>&rsaquo;</span>
+                    <span class="tap-pulse-ring"></span>
+                  </div>
+
+                  <div class="text-[9px] font-bold text-slate-500 uppercase px-1 mb-1">Weitere Länder und Regionen</div>
+                  <div class="bg-slate-100 rounded-lg divide-y divide-slate-200/80 text-[10px] text-slate-600">
+                    <div class="px-3 py-1 flex justify-between"><span>Afghanistan</span><span>&rsaquo;</span></div>
+                    <div class="px-3 py-1 flex justify-between"><span>Ägypten</span><span>&rsaquo;</span></div>
+                    <div class="px-3 py-1 flex justify-between"><span>Albanien</span><span>&rsaquo;</span></div>
+                  </div>
+                </div>
+
+                <div class="home-indicator"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="text-sm text-slate-700 bg-slate-50 p-3.5 rounded-xl border border-slate-200/70">
+            <p class="font-semibold text-slate-900 mb-1">Land oder Region auswählen – Deutschland.</p>
+            <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+              Tippe auf den hervorgehobenen Eintrag <strong>„Deutschland“</strong>.
+            </p>
+          </div>
+        </article>
+
+        <!-- ===============================================================
+             SCHRITT 4: Anredeform auswählen
+             =============================================================== -->
+        <article class="step-card bg-white rounded-2xl p-5 shadow-sm border border-slate-200 flex flex-col justify-between" data-step="4" id="step-card-4">
+          <div>
+            <div class="flex items-center justify-between gap-2 mb-4">
+              <div class="flex items-center gap-2.5">
+                <span class="step-badge w-8 h-8 rounded-full bg-fg-petrol text-white font-bold text-sm flex items-center justify-center shrink-0">4</span>
+                <h3 class="font-bold text-base sm:text-lg text-slate-900">Anredeform auswählen</h3>
+              </div>
+              <label class="inline-flex items-center gap-1.5 cursor-pointer select-none text-xs font-semibold text-slate-600 hover:text-fg-petrol bg-slate-100 px-2.5 py-1.5 rounded-lg">
+                <input type="checkbox" class="step-checkbox w-4 h-4 accent-fg-success rounded cursor-pointer" onchange="toggleStep(4, this.checked)">
+                <span>Erledigt</span>
+              </label>
+            </div>
+
+            <!-- iPad Gen 11 Mockup: Anredeform -->
+            <div class="ipad-gen11-frame mb-4">
+              <div class="ipad-top-button"></div>
+              <div class="ipad-vol-buttons"><span></span><span></span></div>
+
+              <div class="ipados-wallpaper px-3 py-2">
+                <div class="flex justify-end items-center text-[10px] text-white/90 px-1">
+                  <span>14 % 🔋</span>
+                </div>
+
+                <div class="ipados-dialog my-2">
+                  <div class="text-[10px] text-fg-iosBlue mb-1">&lsaquo; Zurück</div>
+                  <div class="flex justify-center mb-1">
+                    <svg class="w-7 h-7 text-fg-iosBlue" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"/>
+                    </svg>
+                  </div>
+                  <div class="text-center font-bold text-xs">Anredeform</div>
+                  <p class="text-[9.5px] text-slate-500 text-center leading-tight mt-1 mb-2.5">
+                    Wähle aus, ob das iPad bei der Anrede für dich die weibliche, männliche oder eine neutrale Form verwenden soll.
+                  </p>
+
+                  <div onclick="toggleStep(4, true)" class="tap-target bg-slate-100 rounded-lg divide-y divide-slate-200/80 border-2 border-fg-iosBlue overflow-hidden mb-2.5">
+                    <div class="px-3 py-1.5 flex justify-between items-center">
+                      <div>
+                        <div class="font-semibold text-[10.5px]">Weiblich</div>
+                        <div class="text-[8.5px] text-slate-500">„Hallo Benutzerin“</div>
+                      </div>
+                      <span class="text-slate-400">&rsaquo;</span>
+                    </div>
+                    <div class="px-3 py-1.5 flex justify-between items-center">
+                      <div>
+                        <div class="font-semibold text-[10.5px]">Männlich</div>
+                        <div class="text-[8.5px] text-slate-500">„Hallo Benutzer“</div>
+                      </div>
+                      <span class="text-slate-400">&rsaquo;</span>
+                    </div>
+                    <div class="px-3 py-1.5 flex justify-between items-center">
+                      <div>
+                        <div class="font-semibold text-[10.5px]">Divers</div>
+                        <div class="text-[8.5px] text-slate-500">„Hallo Benutzer:in“</div>
+                      </div>
+                      <span class="text-slate-400">&rsaquo;</span>
+                    </div>
+                    <span class="tap-pulse-ring"></span>
+                  </div>
+
+                  <div onclick="toggleStep(4, true)" class="text-center text-[9.5px] text-fg-iosBlue font-medium cursor-pointer hover:underline">
+                    Später in „Einstellungen“ konfigurieren
+                  </div>
+                </div>
+
+                <div class="home-indicator"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="text-sm text-slate-700 bg-slate-50 p-3.5 rounded-xl border border-slate-200/70">
+            <p class="font-semibold text-slate-900 mb-1">Anredeform auswählen.</p>
+            <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+              Wähle deine gewünschte Anredeform (<em>Weiblich</em>, <em>Männlich</em>, <em>Divers</em>) oder tippe unten auf <em>„Später in Einstellungen konfigurieren“</em>.
+            </p>
+          </div>
+        </article>
+
+        <!-- ===============================================================
+             SCHRITT 5: Erscheinungsbild auswählen
+             =============================================================== -->
+        <article class="step-card bg-white rounded-2xl p-5 shadow-sm border border-slate-200 flex flex-col justify-between" data-step="5" id="step-card-5">
+          <div>
+            <div class="flex items-center justify-between gap-2 mb-4">
+              <div class="flex items-center gap-2.5">
+                <span class="step-badge w-8 h-8 rounded-full bg-fg-petrol text-white font-bold text-sm flex items-center justify-center shrink-0">5</span>
+                <h3 class="font-bold text-base sm:text-lg text-slate-900">Erscheinungsbild auswählen</h3>
+              </div>
+              <label class="inline-flex items-center gap-1.5 cursor-pointer select-none text-xs font-semibold text-slate-600 hover:text-fg-petrol bg-slate-100 px-2.5 py-1.5 rounded-lg">
+                <input type="checkbox" class="step-checkbox w-4 h-4 accent-fg-success rounded cursor-pointer" onchange="toggleStep(5, this.checked)">
+                <span>Erledigt</span>
+              </label>
+            </div>
+
+            <!-- iPad Gen 11 Mockup: Erscheinungsbild -->
+            <div class="ipad-gen11-frame mb-4">
+              <div class="ipad-top-button"></div>
+              <div class="ipad-vol-buttons"><span></span><span></span></div>
+
+              <div class="ipados-wallpaper px-3 py-2">
+                <div class="flex justify-end items-center text-[10px] text-white/90 px-1">
+                  <span>14 % 🔋</span>
+                </div>
+
+                <div class="ipados-dialog my-2 text-center">
+                  <div class="flex justify-between items-center text-[10px] text-fg-iosBlue mb-1">
+                    <span>&lsaquo; Zurück</span>
+                    <span class="w-4 h-4 rounded-full bg-fg-iosBlue text-white flex items-center justify-center text-[9px]">♿</span>
+                  </div>
+                  <div class="font-bold text-xs">Erscheinungsbild</div>
+                  <p class="text-[9.5px] text-slate-500 leading-tight mt-0.5 mb-2">
+                    Wähle aus, wie Text und Symbole auf dem iPad aussehen sollen.
+                  </p>
+
+                  <!-- Mini Lockscreen Preview -->
+                  <div class="w-16 h-20 mx-auto rounded-md ipados-wallpaper p-1.5 flex flex-col justify-between shadow-inner border border-slate-300 mb-2">
+                    <div class="text-[10px] font-bold text-white">9:41</div>
+                    <div class="space-y-1 my-auto">
+                      <div class="h-2 bg-white/80 rounded-xs"></div>
+                      <div class="h-2 bg-white/80 rounded-xs"></div>
+                    </div>
+                    <div class="w-6 h-0.5 bg-white mx-auto rounded-full"></div>
+                  </div>
+
+                  <!-- Slider -->
+                  <div class="px-3 mb-3">
+                    <div class="h-0.5 bg-slate-300 relative flex items-center justify-between">
+                      <span class="w-3 h-3 rounded-full bg-white border-2 border-slate-400 shadow"></span>
+                      <span class="w-1 h-1.5 bg-slate-400"></span>
+                      <span class="w-1 h-1.5 bg-slate-400"></span>
+                    </div>
+                    <div class="flex justify-between text-[8.5px] text-slate-500 mt-1">
+                      <span>Standard</span>
+                      <span>Mittel</span>
+                      <span>Groß</span>
+                    </div>
+                  </div>
+
+                  <div onclick="toggleStep(5, true)" class="tap-target bg-fg-iosBlue text-white font-semibold py-1.5 rounded-lg text-[10.5px] shadow-xs">
+                    <span>Fortfahren</span>
+                    <span class="tap-pulse-ring" style="border-color: white; background: rgba(255,255,255,0.35);"></span>
+                  </div>
+                </div>
+
+                <div class="home-indicator"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="text-sm text-slate-700 bg-slate-50 p-3.5 rounded-xl border border-slate-200/70">
+            <p class="font-semibold text-slate-900 mb-1">Erscheinungsbild auswählen.</p>
+            <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+              Belasse den Regler auf <em>„Standard“</em> (oder passe die Schriftgröße an) und tippe auf den blauen Button <strong>„Fortfahren“</strong>.
+            </p>
+          </div>
+        </article>
+
+        <!-- ===============================================================
+             SCHRITT 6: Schnellstart ("Ohne anderes Gerät")
+             =============================================================== -->
+        <article class="step-card bg-white rounded-2xl p-5 shadow-sm border-2 border-fg-warn/80 flex flex-col justify-between" data-step="6" id="step-card-6">
+          <div>
+            <div class="flex items-center justify-between gap-2 mb-4">
+              <div class="flex items-center gap-2.5">
+                <span class="step-badge w-8 h-8 rounded-full bg-fg-warn text-white font-bold text-sm flex items-center justify-center shrink-0">6</span>
+                <div>
+                  <h3 class="font-bold text-base sm:text-lg text-slate-900 leading-tight">Schnellstart überspringen</h3>
+                  <span class="text-[11px] font-bold text-fg-warn uppercase tracking-wider">⚠️ Wichtiger Schritt</span>
+                </div>
+              </div>
+              <label class="inline-flex items-center gap-1.5 cursor-pointer select-none text-xs font-semibold text-slate-600 hover:text-fg-petrol bg-slate-100 px-2.5 py-1.5 rounded-lg">
+                <input type="checkbox" class="step-checkbox w-4 h-4 accent-fg-success rounded cursor-pointer" onchange="toggleStep(6, this.checked)">
+                <span>Erledigt</span>
+              </label>
+            </div>
+
+            <!-- iPad Gen 11 Mockup: Schnellstart -->
+            <div class="ipad-gen11-frame mb-4">
+              <div class="ipad-top-button"></div>
+              <div class="ipad-vol-buttons"><span></span><span></span></div>
+
+              <div class="ipados-wallpaper px-3 py-2">
+                <div class="flex justify-end items-center text-[10px] text-white/90 px-1">
+                  <span>14 % 🔋</span>
+                </div>
+
+                <div class="ipados-dialog my-2 text-center">
+                  <div class="flex justify-between items-center text-[10px] text-fg-iosBlue mb-1">
+                    <span>&lsaquo; Zurück</span>
+                    <span class="w-4 h-4 rounded-full bg-fg-iosBlue text-white flex items-center justify-center text-[9px]">♿</span>
+                  </div>
+
+                  <!-- Illustration iPad + iPhone -->
+                  <div class="h-14 bg-slate-100 rounded-md mb-2 flex items-center justify-center gap-2 p-1.5 border border-slate-200">
+                    <div class="w-16 h-11 rounded ipados-wallpaper flex items-center justify-center text-[8px] text-white italic border border-slate-800">hallo</div>
+                    <div class="w-6 h-10 rounded bg-rose-900 border border-slate-800 p-0.5 grid grid-cols-2 gap-0.5">
+                      <span class="bg-amber-300 rounded-xs"></span><span class="bg-sky-300 rounded-xs"></span>
+                      <span class="bg-emerald-300 rounded-xs"></span><span class="bg-pink-400 rounded-xs"></span>
+                    </div>
+                  </div>
+
+                  <div class="font-bold text-xs">Schnellstart</div>
+                  <div class="text-[9px] text-slate-500 flex items-center justify-center gap-1 my-1">
+                    <span class="inline-block w-2.5 h-2.5 border border-slate-400 border-t-transparent rounded-full animate-spin"></span>
+                    <span>Nach Geräten in der Nähe suchen …</span>
+                  </div>
+                  <p class="text-[8.5px] text-slate-500 leading-tight mb-2.5">
+                    Zum Anmelden und Konfigurieren bringe dein aktuelles iPhone oder iPad in die Nähe dieses iPad.
+                  </p>
+
+                  <div onclick="toggleStep(6, true)" class="tap-target py-1.5 px-2 rounded-lg bg-red-50 border-2 border-fg-warn text-fg-iosBlue font-bold text-[10px]">
+                    <span>Ohne anderes Gerät konfigurieren</span>
+                    <span class="tap-pulse-ring warn-ring"></span>
+                  </div>
+                </div>
+
+                <div class="home-indicator"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="text-sm text-slate-700 bg-fg-warnBg p-3.5 rounded-xl border border-fg-warn/30" id="step6TextBox">
+            <p class="font-bold text-fg-warn mb-1">„Ohne anderes Gerät konfigurieren“ auswählen!</p>
+            <p class="text-xs sm:text-sm text-slate-700 leading-relaxed" id="step6DynamicText">
+              Halte <strong>kein</strong> privates iPhone oder altes iPad daneben, sondern tippe ganz unten auf <strong>„Ohne anderes Gerät konfigurieren“</strong>.
+            </p>
+          </div>
+        </article>
+
+        <!-- ===============================================================
+             SCHRITT 7: Mit einem WLAN verbinden
+             =============================================================== -->
+        <article class="step-card bg-white rounded-2xl p-5 shadow-sm border border-slate-200 flex flex-col justify-between" data-step="7" id="step-card-7">
+          <div>
+            <div class="flex items-center justify-between gap-2 mb-4">
+              <div class="flex items-center gap-2.5">
+                <span class="step-badge w-8 h-8 rounded-full bg-fg-petrol text-white font-bold text-sm flex items-center justify-center shrink-0">7</span>
+                <h3 class="font-bold text-base sm:text-lg text-slate-900">Mit dem WLAN zu Hause verbinden</h3>
+              </div>
+              <label class="inline-flex items-center gap-1.5 cursor-pointer select-none text-xs font-semibold text-slate-600 hover:text-fg-petrol bg-slate-100 px-2.5 py-1.5 rounded-lg">
+                <input type="checkbox" class="step-checkbox w-4 h-4 accent-fg-success rounded cursor-pointer" onchange="toggleStep(7, this.checked)">
+                <span>Erledigt</span>
+              </label>
+            </div>
+
+            <!-- iPad Gen 11 Mockup: WLAN wählen -->
+            <div class="ipad-gen11-frame mb-4">
+              <div class="ipad-top-button"></div>
+              <div class="ipad-vol-buttons"><span></span><span></span></div>
+
+              <div class="ipados-wallpaper px-3 py-2">
+                <div class="flex justify-end items-center text-[10px] text-white/90 px-1">
+                  <span>14 % 🔋</span>
+                </div>
+
+                <div class="ipados-dialog my-2">
+                  <div class="text-[10px] text-fg-iosBlue mb-1">&lsaquo; Zurück</div>
+                  <div class="flex justify-center mb-1">
+                    <svg class="w-7 h-7 text-fg-iosBlue" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.111 16.404a5.5 5.5 0 017.778 0M12 20h.01m-7.08-7.071c3.904-3.905 10.236-3.905 14.141 0M1.394 9.393c5.857-5.857 15.355-5.857 21.213 0"/>
+                    </svg>
+                  </div>
+                  <div class="text-center font-bold text-xs mb-2.5">WLAN wählen</div>
+
+                  <div onclick="toggleStep(7, true)" class="tap-target bg-slate-100 rounded-lg divide-y divide-slate-200/80 text-[10px] font-medium border-2 border-fg-iosBlue overflow-hidden">
+                    <div class="px-3 py-1.5 bg-sky-50 text-fg-iosBlue font-bold flex justify-between items-center">
+                      <span>Dein WLAN zu Hause</span>
+                      <span>🔒 🛜</span>
+                    </div>
+                    <div class="px-3 py-1.5 flex justify-between items-center text-slate-700"><span>FRITZ!Box 7590</span><span>🔒 🛜</span></div>
+                    <div class="px-3 py-1.5 flex justify-between items-center text-slate-700"><span>Telekom_Home</span><span>🔒 🛜</span></div>
+                    <div class="px-3 py-1.5 flex justify-between items-center text-slate-700"><span>Vodafone-Station</span><span>🔒 🛜</span></div>
+                    <div class="px-3 py-1.5 flex justify-between items-center text-slate-700"><span>WLAN-Nachbar</span><span>🔒 🛜</span></div>
+                    <span class="tap-pulse-ring"></span>
+                  </div>
+                </div>
+
+                <div class="home-indicator"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="text-sm text-slate-700 bg-slate-50 p-3.5 rounded-xl border border-slate-200/70">
+            <p class="font-semibold text-slate-900 mb-1">Mit dem WLAN zu Hause verbinden – das Gerät wird aktiviert.</p>
+            <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+              Die Einrichtung erfolgt <strong>definitiv zu Hause</strong>: Wähle dein privates Heim-WLAN aus und gib das WLAN-Passwort ein. Das iPad wird nun über die Apple-Server aktiviert – <strong>dies kann einige Minuten dauern</strong>.
+            </p>
+            <p class="text-xs sm:text-sm text-fg-petrol font-semibold mt-2 leading-relaxed">
+              ℹ️ In der Schule musst du dich später nicht extra verbinden – dort loggt sich das iPad automatisch im Schul-WLAN ein.
+            </p>
+          </div>
+        </article>
+
+        <!-- ===============================================================
+             SCHRITT 8: Apps & Daten übertragen ("Nichts übertragen")
+             =============================================================== -->
+        <article class="step-card bg-white rounded-2xl p-5 shadow-sm border-2 border-fg-warn/80 flex flex-col justify-between" data-step="8" id="step-card-8">
+          <div>
+            <div class="flex items-center justify-between gap-2 mb-4">
+              <div class="flex items-center gap-2.5">
+                <span class="step-badge w-8 h-8 rounded-full bg-fg-warn text-white font-bold text-sm flex items-center justify-center shrink-0">8</span>
+                <div>
+                  <h3 class="font-bold text-base sm:text-lg text-slate-900 leading-tight">Apps &amp; Daten übertragen</h3>
+                  <span id="step8BadgeText" class="text-[11px] font-bold text-fg-warn uppercase tracking-wider">⚠️ Wichtiger Schritt: Nichts übertragen</span>
+                </div>
+              </div>
+              <label class="inline-flex items-center gap-1.5 cursor-pointer select-none text-xs font-semibold text-slate-600 hover:text-fg-petrol bg-slate-100 px-2.5 py-1.5 rounded-lg">
+                <input type="checkbox" class="step-checkbox w-4 h-4 accent-fg-success rounded cursor-pointer" onchange="toggleStep(8, this.checked)">
+                <span>Erledigt</span>
+              </label>
+            </div>
+
+            <!-- iPad Gen 11 Mockup: Apps & Daten übertragen -->
+            <div class="ipad-gen11-frame mb-4">
+              <div class="ipad-top-button"></div>
+              <div class="ipad-vol-buttons"><span></span><span></span></div>
+
+              <div class="ipados-wallpaper px-3 py-2">
+                <div class="flex justify-between items-center text-[9.5px] text-white/90 px-1">
+                  <span>09:41</span>
+                  <span>🛜 13 % 🔋</span>
+                </div>
+
+                <div class="ipados-dialog my-2">
+                  <div class="text-[10px] text-fg-iosBlue mb-1">&lsaquo; Zurück</div>
+                  <div class="flex justify-center mb-1">
+                    <svg class="w-7 h-7 text-fg-iosBlue" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"/>
+                    </svg>
+                  </div>
+                  <div class="text-center font-bold text-xs">Apps &amp; Daten übertragen</div>
+                  <p class="text-[9px] text-slate-500 text-center leading-tight mt-0.5 mb-2.5">
+                    Übertrage deine bestehenden Apps und Daten, z. B. Fotos, Notizen und Erinnerungen, auf dein neues Gerät.
+                  </p>
+
+                  <!-- Optionen -->
+                  <div class="space-y-1.5 text-[10px] font-medium">
+                    <div class="px-3 py-2 bg-slate-100 rounded-lg flex justify-between items-center text-slate-500">
+                      <span class="flex items-center gap-2"><span class="text-fg-iosBlue">☁️</span> Von iCloud-Backup</span>
+                      <span class="text-slate-400">&rsaquo;</span>
+                    </div>
+                    <div class="px-3 py-2 bg-slate-100 rounded-lg flex justify-between items-center text-slate-500">
+                      <span class="flex items-center gap-2"><span class="text-fg-iosBlue">💻</span> Von Mac oder PC</span>
+                      <span class="text-slate-400">&rsaquo;</span>
+                    </div>
+                    <div id="step8OptionNothing" onclick="toggleStep(8, true)" class="tap-target px-3 py-2 bg-red-50 border-2 border-fg-warn rounded-lg flex justify-between items-center font-bold text-slate-900">
+                      <span class="flex items-center gap-2"><span class="text-fg-iosBlue">📱</span> Nichts übertragen</span>
+                      <span class="text-slate-500">&rsaquo;</span>
+                      <span class="tap-pulse-ring warn-ring" id="step8PulseRing"></span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="home-indicator"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="text-sm text-slate-700 bg-fg-warnBg p-3.5 rounded-xl border border-fg-warn/30" id="step8TextBox">
+            <p class="font-bold text-fg-warn mb-1" id="step8Headline">„Nichts übertragen“ auswählen.</p>
+            <p class="text-xs sm:text-sm text-slate-700 leading-relaxed" id="step8DynamicText">
+              Wähle bei einer Neueinrichtung unbedingt <strong>„Nichts übertragen“</strong> aus, damit keine privaten Einstellungen die nachfolgende Schulkonfiguration blockieren.
+            </p>
+          </div>
+        </article>
+
+        <!-- ===============================================================
+             SCHRITT 9: Entfernte Verwaltung (Schulamt Mainz)
+             =============================================================== -->
+        <article class="step-card bg-white rounded-2xl p-5 shadow-sm border-2 border-fg-petrol flex flex-col justify-between" data-step="9" id="step-card-9">
+          <div>
+            <div class="flex items-center justify-between gap-2 mb-4">
+              <div class="flex items-center gap-2.5">
+                <span class="step-badge w-8 h-8 rounded-full bg-fg-petrol text-white font-bold text-sm flex items-center justify-center shrink-0">9</span>
+                <div>
+                  <h3 class="font-bold text-base sm:text-lg text-slate-900 leading-tight">Entfernte Verwaltung</h3>
+                  <span class="text-[11px] font-bold text-fg-petrol uppercase tracking-wider">Schulamt Mainz</span>
+                </div>
+              </div>
+              <label class="inline-flex items-center gap-1.5 cursor-pointer select-none text-xs font-semibold text-slate-600 hover:text-fg-petrol bg-slate-100 px-2.5 py-1.5 rounded-lg">
+                <input type="checkbox" class="step-checkbox w-4 h-4 accent-fg-success rounded cursor-pointer" onchange="toggleStep(9, this.checked)">
+                <span>Erledigt</span>
+              </label>
+            </div>
+
+            <!-- iPad Gen 11 Mockup: Entfernte Verwaltung -->
+            <div class="ipad-gen11-frame mb-4">
+              <div class="ipad-top-button"></div>
+              <div class="ipad-vol-buttons"><span></span><span></span></div>
+
+              <div class="ipados-wallpaper px-3 py-2">
+                <div class="flex justify-between items-center text-[9.5px] text-white/90 px-1">
+                  <span>09:41</span>
+                  <span>🛜 13 % 🔋</span>
+                </div>
+
+                <div class="ipados-dialog my-2 text-center">
+                  <div class="text-left text-[10px] text-fg-iosBlue mb-1">&lsaquo; Zurück</div>
+                  <div class="flex justify-center mb-1.5">
+                    <svg class="w-8 h-8 text-fg-iosBlue" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/>
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                    </svg>
+                  </div>
+                  <div class="font-bold text-xs">Entfernte Verwaltung</div>
+                  <div class="text-[9px] text-slate-500 mt-1">Dieses iPad gehört:</div>
+                  <div class="font-bold text-[10.5px] text-slate-900 my-1">Schulamt Mainz</div>
+                  <p class="text-[8.5px] text-slate-500 leading-tight mb-2">
+                    Die entfernte Verwaltung ist erforderlich und erlaubt es dieser Organisation, E-Mail- und Netzwerkaccounts zu konfigurieren, Apps zu installieren und einzurichten sowie die Einstellungen dieses iPad zu verwalten.
+                  </p>
+                  <div class="text-[8.5px] text-fg-iosBlue mb-2.5">Mehr Informationen zur entfernten Verwaltung</div>
+
+                  <div onclick="toggleStep(9, true)" class="tap-target bg-fg-iosBlue text-white font-semibold py-1.5 rounded-lg text-[10.5px] shadow-xs">
+                    <span>Dieses iPad registrieren</span>
+                    <span class="tap-pulse-ring" style="border-color: white; background: rgba(255,255,255,0.35);"></span>
+                  </div>
+                </div>
+
+                <div class="home-indicator"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="text-sm text-slate-700 bg-fg-petrolSoft p-3.5 rounded-xl border border-fg-petrol/20">
+            <p class="font-bold text-fg-petrol mb-1">„Dieses iPad registrieren“ auswählen.</p>
+            <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+              Bestätige die Verwaltung durch das <strong>Schulamt Mainz</strong> mit einem Tipp auf den blauen Button <strong>„Dieses iPad registrieren“</strong>.
+            </p>
+          </div>
+        </article>
+
+        <!-- ===============================================================
+             SCHRITT 10: Ortungsdienste aktivieren
+             =============================================================== -->
+        <article class="step-card bg-white rounded-2xl p-5 shadow-sm border border-slate-200 flex flex-col justify-between" data-step="10" id="step-card-10">
+          <div>
+            <div class="flex items-center justify-between gap-2 mb-4">
+              <div class="flex items-center gap-2.5">
+                <span class="step-badge w-8 h-8 rounded-full bg-fg-petrol text-white font-bold text-sm flex items-center justify-center shrink-0">10</span>
+                <h3 class="font-bold text-base sm:text-lg text-slate-900">Ortungsdienste aktivieren</h3>
+              </div>
+              <label class="inline-flex items-center gap-1.5 cursor-pointer select-none text-xs font-semibold text-slate-600 hover:text-fg-petrol bg-slate-100 px-2.5 py-1.5 rounded-lg">
+                <input type="checkbox" class="step-checkbox w-4 h-4 accent-fg-success rounded cursor-pointer" onchange="toggleStep(10, this.checked)">
+                <span>Erledigt</span>
+              </label>
+            </div>
+
+            <!-- iPad Gen 11 Mockup: Ortungsdienste -->
+            <div class="ipad-gen11-frame mb-4">
+              <div class="ipad-top-button"></div>
+              <div class="ipad-vol-buttons"><span></span><span></span></div>
+
+              <div class="ipados-wallpaper px-3 py-2">
+                <div class="flex justify-between items-center text-[9.5px] text-white/90 px-1">
+                  <span>09:41</span>
+                  <span>🛜 13 % 🔋</span>
+                </div>
+
+                <div class="ipados-dialog my-2 text-center">
+                  <div class="text-left text-[10px] text-fg-iosBlue mb-2">&lsaquo; Zurück</div>
+                  <div class="flex justify-center mb-2">
+                    <svg class="w-8 h-8 text-fg-iosBlue" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/>
+                    </svg>
+                  </div>
+                  <div class="font-bold text-xs mb-1">Ortungsdienste</div>
+                  <p class="text-[9px] text-slate-500 leading-tight mb-4">
+                    Anhand der Ortungsdienste können „Karten“ und andere Apps und Dienste, wie „Wo ist?“, Daten erfassen und verwenden, die auf deinen Standort verweisen.
+                  </p>
+                  <div class="text-[8.5px] text-fg-iosBlue mb-2">Über Ortungsdienste &amp; Datenschutz …</div>
+
+                  <div onclick="toggleStep(10, true)" class="tap-target bg-fg-iosBlue text-white font-semibold py-1.5 rounded-lg text-[10.5px] shadow-xs mb-1.5">
+                    <span>Ortungsdienste aktivieren</span>
+                    <span class="tap-pulse-ring" style="border-color: white; background: rgba(255,255,255,0.35);"></span>
+                  </div>
+                  <div class="text-[9.5px] text-fg-iosBlue">Später konfigurieren</div>
+                </div>
+
+                <div class="home-indicator"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="text-sm text-slate-700 bg-slate-50 p-3.5 rounded-xl border border-slate-200/70">
+            <p class="font-semibold text-slate-900 mb-1">„Ortungsdienste aktivieren“ auswählen.</p>
+            <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+              Tippe auf den blauen Button <strong>„Ortungsdienste aktivieren“</strong>, damit das Gerät bei Verlust über den Dienst „Wo ist?“ wiedergefunden werden kann.
+            </p>
+          </div>
+        </article>
+
+        <!-- ===============================================================
+             SCHRITT 11: Home-Bildschirm, Sperrcode & Touch ID (Full Width Card)
+             =============================================================== -->
+        <article class="step-card md:col-span-2 bg-white rounded-2xl p-5 sm:p-6 shadow-sm border-2 border-fg-petrol/40 flex flex-col justify-between" data-step="11" id="step-card-11">
+          <div class="flex flex-wrap items-center justify-between gap-2 mb-4">
+            <div class="flex items-center gap-2.5">
+              <span class="step-badge w-8 h-8 rounded-full bg-fg-petrol text-white font-bold text-sm flex items-center justify-center shrink-0">11</span>
+              <div>
+                <h3 class="font-bold text-base sm:text-lg text-slate-900">Home-Bildschirm, Sperrcode &amp; Touch ID (Obere Taste)</h3>
+                <p class="text-xs text-slate-500">Die schulische Konfiguration installiert sich nun automatisch im Hintergrund</p>
+              </div>
+            </div>
+            <label class="inline-flex items-center gap-1.5 cursor-pointer select-none text-xs font-semibold text-slate-600 hover:text-fg-petrol bg-slate-100 px-3 py-1.5 rounded-lg">
+              <input type="checkbox" class="step-checkbox w-4 h-4 accent-fg-success rounded cursor-pointer" onchange="toggleStep(11, this.checked)">
+              <span>Erledigt</span>
+            </label>
+          </div>
+
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
+            <!-- Links: iPad Gen 11 Homescreen im Querformat mit "Laden..." Apps -->
+            <div class="lg:col-span-7">
+              <div class="ipad-gen11-frame">
+                <!-- Hervorgehobener Touch-ID-Sensor an der Gehäuseseite -->
+                <div class="ipad-top-button highlight-sensor"></div>
+                <div class="absolute -top-7 right-3 bg-fg-petrol text-white text-[10px] font-bold px-2.5 py-0.5 rounded shadow flex items-center gap-1 z-20">
+                  <span>👆 Touch ID (Fingerabdruck) hier oben!</span>
+                </div>
+
+                <div class="ipados-homescreen-wallpaper px-4 py-2.5 text-white">
+                  <div class="flex justify-between items-center text-[10px] opacity-90 mb-3">
+                    <span>09:42 &nbsp; Mittwoch</span>
+                    <span>🛜 66 % 🔋</span>
+                  </div>
+
+                  <!-- App-Grid analog zum Foto in der Vorlage -->
+                  <div onclick="toggleStep(11, true)" class="tap-target grid grid-cols-6 gap-2.5 sm:gap-3 my-auto py-2 px-1">
+                    <!-- App 1: Kamera -->
+                    <div class="flex flex-col items-center">
+                      <div class="w-10 h-10 rounded-xl bg-slate-200 text-slate-800 flex items-center justify-center text-lg shadow">📷</div>
+                      <span class="text-[9px] mt-1">Kamera</span>
+                    </div>
+                    <!-- App 2: Fotos -->
+                    <div class="flex flex-col items-center">
+                      <div class="w-10 h-10 rounded-xl bg-white flex items-center justify-center text-lg shadow">🌸</div>
+                      <span class="text-[9px] mt-1">Fotos</span>
+                    </div>
+                    <!-- App 3: Warten... -->
+                    <div class="flex flex-col items-center opacity-80">
+                      <div class="w-10 h-10 rounded-xl bg-slate-900/75 flex items-center justify-center shadow border border-white/20">
+                        <div class="w-5 h-5 rounded-full border-2 border-white border-t-transparent animate-spin"></div>
+                      </div>
+                      <span class="text-[9px] mt-1">Laden …</span>
+                    </div>
+                    <!-- App 4: Uhr -->
+                    <div class="flex flex-col items-center">
+                      <div class="w-10 h-10 rounded-xl bg-slate-900 text-white flex items-center justify-center text-lg shadow">🕒</div>
+                      <span class="text-[9px] mt-1">Uhr</span>
+                    </div>
+                    <!-- App 5: Warten... -->
+                    <div class="flex flex-col items-center opacity-80">
+                      <div class="w-10 h-10 rounded-xl bg-slate-900/75 flex items-center justify-center shadow border border-white/20">
+                        <div class="w-5 h-5 rounded-full border-2 border-white/60 border-r-transparent animate-spin"></div>
+                      </div>
+                      <span class="text-[9px] mt-1">Warten …</span>
+                    </div>
+                    <!-- App 6: Wo ist? -->
+                    <div class="flex flex-col items-center">
+                      <div class="w-10 h-10 rounded-xl bg-emerald-500 text-white flex items-center justify-center text-lg shadow">🟢</div>
+                      <span class="text-[9px] mt-1">Wo ist?</span>
+                    </div>
+                    <!-- App 7: Sprachmemos -->
+                    <div class="flex flex-col items-center">
+                      <div class="w-10 h-10 rounded-xl bg-slate-900 text-red-500 flex items-center justify-center text-lg shadow">🎙️</div>
+                      <span class="text-[9px] mt-1">Sprachmemos</span>
+                    </div>
+                    <!-- App 8: Warten... -->
+                    <div class="flex flex-col items-center opacity-80">
+                      <div class="w-10 h-10 rounded-xl bg-slate-900/75 flex items-center justify-center shadow border border-white/20">
+                        <div class="w-5 h-5 rounded-full border-2 border-white border-t-transparent animate-spin"></div>
+                      </div>
+                      <span class="text-[9px] mt-1">Laden …</span>
+                    </div>
+                    <!-- App 9: App Store -->
+                    <div class="flex flex-col items-center">
+                      <div class="w-10 h-10 rounded-xl bg-sky-500 text-white flex items-center justify-center font-bold text-base shadow">A</div>
+                      <span class="text-[9px] mt-1">App Store</span>
+                    </div>
+                    <!-- App 10: Einstellungen -->
+                    <div class="flex flex-col items-center">
+                      <div class="w-10 h-10 rounded-xl bg-slate-400 text-slate-900 flex items-center justify-center text-lg shadow">⚙️</div>
+                      <span class="text-[9px] mt-1">Einstellungen</span>
+                    </div>
+                    <!-- App 11: Schüler-App installiert sich -->
+                    <div class="flex flex-col items-center">
+                      <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-600 to-purple-600 text-white flex items-center justify-center text-lg shadow ring-2 ring-white">🎓</div>
+                      <span class="text-[9px] mt-1 font-bold">Schüler</span>
+                    </div>
+                    <!-- App 12: Warten... -->
+                    <div class="flex flex-col items-center opacity-80">
+                      <div class="w-10 h-10 rounded-xl bg-slate-900/75 flex items-center justify-center shadow border border-white/20">
+                        <div class="w-5 h-5 rounded-full border-2 border-white/70 border-b-transparent animate-spin"></div>
+                      </div>
+                      <span class="text-[9px] mt-1">Warten …</span>
+                    </div>
+                  </div>
+
+                  <!-- Dock unten -->
+                  <div class="mt-2 bg-white/25 backdrop-blur-md rounded-2xl px-4 py-1.5 mx-auto flex items-center gap-3">
+                    <span class="w-7 h-7 rounded-lg bg-green-500 flex items-center justify-center text-xs">💬</span>
+                    <span class="w-7 h-7 rounded-lg bg-sky-500 flex items-center justify-center text-xs">🧭</span>
+                    <span class="w-7 h-7 rounded-lg bg-sky-400 flex items-center justify-center text-xs">✉️</span>
+                    <span class="w-7 h-7 rounded-lg bg-blue-500 flex items-center justify-center text-xs">📁</span>
+                  </div>
+                  <div class="home-indicator"></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Rechts: Wichtige Erklärungen zu Sperrcode, Touch ID & Hintergrund-Installation -->
+            <div class="lg:col-span-5 space-y-3">
+              <div class="p-4 rounded-xl bg-fg-petrolSoft border border-fg-petrol/25">
+                <h4 class="font-bold text-fg-petrol text-sm sm:text-base flex items-center gap-2 mb-1">
+                  <span>🔐 1. Code für Bildschirmsperre &amp; Touch ID</span>
+                </h4>
+                <p class="text-xs sm:text-sm text-slate-700 leading-relaxed">
+                  Innerhalb der ersten Stunde nach Aktivierung des Gerätes <strong>muss ein Code für die Bildschirmsperre</strong> vergeben werden. Sowohl ein <strong>Zahlencode</strong> als auch <strong>Touch ID (Fingerabdruck)</strong> sind möglich.
+                </p>
+                <div class="mt-2 p-2.5 rounded-lg bg-white border border-fg-petrol/20 text-xs text-slate-600">
+                  <strong>Neu beim iPad 11. Gen.:</strong> Der Touch-ID-Sensor sitzt im <strong>oberen Einschaltknopf (Top-Button)</strong> – lege deinen Finger beim Einrichten flach auf diese Taste.
+                </div>
+              </div>
+
+              <div class="p-4 rounded-xl bg-slate-50 border border-slate-200">
+                <h4 class="font-bold text-slate-900 text-sm sm:text-base flex items-center gap-2 mb-1">
+                  <span>⏳ 2. Schulische Konfiguration lädt automatisch</span>
+                </h4>
+                <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                  Die schulische Konfiguration wird nun im Hintergrund installiert, d. h. <strong>einige Standard-Apps verschwinden automatisch</strong>, während sich <strong>andere Schul-Apps nach und nach installieren</strong> (erkennbar an <em>„Laden …“</em> oder <em>„Warten …“</em>). Lass das iPad währenddessen im WLAN eingeschaltet.
+                </p>
+              </div>
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- =====================================================================
+         TEIL 2: SCHÜLER/STUDENT-APP – INTERNER „APP-STORE“ (SCHRITTE 12 BIS 16)
+         ===================================================================== -->
+    <section id="sektion-schueler-app" class="mb-12 scroll-mt-20">
+      <div class="flex items-center justify-between border-b-2 border-fg-petrol pb-3 mb-6">
+        <div class="flex items-center gap-3">
+          <span class="w-8 h-8 rounded-lg bg-fg-petrol text-white font-bold flex items-center justify-center text-sm">II</span>
+          <div>
+            <h2 class="text-xl sm:text-2xl font-bold text-slate-900">Schüler/Student-App – interner „App-Store“</h2>
+            <p class="text-xs sm:text-sm text-slate-500">Berechtigungen freigeben, benötigte Unterrichts-Apps abrufen &amp; Schulkalender abonnieren</p>
+          </div>
+        </div>
+        <span class="hidden sm:inline-block text-xs font-mono bg-fg-petrolLight text-fg-petrol px-3 py-1 rounded-full font-semibold">
+          Schritte 12 – 16
+        </span>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+        <!-- ===============================================================
+             SCHRITT 12: Schüler-App öffnen
+             =============================================================== -->
+        <article class="step-card bg-white rounded-2xl p-5 shadow-sm border border-slate-200 flex flex-col justify-between" data-step="12" id="step-card-12">
+          <div>
+            <div class="flex items-center justify-between gap-2 mb-4">
+              <div class="flex items-center gap-2.5">
+                <span class="step-badge w-8 h-8 rounded-full bg-fg-petrol text-white font-bold text-sm flex items-center justify-center shrink-0">12</span>
+                <h3 class="font-bold text-base sm:text-lg text-slate-900">Schüler-App öffnen</h3>
+              </div>
+              <label class="inline-flex items-center gap-1.5 cursor-pointer select-none text-xs font-semibold text-slate-600 hover:text-fg-petrol bg-slate-100 px-2.5 py-1.5 rounded-lg">
+                <input type="checkbox" class="step-checkbox w-4 h-4 accent-fg-success rounded cursor-pointer" onchange="toggleStep(12, this.checked)">
+                <span>Erledigt</span>
+              </label>
+            </div>
+
+            <!-- Nachbildung des Schüler-App-Icons aus der Vorlage -->
+            <div class="ipad-gen11-frame mb-4">
+              <div class="ipad-top-button"></div>
+              <div class="bg-slate-100 rounded-[13px] min-h-[290px] flex flex-col items-center justify-center p-6 relative">
+                <div onclick="toggleStep(12, true)" class="tap-target flex flex-col items-center group">
+                  <!-- Lila-Blaues App-Icon mit weißem Doktorhut (Mortarboard) -->
+                  <div class="w-32 h-32 rounded-[28px] bg-gradient-to-tr from-[#3b43c4] via-[#5e3fd3] to-[#8b2fc9] shadow-xl flex items-center justify-center relative group-hover:scale-105 transition-transform">
+                    <svg class="w-20 h-20 text-white drop-shadow" viewBox="0 0 64 64" fill="currentColor">
+                      <path d="M32 14L8 25L32 36L56 25L32 14Z"/>
+                      <path d="M17 31.5V42.5C17 46.5 23.7 50 32 50C40.3 50 47 46.5 47 42.5V31.5L32 38.5L17 31.5Z"/>
+                      <path d="M53 27.5V43.5" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+                      <circle cx="53" cy="45" r="2.8"/>
+                    </svg>
+                    <span class="tap-pulse-ring" style="border-color: white; background: rgba(255,255,255,0.35);"></span>
+                  </div>
+                  <span class="mt-3 font-bold text-slate-800 text-base tracking-wide">Schüler</span>
+                  <span class="text-xs text-fg-iosBlue font-medium mt-0.5">Zum Öffnen antippen</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="text-sm text-slate-700 bg-slate-50 p-3.5 rounded-xl border border-slate-200/70">
+            <p class="font-semibold text-slate-900 mb-1">Unter anderem installiert sich die Schüler/Student-App. Diese öffnen.</p>
+            <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+              Sobald das lila-blaue Icon mit dem Doktorhut (<strong>„Schüler“</strong>) auf dem Home-Bildschirm fertig geladen ist, tippe darauf, um den internen App-Store der Schule zu starten.
+            </p>
+          </div>
+        </article>
+
+        <!-- ===============================================================
+             SCHRITT 13: Datenschutzhinweise akzeptieren
+             =============================================================== -->
+        <article class="step-card bg-white rounded-2xl p-5 shadow-sm border border-slate-200 flex flex-col justify-between" data-step="13" id="step-card-13">
+          <div>
+            <div class="flex items-center justify-between gap-2 mb-4">
+              <div class="flex items-center gap-2.5">
+                <span class="step-badge w-8 h-8 rounded-full bg-fg-petrol text-white font-bold text-sm flex items-center justify-center shrink-0">13</span>
+                <h3 class="font-bold text-base sm:text-lg text-slate-900">Datenschutzhinweise akzeptieren</h3>
+              </div>
+              <label class="inline-flex items-center gap-1.5 cursor-pointer select-none text-xs font-semibold text-slate-600 hover:text-fg-petrol bg-slate-100 px-2.5 py-1.5 rounded-lg">
+                <input type="checkbox" class="step-checkbox w-4 h-4 accent-fg-success rounded cursor-pointer" onchange="toggleStep(13, this.checked)">
+                <span>Erledigt</span>
+              </label>
+            </div>
+
+            <!-- iPad Gen 11 Mockup: Datenschutzhinweis zur App -->
+            <div class="ipad-gen11-frame mb-4">
+              <div class="ipad-top-button"></div>
+              <div class="bg-slate-300 rounded-[13px] min-h-[290px] flex flex-col justify-between p-3">
+                <div class="ipados-dialog w-full max-w-[300px] my-auto p-0 overflow-hidden">
+                  <!-- Top Navigation Bar des Dialogs -->
+                  <div class="bg-slate-100 border-b border-slate-200 px-3 py-2 flex items-center justify-between">
+                    <span class="font-bold text-[10px] text-slate-800">Datenschutzhinweis zur App</span>
+                    <div onclick="toggleStep(13, true)" class="tap-target px-2 py-0.5 rounded bg-sky-100 border-2 border-fg-iosBlue text-fg-iosBlue font-bold text-[10px]">
+                      <span>Akzeptieren</span>
+                      <span class="tap-pulse-ring"></span>
+                    </div>
+                  </div>
+                  <!-- Inhalt -->
+                  <div class="p-3.5 text-center space-y-2 text-[9px] text-slate-600 leading-relaxed">
+                    <div class="font-bold text-xs text-slate-900">Datenschutzhinweis zur App</div>
+                    <p>
+                      Das Mobile Device Management (MDM) wird von ZuluDesk Teacher genutzt, um von Ihrer Schule ausgegebene Geräte zu verwalten und Aufgaben darauf auszuführen. Dazu gehören z. B. Suchvorgänge nach Software-Updates und installierten Apps.
+                    </p>
+                    <div class="font-bold text-[11px] text-slate-900 pt-1">Apple Richtlinie</div>
+                    <p>
+                      In Übereinstimmung mit den Datenschutzbestimmungen von Apple werden über unseren Dienst erfasste Daten niemals an Dritte weitergeleitet.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="text-sm text-slate-700 bg-slate-50 p-3.5 rounded-xl border border-slate-200/70">
+            <p class="font-semibold text-slate-900 mb-1">Datenschutzhinweise akzeptieren (oben rechts).</p>
+            <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+              Tippe oben rechts im Fenster auf <strong>„Akzeptieren“</strong> (Hinweis: In den Systemtexten wird technisch bedingt teilweise noch der frühere Name <em>„ZuluDesk Teacher“</em> genannt).
+            </p>
+          </div>
+        </article>
+
+        <!-- ===============================================================
+             SCHRITT 14: Bluetooth & Berechtigungen erlauben
+             =============================================================== -->
+        <article class="step-card bg-white rounded-2xl p-5 shadow-sm border border-slate-200 flex flex-col justify-between" data-step="14" id="step-card-14">
+          <div>
+            <div class="flex items-center justify-between gap-2 mb-4">
+              <div class="flex items-center gap-2.5">
+                <span class="step-badge w-8 h-8 rounded-full bg-fg-petrol text-white font-bold text-sm flex items-center justify-center shrink-0">14</span>
+                <h3 class="font-bold text-base sm:text-lg text-slate-900">Bluetooth &amp; Berechtigungen</h3>
+              </div>
+              <label class="inline-flex items-center gap-1.5 cursor-pointer select-none text-xs font-semibold text-slate-600 hover:text-fg-petrol bg-slate-100 px-2.5 py-1.5 rounded-lg">
+                <input type="checkbox" class="step-checkbox w-4 h-4 accent-fg-success rounded cursor-pointer" onchange="toggleStep(14, this.checked)">
+                <span>Erledigt</span>
+              </label>
+            </div>
+
+            <!-- iPad Gen 11 Mockup: Berechtigungen für Bluetooth -->
+            <div class="ipad-gen11-frame mb-4">
+              <div class="ipad-top-button"></div>
+              <div class="bg-slate-300 rounded-[13px] min-h-[290px] flex flex-col justify-between p-3 relative overflow-hidden">
+                <div class="ipados-dialog w-full max-w-[300px] my-auto !p-0 overflow-hidden relative">
+                  <div class="bg-slate-100 border-b border-slate-200 px-3 py-2 flex items-center justify-between text-[10px]">
+                    <span class="text-fg-iosBlue">&lsaquo; Zurück</span>
+                    <span class="font-bold text-slate-800">Berechtigungen für Bluetooth</span>
+                    <span class="text-fg-iosBlue font-semibold">Fortfahren</span>
+                  </div>
+                  <div class="p-5 text-center opacity-50 min-h-[155px] flex flex-col justify-center">
+                    <div class="text-2xl text-fg-iosBlue font-bold mb-1">ᛒ</div>
+                    <div class="font-bold text-xs">Berechtigungen für Bluetooth</div>
+                    <p class="text-[8.5px] mt-1">Die App benötigt Zugriff auf Bluetooth für spontane Klassen.</p>
+                  </div>
+                </div>
+
+                <!-- System-Alert Overlay -->
+                <div class="absolute inset-0 z-20 bg-black/25 rounded-[13px] flex items-center justify-center p-4">
+                  <div class="bg-white rounded-xl shadow-xl w-56 overflow-hidden text-center border border-slate-200 ring-1 ring-black/5">
+                    <div class="p-3 bg-white">
+                      <div class="font-bold text-[10.5px] text-slate-900 leading-snug">
+                        „Teacher“ möchte Bluetooth verwenden
+                      </div>
+                      <p class="text-[8.5px] text-slate-500 mt-1">
+                        Bluetooth is used to create ad-hoc classes.
+                      </p>
+                    </div>
+                    <div class="grid grid-cols-2 border-t border-slate-200 divide-x divide-slate-200 text-[10.5px] bg-white">
+                      <div class="py-2 text-fg-iosBlue">Nicht erlauben</div>
+                      <div onclick="toggleStep(14, true)" class="tap-target py-2 font-bold text-fg-iosBlue bg-sky-50">
+                        <span>OK</span>
+                        <span class="tap-pulse-ring"></span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="text-sm text-slate-700 bg-slate-50 p-3.5 rounded-xl border border-slate-200/70">
+            <p class="font-semibold text-slate-900 mb-1">Bluetooth muss erlaubt werden. Ebenso sind andere Berechtigungen notwendig.</p>
+            <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+              Tippe oben rechts auf <strong>„Fortfahren“</strong> und bestätige die Systemabfrage <em>„Teacher möchte Bluetooth verwenden“</em> zwingend mit <strong>„OK“</strong>.
+            </p>
+          </div>
+        </article>
+
+        <!-- ===============================================================
+             SCHRITT 15: Mitteilungen & App-Update durchführen
+             =============================================================== -->
+        <article class="step-card bg-white rounded-2xl p-5 shadow-sm border border-slate-200 flex flex-col justify-between" data-step="15" id="step-card-15">
+          <div>
+            <div class="flex items-center justify-between gap-2 mb-4">
+              <div class="flex items-center gap-2.5">
+                <span class="step-badge w-8 h-8 rounded-full bg-fg-petrol text-white font-bold text-sm flex items-center justify-center shrink-0">15</span>
+                <h3 class="font-bold text-base sm:text-lg text-slate-900">Mitteilungen &amp; App-Update</h3>
+              </div>
+              <label class="inline-flex items-center gap-1.5 cursor-pointer select-none text-xs font-semibold text-slate-600 hover:text-fg-petrol bg-slate-100 px-2.5 py-1.5 rounded-lg">
+                <input type="checkbox" class="step-checkbox w-4 h-4 accent-fg-success rounded cursor-pointer" onchange="toggleStep(15, this.checked)">
+                <span>Erledigt</span>
+              </label>
+            </div>
+
+            <!-- iPad Gen 11 Mockup: Berechtigungen für Mitteilungen & App-Update -->
+            <div class="ipad-gen11-frame mb-4">
+              <div class="ipad-top-button"></div>
+              <div class="bg-slate-300 rounded-[13px] min-h-[290px] flex flex-col justify-between p-3 relative overflow-hidden">
+                <div class="ipados-dialog w-full max-w-[300px] my-auto !p-0 overflow-hidden relative">
+                  <div class="bg-slate-100 border-b border-slate-200 px-3 py-2 flex items-center justify-between text-[10px]">
+                    <span class="text-fg-iosBlue">&lsaquo; Zurück</span>
+                    <span class="font-bold text-slate-800">Berechtigungen für Mitteilungen</span>
+                    <span class="text-fg-iosBlue font-semibold">Fortfahren</span>
+                  </div>
+                  <div class="p-5 text-center opacity-50 min-h-[155px] flex flex-col justify-center">
+                    <div class="w-7 h-7 mx-auto border-2 border-fg-iosBlue rounded-md relative mb-1">
+                      <span class="w-2.5 h-2.5 bg-fg-iosBlue rounded-full absolute -top-1 -right-1"></span>
+                    </div>
+                    <div class="font-bold text-xs">Berechtigungen für Mitteilungen</div>
+                    <p class="text-[8.5px] mt-1">Tippen Sie auf Fortfahren, um Mitteilungen zu erlauben.</p>
+                  </div>
+                </div>
+
+                <!-- System-Alert Overlay: App-Update -->
+                <div class="absolute inset-0 z-20 bg-black/25 rounded-[13px] flex items-center justify-center p-4">
+                  <div class="bg-white rounded-xl shadow-xl w-60 overflow-hidden text-center border border-slate-200 ring-1 ring-black/5">
+                    <div class="p-3 bg-white">
+                      <div class="font-bold text-[10.5px] text-slate-900">App-Update</div>
+                      <p class="text-[8.5px] text-slate-600 mt-1 leading-snug">
+                        <code class="font-mono text-[8px] text-fg-petrol">"medienbildungmainz.jamfcloud.com"</code> wird gleich die App „ZuluDesk Teacher“ vom App Store aktualisieren.
+                      </p>
+                    </div>
+                    <div class="grid grid-cols-2 border-t border-slate-200 divide-x divide-slate-200 text-[10px] bg-white">
+                      <div class="py-2 text-fg-iosBlue">Abbrechen</div>
+                      <div onclick="toggleStep(15, true)" class="tap-target py-2 font-bold text-fg-iosBlue bg-sky-50">
+                        <span>Aktualisieren</span>
+                        <span class="tap-pulse-ring"></span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="text-sm text-slate-700 bg-slate-50 p-3.5 rounded-xl border border-slate-200/70">
+            <p class="font-semibold text-slate-900 mb-1">Eventuell: App-Update durchführen und „Aktualisieren“ wählen.</p>
+            <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+              Erlaube auch die Mitteilungen. Falls ein Pop-up von <code class="font-mono text-xs bg-fg-petrolLight text-fg-petrol px-1.5 py-0.5 rounded">medienbildungmainz.jamfcloud.com</code> erscheint, bestätige dieses mit <strong>„Aktualisieren“</strong>.
+            </p>
+          </div>
+        </article>
+
+        <!-- ===============================================================
+             SCHRITT 16: Meine Ressourcen (Apps) & Profile (Schulkalender)
+             =============================================================== -->
+        <article class="step-card md:col-span-2 bg-white rounded-2xl p-5 sm:p-6 shadow-sm border-2 border-fg-petrol flex flex-col justify-between" data-step="16" id="step-card-16">
+          <div class="flex flex-wrap items-center justify-between gap-2 mb-4">
+            <div class="flex items-center gap-2.5">
+              <span class="step-badge w-8 h-8 rounded-full bg-fg-petrol text-white font-bold text-sm flex items-center justify-center shrink-0">16</span>
+              <div>
+                <h3 class="font-bold text-base sm:text-lg text-slate-900">„Meine Ressourcen“: Unterrichts-Apps &amp; Schulkalender laden</h3>
+                <p class="text-xs text-slate-500">Schalte im Mockup zwischen dem Reiter <strong>„Apps“</strong> und dem Reiter <strong>„Profile“ (Kalenderabos)</strong> um</p>
+              </div>
+            </div>
+            <label class="inline-flex items-center gap-1.5 cursor-pointer select-none text-xs font-semibold text-slate-600 hover:text-fg-petrol bg-slate-100 px-3 py-1.5 rounded-lg">
+              <input type="checkbox" class="step-checkbox w-4 h-4 accent-fg-success rounded cursor-pointer" onchange="toggleStep(16, this.checked)">
+              <span>Erledigt</span>
+            </label>
+          </div>
+
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+            
+            <!-- Links: Interaktives iPad Gen 11 Mockup mit umschaltbaren Reitern Apps | Dokumente | Profile -->
+            <div class="lg:col-span-7">
+              <div class="ipad-gen11-frame">
+                <div class="ipad-top-button"></div>
+                <div class="bg-white rounded-[13px] min-h-[340px] flex flex-col justify-between p-3 text-slate-800">
+                  
+                  <!-- Obere Segmented Control wie im Original-Screenshot -->
+                  <div>
+                    <div class="bg-slate-200/80 p-1 rounded-lg grid grid-cols-3 text-xs font-semibold max-w-xs mx-auto mb-2.5">
+                      <button type="button" onclick="switchResourceTab('apps')" id="mockTabApps" class="py-1 rounded-md bg-white shadow-xs text-slate-900 transition">
+                        Apps
+                      </button>
+                      <button type="button" onclick="switchResourceTab('docs')" id="mockTabDocs" class="py-1 rounded-md text-slate-600 hover:text-slate-900 transition">
+                        Dokumente
+                      </button>
+                      <button type="button" onclick="switchResourceTab('profiles')" id="mockTabProfiles" class="py-1 rounded-md text-slate-600 hover:text-slate-900 transition">
+                        Profile
+                      </button>
+                    </div>
+
+                    <!-- Suchleiste -->
+                    <div class="flex items-center gap-2 mb-2 px-1">
+                      <div class="flex-1 bg-slate-100 rounded-md px-2.5 py-1 text-[10px] text-slate-400 flex items-center gap-1.5">
+                        <span>🔍</span><span>Suchen</span>
+                      </div>
+                      <span class="text-[10px] text-slate-400">Abbrechen</span>
+                    </div>
+
+                    <div class="flex justify-between items-center px-1 pb-1.5 border-b border-slate-200 text-[10px]">
+                      <span class="text-slate-400 font-medium" id="mockSubHeaderLabel">Intern zur Verfügung gestellte Apps</span>
+                      <span class="text-fg-iosBlue font-medium line-through decoration-fg-warn decoration-2" title="Nicht auf Alle herunterladen tippen!">Alle herunterladen</span>
+                    </div>
+                  </div>
+
+                  <!-- TAB-INHALT A: APPS (Original-Liste aus Screenshot 5) -->
+                  <div id="mockContentApps" class="divide-y divide-slate-100 text-[11px] my-1 max-h-[220px] overflow-y-auto pr-1">
+                    <div class="py-2 flex items-center justify-between">
+                      <div class="flex items-center gap-2.5">
+                        <span class="w-7 h-7 rounded-lg bg-sky-600 text-white font-bold flex items-center justify-center text-xs">📈</span>
+                        <div><div class="font-semibold">AccelVisu2</div><div class="text-[9px] text-slate-400">Stephan Lueck</div></div>
+                      </div>
+                      <button onclick="toggleStep(16, true)" class="tap-target bg-slate-100 hover:bg-sky-50 text-fg-iosBlue font-bold text-[10px] px-3 py-1 rounded-full">ABRUFEN</button>
+                    </div>
+                    <div class="py-2 flex items-center justify-between">
+                      <div class="flex items-center gap-2.5">
+                        <span class="w-7 h-7 rounded-lg bg-slate-900 text-orange-500 font-bold flex items-center justify-center text-xs">A</span>
+                        <div><div class="font-semibold">Actionbound</div><div class="text-[9px] text-slate-400">Actionbound GmbH</div></div>
+                      </div>
+                      <button onclick="toggleStep(16, true)" class="bg-slate-100 hover:bg-sky-50 text-fg-iosBlue font-bold text-[10px] px-3 py-1 rounded-full">ABRUFEN</button>
+                    </div>
+                    <div class="py-2 flex items-center justify-between">
+                      <div class="flex items-center gap-2.5">
+                        <span class="w-7 h-7 rounded-lg bg-red-600 text-white font-bold flex items-center justify-center text-xs">PDF</span>
+                        <div><div class="font-semibold">Adobe Acrobat Reader für PDF</div><div class="text-[9px] text-slate-400">Adobe Inc.</div></div>
+                      </div>
+                      <button onclick="toggleStep(16, true)" class="bg-slate-100 hover:bg-sky-50 text-fg-iosBlue font-bold text-[10px] px-3 py-1 rounded-full">ABRUFEN</button>
+                    </div>
+                    <div class="py-2 flex items-center justify-between">
+                      <div class="flex items-center gap-2.5">
+                        <span class="w-7 h-7 rounded-lg bg-red-700 text-white font-bold flex items-center justify-center text-[10px]">BiBox</span>
+                        <div><div class="font-semibold">BiBox 2.0</div><div class="text-[9px] text-slate-400">Westermann Digital GmbH</div></div>
+                      </div>
+                      <button onclick="toggleStep(16, true)" class="bg-slate-100 hover:bg-sky-50 text-fg-iosBlue font-bold text-[10px] px-3 py-1 rounded-full">ABRUFEN</button>
+                    </div>
+                    <div class="py-2 flex items-center justify-between">
+                      <div class="flex items-center gap-2.5">
+                        <span class="w-7 h-7 rounded-lg bg-gradient-to-br from-amber-400 via-pink-500 to-indigo-600 text-white font-bold flex items-center justify-center text-xs">📖</span>
+                        <div><div class="font-semibold">Book Creator One</div><div class="text-[9px] text-slate-400">Tools for Schools Limited</div></div>
+                      </div>
+                      <button onclick="toggleStep(16, true)" class="bg-slate-100 hover:bg-sky-50 text-fg-iosBlue font-bold text-[10px] px-3 py-1 rounded-full">ABRUFEN</button>
+                    </div>
+                    <div class="py-2 flex items-center justify-between">
+                      <div class="flex items-center gap-2.5">
+                        <span class="w-7 h-7 rounded-lg bg-indigo-600 text-white font-bold flex items-center justify-center text-xs">🎥</span>
+                        <div><div class="font-semibold">Clips</div><div class="text-[9px] text-slate-400">Apple</div></div>
+                      </div>
+                      <button onclick="toggleStep(16, true)" class="bg-slate-100 hover:bg-sky-50 text-fg-iosBlue font-bold text-[10px] px-3 py-1 rounded-full">ABRUFEN</button>
+                    </div>
+                  </div>
+
+                  <!-- TAB-INHALT B: DOKUMENTE -->
+                  <div id="mockContentDocs" class="hidden my-auto text-center py-10 text-xs text-slate-400">
+                    Hier erscheinen schulische PDF-Dokumente, sofern deine Stufe welche zugewiesen bekommt.
+                  </div>
+
+                  <!-- TAB-INHALT C: PROFILE (Original-Kalenderabos aus Screenshot 6) -->
+                  <div id="mockContentProfiles" class="hidden divide-y divide-slate-100 text-[11px] my-1 max-h-[220px] overflow-y-auto pr-1">
+                    <div class="py-1.5 flex items-center justify-between">
+                      <span class="font-medium text-slate-700">⚙️ #30 Kalenderabo Schulleitung alle</span>
+                      <button onclick="toggleStep(16, true)" class="bg-slate-100 text-fg-iosBlue font-bold text-[10px] px-3 py-1 rounded-full">ABRUFEN</button>
+                    </div>
+                    <div class="py-1.5 flex items-center justify-between">
+                      <span class="font-medium text-slate-700">⚙️ #31 Kalenderabo MSS Schüler</span>
+                      <button onclick="toggleStep(16, true)" class="bg-slate-100 text-fg-iosBlue font-bold text-[10px] px-3 py-1 rounded-full">ABRUFEN</button>
+                    </div>
+                    <div class="py-1.5 flex items-center justify-between">
+                      <span class="font-medium text-slate-700">⚙️ #33 Kalenderabo Mittelstufe alle</span>
+                      <button onclick="toggleStep(16, true)" class="bg-slate-100 text-fg-iosBlue font-bold text-[10px] px-3 py-1 rounded-full">ABRUFEN</button>
+                    </div>
+                    <div class="py-1.5 flex items-center justify-between">
+                      <span class="font-medium text-slate-700">⚙️ #34 Kalenderabo Orientierungsstufe Schüler</span>
+                      <button onclick="toggleStep(16, true)" class="bg-slate-100 text-fg-iosBlue font-bold text-[10px] px-3 py-1 rounded-full">ABRUFEN</button>
+                    </div>
+                    <div class="py-1.5 flex items-center justify-between">
+                      <span class="font-medium text-slate-700">⚙️ #37 Kalenderabo BO alle</span>
+                      <button onclick="toggleStep(16, true)" class="bg-slate-100 text-fg-iosBlue font-bold text-[10px] px-3 py-1 rounded-full">ABRUFEN</button>
+                    </div>
+                    <div class="py-1.5 flex items-center justify-between">
+                      <span class="font-medium text-slate-700">⚙️ #38 Kalenderabo GTS alle</span>
+                      <button onclick="toggleStep(16, true)" class="bg-slate-100 text-fg-iosBlue font-bold text-[10px] px-3 py-1 rounded-full">ABRUFEN</button>
+                    </div>
+                  </div>
+
+                  <div class="w-1/3 h-1 bg-slate-300 rounded-full mx-auto mt-2"></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Rechts: Wichtige Hinweise aus Schritt 5 & 6 der Original-Vorlage -->
+            <div class="lg:col-span-5 space-y-4">
+              <div class="p-4 rounded-xl bg-fg-warnBg border-l-4 border-fg-warn">
+                <h4 class="font-bold text-fg-warn text-sm sm:text-base mb-1">
+                  📦 1. Wähle „Meine Ressourcen“ (Reiter „Apps“)
+                </h4>
+                <p class="text-xs sm:text-sm text-slate-700 leading-relaxed">
+                  Dort findest du eine Liste aller intern zur Verfügung gestellten Apps. <br>
+                  <strong>Achtung: Du musst nicht alle Apps laden!</strong> Deine Lehrerinnen und Lehrer teilen dir mit, welche Apps du im Unterricht benötigst. Auch in der Schule können diese Apps jederzeit im WLAN geladen werden.
+                </p>
+                <p class="text-xs text-slate-600 mt-2 font-semibold">
+                  🔄 Prüfe regelmäßig in der Schüler-App, ob „App-Updates“ vorliegen, und installiere diese.
+                </p>
+              </div>
+
+              <div class="p-4 rounded-xl bg-fg-petrolSoft border border-fg-petrol/25">
+                <h4 class="font-bold text-fg-petrol text-sm sm:text-base mb-1">
+                  📅 2. Reiter „Profile“: Schulkalender laden
+                </h4>
+                <p class="text-xs sm:text-sm text-slate-700 leading-relaxed mb-2.5">
+                  Unter <strong>„Profile“</strong> können die Schulkalender des Frauenlob-Gymnasiums individuell in die Kalender-App des iPads geladen werden.
+                </p>
+                <button type="button" onclick="switchResourceTab('profiles')" class="text-xs font-bold bg-fg-petrol text-white px-3 py-1.5 rounded-lg hover:bg-fg-petrolDark transition">
+                  Im iPad-Mockup auf „Profile“ umschalten &rarr;
+                </button>
+              </div>
+            </div>
+
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- =====================================================================
+         INTERAKTIVER SCHULKALENDER-FINDER (PROFILE #30 BIS #38)
+         ===================================================================== -->
+    <section id="sektion-kalender-finder" class="bg-white rounded-2xl p-5 sm:p-7 shadow-sm border border-slate-200 mb-12 scroll-mt-20">
+      <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-200 pb-4 mb-5">
+        <div>
+          <span class="text-xs font-mono uppercase tracking-wider font-semibold text-fg-petrol bg-fg-petrolLight px-2.5 py-0.5 rounded-md">
+            Hilfe zu Schritt 16 • Reiter „Profile“
+          </span>
+          <h2 class="text-lg sm:text-xl font-bold text-slate-900 mt-1">
+            📅 Interaktiver Schulkalender-Finder: Welches Profil benötige ich?
+          </h2>
+          <p class="text-xs sm:text-sm text-slate-600">
+            Wähle deine Klassenstufe, um zu sehen, welche Schulkalender du in der Schüler-App auf <strong>„ABRUFEN“</strong> tippen solltest:
+          </p>
+        </div>
+
+        <!-- Stufen-Filter-Buttons -->
+        <div class="flex flex-wrap gap-2 shrink-0">
+          <button type="button" onclick="filterCalendars('ori')" id="calBtn-ori" class="cal-filter-btn px-3.5 py-2 rounded-xl text-xs font-bold border-2 border-fg-petrol bg-fg-petrol text-white transition">
+            Klasse 5–6 (Orientierungsstufe)
+          </button>
+          <button type="button" onclick="filterCalendars('mitte')" id="calBtn-mitte" class="cal-filter-btn px-3.5 py-2 rounded-xl text-xs font-bold border-2 border-slate-200 bg-white text-slate-700 hover:border-fg-petrol transition">
+            Klasse 7–10 (Mittelstufe)
+          </button>
+          <button type="button" onclick="filterCalendars('mss')" id="calBtn-mss" class="cal-filter-btn px-3.5 py-2 rounded-xl text-xs font-bold border-2 border-slate-200 bg-white text-slate-700 hover:border-fg-petrol transition">
+            MSS 11–13 (Oberstufe)
+          </button>
+        </div>
+      </div>
+
+      <!-- Liste der Original-Profile #30 bis #38 aus der Vorlage -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3" id="calendarProfileGrid">
+        <!-- Wird dynamisch per JS gerendert -->
+      </div>
+    </section>
+
+    <!-- =====================================================================
+         ABSCHLUSS-BEREICH / TRIGGER FÜR DEN „HAPPY SCREEN“
+         ===================================================================== -->
+    <section class="bg-gradient-to-br from-fg-petrol to-fg-petrolDark text-white rounded-2xl p-6 sm:p-8 text-center shadow-lg mb-10">
+      <h2 class="text-xl sm:text-2xl font-bold mb-2">
+        Bist du mit allen Schritten durch?
+      </h2>
+      <p class="text-white/85 text-sm sm:text-base max-w-xl mx-auto mb-5">
+        Wenn du dein iPad beim Schulamt Mainz registriert, deinen Sperrcode gesetzt und die Schüler-App eingerichtet hast, ist dein neues iPad der 11. Generation einsatzbereit!
+      </p>
+      <button type="button" onclick="openHappyScreen()" class="bg-white text-fg-petrol hover:bg-fg-petrolLight font-extrabold text-sm sm:text-base px-6 py-3.5 rounded-xl shadow-md hover:shadow-xl transition transform hover:-translate-y-0.5 inline-flex items-center gap-2">
+        <span>🎉 Einrichtung erfolgreich abgeschlossen!</span>
+      </button>
+    </section>
+
+  </main>
+
+  <!-- =====================================================================
+       4. FOOTER MIT DOKUMENTENHISTORIE (VERSION 1–5, SEU) & APPLE LINKS
+       ===================================================================== -->
+  <footer class="bg-white border-t border-slate-200 py-8 px-4 text-xs text-slate-600">
+    <div class="max-w-6xl mx-auto space-y-6">
+      
+      <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+        <div>
+          <div class="font-bold text-slate-900 text-sm">Frauenlob-Gymnasium Mainz</div>
+          <p class="text-slate-500 mt-0.5">Anleitung zur Einrichtung von Schüler-iPads (iPad 11. Generation • iPadOS • Jamf School)</p>
+        </div>
+        <div class="flex flex-wrap gap-3">
+          <a href="https://support.apple.com/de-de/guide/ipad/ipad995bb83d/ipados" target="_blank" rel="noopener noreferrer" class="px-3 py-1.5 rounded-lg bg-slate-100 hover:bg-fg-petrolLight hover:text-fg-petrol font-semibold transition">
+            Apple Support: iPad einrichten &nearr;
+          </a>
+          <a href="https://support.apple.com/de-de/guide/security/secc2cd563ef/web" target="_blank" rel="noopener noreferrer" class="px-3 py-1.5 rounded-lg bg-slate-100 hover:bg-fg-petrolLight hover:text-fg-petrol font-semibold transition">
+            Apple Security: Automatische Geräteregistrierung &nearr;
+          </a>
+        </div>
+      </div>
+
+      <!-- Ausklappbare Dokumentenhistorie aus der Original-Word-Datei -->
+      <details class="bg-slate-50 rounded-xl border border-slate-200 p-4">
+        <summary class="font-bold text-slate-800 cursor-pointer select-none flex items-center justify-between">
+          <span>📋 Dokumentenhistorie anzeigen (Version 1 bis Version 5 – Verfasser: SEU)</span>
+          <span class="font-mono text-[11px] text-fg-petrol">Klicken zum Aufklappen</span>
+        </summary>
+        <div class="mt-3 overflow-x-auto">
+          <table class="w-full text-left border-collapse font-mono text-xs">
+            <thead>
+              <tr class="border-b border-slate-300 text-slate-700 bg-slate-100">
+                <th class="py-2 px-3">Version</th>
+                <th class="py-2 px-3">Datum</th>
+                <th class="py-2 px-3">Änderung</th>
+                <th class="py-2 px-3">Verfasser</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-200">
+              <tr>
+                <td class="py-1.5 px-3">1</td>
+                <td class="py-1.5 px-3">07.04.2021</td>
+                <td class="py-1.5 px-3">Ersterstellung der Einrichtungsanleitung</td>
+                <td class="py-1.5 px-3">SEU</td>
+              </tr>
+              <tr>
+                <td class="py-1.5 px-3">2</td>
+                <td class="py-1.5 px-3">18.09.2023</td>
+                <td class="py-1.5 px-3">Schritt „Profilübertragung“ entfernt</td>
+                <td class="py-1.5 px-3">SEU</td>
+              </tr>
+              <tr>
+                <td class="py-1.5 px-3">3</td>
+                <td class="py-1.5 px-3">09.09.2024</td>
+                <td class="py-1.5 px-3">Anpassung iPadOS</td>
+                <td class="py-1.5 px-3">SEU</td>
+              </tr>
+              <tr>
+                <td class="py-1.5 px-3">4</td>
+                <td class="py-1.5 px-3">15.09.2025</td>
+                <td class="py-1.5 px-3">Schüler-App aktualisiert</td>
+                <td class="py-1.5 px-3">SEU</td>
+              </tr>
+              <tr class="bg-fg-petrolLight/60 font-semibold text-fg-petrolDark">
+                <td class="py-1.5 px-3">5</td>
+                <td class="py-1.5 px-3">Aktuell</td>
+                <td class="py-1.5 px-3">Interaktive Web-Version für iPad 11. Generation (All-Screen, Touch ID im Top-Button)</td>
+                <td class="py-1.5 px-3">SEU</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </details>
+
+    </div>
+  </footer>
+
+  <!-- =====================================================================
+       5. HAPPY SCREEN OVERLAY MIT HTML5-CANVAS-FEUERWERK & KONFETTI
+       ===================================================================== -->
+  <div id="happyScreenModal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md">
+    <!-- Vollbild-Feuerwerk-Canvas im Hintergrund -->
+    <canvas id="fireworksCanvas" class="fixed inset-0 pointer-events-none z-0"></canvas>
+
+    <!-- Feierliche Bestätigungskarte -->
+    <div class="relative z-10 bg-white rounded-3xl max-w-lg w-full p-6 sm:p-8 text-center shadow-2xl border-2 border-fg-petrol animate-[fadeIn_0.3s_ease-out]">
+      <div class="w-20 h-20 rounded-full bg-fg-successBg text-fg-success mx-auto flex items-center justify-center text-4xl shadow-inner mb-4 ring-8 ring-emerald-50">
+        🎉
+      </div>
+      <span class="text-xs font-mono uppercase tracking-widest bg-fg-petrolLight text-fg-petrol px-3 py-1 rounded-full font-bold">
+        Frauenlob-Gymnasium Mainz
+      </span>
+      <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 mt-3">
+        Geschafft! Dein iPad ist startklar.
+      </h2>
+      <p class="text-sm text-slate-600 mt-2 leading-relaxed">
+        Dein neues <strong>iPad der 11. Generation</strong> ist vollständig für den Unterricht am Frauenlob-Gymnasium eingerichtet.
+      </p>
+
+      <!-- 3 Goldene Tipps für den Schulalltag -->
+      <div class="text-left bg-slate-50 rounded-2xl p-4 my-5 border border-slate-200 space-y-2.5 text-xs sm:text-sm">
+        <div class="font-bold text-fg-petrol text-xs uppercase tracking-wider mb-1">
+          3 Tipps für deinen Schulalltag:
+        </div>
+        <div class="flex items-start gap-2.5">
+          <span class="text-base">🔐</span>
+          <span><strong>Sperrcode gut merken:</strong> Bewahre deinen 6-stelligen Code sicher auf. Mit Touch ID in der oberen Taste entsperrst du dein iPad im Alltag blitzschnell.</span>
+        </div>
+        <div class="flex items-start gap-2.5">
+          <span class="text-base">🎓</span>
+          <span><strong>Schüler-App prüfen:</strong> Lade über „Meine Ressourcen“ nur die Apps, die deine Lehrkräfte ansagen, und installiere regelmäßig verfügbare App-Updates.</span>
+        </div>
+        <div class="flex items-start gap-2.5">
+          <span class="text-base">🔋</span>
+          <span><strong>Aufgeladen in die Schule:</strong> Lade dein iPad abends mit dem USB-C-Kabel auf, damit der Akku sicher durch den gesamten Schultag hält.</span>
+        </div>
+      </div>
+
+      <div class="flex flex-col sm:flex-row gap-3 justify-center">
+        <button type="button" onclick="launchMoreFireworks()" class="px-5 py-2.5 rounded-xl bg-fg-petrolLight text-fg-petrol font-bold text-sm hover:bg-fg-petrol hover:text-white transition">
+          🎆 Noch mehr Feuerwerk!
+        </button>
+        <button type="button" onclick="closeHappyScreen()" class="px-6 py-2.5 rounded-xl bg-fg-petrol text-white font-bold text-sm hover:bg-fg-petrolDark transition shadow">
+          Zurück zur Übersicht
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- =====================================================================
+       JAVASCRIPT: LOGIK FÜR FORTSCHRITT, KALENDER & FEUERWERK
+       ===================================================================== -->
+  <script>
+    // Status-Verwaltung für die 16 Schritte
+    const TOTAL_STEPS = 16;
+    const completedSteps = new Set();
+
+    // Schüler-Kalenderprofile aus der Schüler-App (ohne reine Lehrkräfte-Kalender)
+    const calendarProfiles = [
+      { id: '#30', name: 'Kalenderabo Schulleitung alle', role: 'student', targets: ['ori', 'mitte', 'mss'], hint: 'Pflicht-Kalender für alle (allgemeine Schultermine)' },
+      { id: '#31', name: 'Kalenderabo MSS Schüler', role: 'student', targets: ['mss'], hint: 'Pflicht-Kalender für die Oberstufe (MSS 11–13)' },
+      { id: '#33', name: 'Kalenderabo Mittelstufe alle', role: 'student', targets: ['mitte'], hint: 'Pflicht-Kalender für Klasse 7 bis 10' },
+      { id: '#34', name: 'Kalenderabo Orientierungsstufe Schüler', role: 'student', targets: ['ori'], hint: 'Pflicht-Kalender für Klasse 5 und 6' },
+      { id: '#37', name: 'Kalenderabo BO alle', role: 'optional', targets: ['mitte', 'mss'], hint: 'Optional: Berufsorientierung (Mittel-/Oberstufe)' },
+      { id: '#38', name: 'Kalenderabo GTS alle', role: 'optional', targets: ['ori', 'mitte'], hint: 'Optional: Ganztagsschule (falls angemeldet)' }
+    ];
+
+    // Einzelnen Schritt abhaken / zurücksetzen
+    function toggleStep(stepNumber, isChecked) {
+      const card = document.getElementById(`step-card-${stepNumber}`);
+      const checkbox = card ? card.querySelector('.step-checkbox') : null;
+
+      if (isChecked) {
+        completedSteps.add(stepNumber);
+        if (card) card.classList.add('is-completed');
+        if (checkbox) checkbox.checked = true;
+      } else {
+        completedSteps.delete(stepNumber);
+        if (card) card.classList.remove('is-completed');
+        if (checkbox) checkbox.checked = false;
+      }
+
+      updateProgressUI();
+
+      // Wenn alle 16 Schritte erledigt wurden, automatisch den Happy Screen öffnen
+      if (completedSteps.size === TOTAL_STEPS) {
+        setTimeout(() => openHappyScreen(), 350);
+      }
+    }
+
+    // Fortschrittsbalken & Zähler aktualisieren
+    function updateProgressUI() {
+      const count = completedSteps.size;
+      const percent = Math.round((count / TOTAL_STEPS) * 100);
+
+      document.getElementById('progressPercentBadge').textContent = `${percent}%`;
+      document.getElementById('progressCounterText').textContent = `${count} / ${TOTAL_STEPS} erledigt`;
+      document.getElementById('progressBarFill').style.width = `${percent}%`;
+
+      const toggleBtn = document.getElementById('toggleAllBtn');
+      if (count === TOTAL_STEPS) {
+        toggleBtn.innerHTML = `<span>Zurücksetzen</span>`;
+      } else {
+        toggleBtn.innerHTML = `<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg><span>Alle abhaken</span>`;
+      }
+    }
+
+    // Alle Schritte auf einmal abhaken oder zurücksetzen
+    function toggleAllSteps() {
+      const shouldCheckAll = completedSteps.size < TOTAL_STEPS;
+      for (let i = 1; i <= TOTAL_STEPS; i++) {
+        const card = document.getElementById(`step-card-${i}`);
+        const checkbox = card ? card.querySelector('.step-checkbox') : null;
+        if (shouldCheckAll) {
+          completedSteps.add(i);
+          if (card) card.classList.add('is-completed');
+          if (checkbox) checkbox.checked = true;
+        } else {
+          completedSteps.delete(i);
+          if (card) card.classList.remove('is-completed');
+          if (checkbox) checkbox.checked = false;
+        }
+      }
+      updateProgressUI();
+      if (shouldCheckAll) {
+        openHappyScreen();
+      }
+    }
+
+    // Reiter in Schritt 16 (Apps | Dokumente | Profile) umschalten
+    function switchResourceTab(tab) {
+      const tabApps = document.getElementById('mockTabApps');
+      const tabDocs = document.getElementById('mockTabDocs');
+      const tabProfiles = document.getElementById('mockTabProfiles');
+
+      const contentApps = document.getElementById('mockContentApps');
+      const contentDocs = document.getElementById('mockContentDocs');
+      const contentProfiles = document.getElementById('mockContentProfiles');
+      const subLabel = document.getElementById('mockSubHeaderLabel');
+
+      // Reset alle Tabs
+      [tabApps, tabDocs, tabProfiles].forEach(btn => {
+        btn.className = 'py-1 rounded-md text-slate-600 hover:text-slate-900 transition';
+      });
+      [contentApps, contentDocs, contentProfiles].forEach(el => el.classList.add('hidden'));
+
+      if (tab === 'apps') {
+        tabApps.className = 'py-1 rounded-md bg-white shadow-xs text-slate-900 font-bold transition';
+        contentApps.classList.remove('hidden');
+        subLabel.textContent = 'Intern zur Verfügung gestellte Apps';
+      } else if (tab === 'docs') {
+        tabDocs.className = 'py-1 rounded-md bg-white shadow-xs text-slate-900 font-bold transition';
+        contentDocs.classList.remove('hidden');
+        subLabel.textContent = 'Verfügbare Dokumente';
+      } else if (tab === 'profiles') {
+        tabProfiles.className = 'py-1 rounded-md bg-white shadow-xs text-slate-900 font-bold transition';
+        contentProfiles.classList.remove('hidden');
+        subLabel.textContent = 'Schulkalender-Profile (#30 – #38)';
+      }
+    }
+
+    // Interaktiver Schulkalender-Finder (Filter nach Stufe)
+    function filterCalendars(stage) {
+      // Buttons aktualisieren
+      ['ori', 'mitte', 'mss'].forEach(key => {
+        const btn = document.getElementById(`calBtn-${key}`);
+        if (key === stage) {
+          btn.className = 'cal-filter-btn px-3.5 py-2 rounded-xl text-xs font-bold border-2 border-fg-petrol bg-fg-petrol text-white transition shadow-xs';
+        } else {
+          btn.className = 'cal-filter-btn px-3.5 py-2 rounded-xl text-xs font-bold border-2 border-slate-200 bg-white text-slate-700 hover:border-fg-petrol transition';
+        }
+      });
+
+      const grid = document.getElementById('calendarProfileGrid');
+      grid.innerHTML = '';
+
+      calendarProfiles.forEach(prof => {
+        const isRecommended = prof.targets.includes(stage) && prof.role === 'student';
+        const isOptionalMatch = prof.targets.includes(stage) && prof.role === 'optional';
+
+        let cardStyle = 'border-slate-200 bg-slate-50/70 opacity-60';
+        let badgeHTML = `<span class="text-[10px] font-semibold bg-slate-200 text-slate-600 px-2 py-0.5 rounded">Nicht benötigt</span>`;
+
+        if (isRecommended) {
+          cardStyle = 'border-2 border-fg-success bg-fg-successBg/60 shadow-xs';
+          badgeHTML = `<span class="text-[10px] font-bold bg-fg-success text-white px-2.5 py-0.5 rounded-full">✓ Jetzt ABRUFEN</span>`;
+        } else if (isOptionalMatch) {
+          cardStyle = 'border-2 border-fg-petrol/50 bg-fg-petrolSoft';
+          badgeHTML = `<span class="text-[10px] font-bold bg-fg-petrol text-white px-2.5 py-0.5 rounded-full">Bei Bedarf abrufen</span>`;
+        }
+
+        const item = document.createElement('div');
+        item.className = `p-3.5 rounded-xl border transition-all flex flex-col justify-between gap-2 ${cardStyle}`;
+        item.innerHTML = `
+          <div>
+            <div class="flex items-center justify-between gap-2 mb-1">
+              <span class="font-mono text-xs font-bold text-fg-petrol">${prof.id}</span>
+              ${badgeHTML}
+            </div>
+            <div class="font-bold text-slate-900 text-xs sm:text-sm">${prof.name}</div>
+          </div>
+          <div class="text-[11px] text-slate-600 border-t border-slate-200/60 pt-1.5 flex items-center justify-between">
+            <span>${prof.hint}</span>
+          </div>
+        `;
+        grid.appendChild(item);
+      });
+    }
+
+    // =====================================================================
+    // HAPPY SCREEN & HTML5 CANVAS FEUERWERK / KONFETTI ANIMATION
+    // =====================================================================
+    let fireworksAnimId = null;
+    let particles = [];
+
+    function openHappyScreen() {
+      const modal = document.getElementById('happyScreenModal');
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+      initFireworksCanvas();
+      launchMoreFireworks();
+    }
+
+    function closeHappyScreen() {
+      const modal = document.getElementById('happyScreenModal');
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+      if (fireworksAnimId) {
+        cancelAnimationFrame(fireworksAnimId);
+        fireworksAnimId = null;
+      }
+    }
+
+    function initFireworksCanvas() {
+      const canvas = document.getElementById('fireworksCanvas');
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      if (!fireworksAnimId) {
+        animateFireworks();
+      }
+    }
+
+    function createBurst(x, y) {
+      const colors = ['#006D84', '#00A8CC', '#1E8E3E', '#F59E0B', '#EC4899', '#3B82F6', '#FFFFFF'];
+      for (let i = 0; i < 55; i++) {
+        const angle = (Math.PI * 2 * i) / 55;
+        const speed = 2 + Math.random() * 5.5;
+        particles.push({
+          x: x,
+          y: y,
+          vx: Math.cos(angle) * speed,
+          vy: Math.sin(angle) * speed - 1.2,
+          alpha: 1,
+          color: colors[Math.floor(Math.random() * colors.length)],
+          size: 2.5 + Math.random() * 3.5,
+          decay: 0.012 + Math.random() * 0.012
+        });
+      }
+    }
+
+    function launchMoreFireworks() {
+      const w = window.innerWidth;
+      const h = window.innerHeight;
+      createBurst(w * 0.25, h * 0.3);
+      setTimeout(() => createBurst(w * 0.75, h * 0.28), 220);
+      setTimeout(() => createBurst(w * 0.5, h * 0.22), 450);
+      setTimeout(() => createBurst(w * 0.35, h * 0.45), 700);
+      setTimeout(() => createBurst(w * 0.68, h * 0.42), 950);
+    }
+
+    function animateFireworks() {
+      const canvas = document.getElementById('fireworksCanvas');
+      const ctx = canvas.getContext('2d');
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      for (let i = particles.length - 1; i >= 0; i--) {
+        const p = particles[i];
+        p.x += p.vx;
+        p.y += p.vy;
+        p.vy += 0.06; // Schwerkraft
+        p.alpha -= p.decay;
+
+        if (p.alpha <= 0) {
+          particles.splice(i, 1);
+          continue;
+        }
+
+        ctx.save();
+        ctx.globalAlpha = Math.max(0, p.alpha);
+        ctx.fillStyle = p.color;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.restore();
+      }
+
+      fireworksAnimId = requestAnimationFrame(animateFireworks);
+    }
+
+    window.addEventListener('resize', () => {
+      const canvas = document.getElementById('fireworksCanvas');
+      if (canvas) {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+      }
+    });
+
+    // Initialisierung beim Laden der Seite
+    window.addEventListener('DOMContentLoaded', () => {
+      filterCalendars('ori');
+      updateProgressUI();
+    });
+  </script>
+</body>
+</html>
